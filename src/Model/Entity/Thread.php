@@ -1,0 +1,66 @@
+<?php
+namespace CakeDC\Forum\Model\Entity;
+
+use Cake\ORM\Entity;
+
+/**
+ * Thread Entity
+ *
+ * @property int $id
+ * @property int $parent_id
+ * @property int $category_id
+ * @property int $user_id
+ * @property string $title
+ * @property string $slug
+ * @property string $message
+ * @property int $replies_count
+ * @property int $reports_count
+ * @property bool $is_sticky
+ * @property bool $is_locked
+ * @property bool $is_visible
+ * @property bool $is_reported
+ * @property \Cake\I18n\FrozenTime $last_reply_created
+ * @property \Cake\I18n\FrozenTime $created
+ * @property \Cake\I18n\FrozenTime $modified
+ *
+ * @property \CakeDC\Forum\Model\Entity\Category $category
+ * @property \Cake\ORM\Entity $user
+ * @property \CakeDC\Forum\Model\Entity\Reply[] $replies
+ * @property \CakeDC\Forum\Model\Entity\Reply $reported_reply
+ * @property \CakeDC\Forum\Model\Entity\Reply $last_reply
+ * @property \CakeDC\Forum\Model\Entity\Report[] $reports
+ * @property \CakeDC\Forum\Model\Entity\Like[] $likes
+ */
+class Thread extends Entity
+{
+
+    /**
+     * Fields that can be mass assigned using newEntity() or patchEntity().
+     *
+     * Note that when '*' is set to true, this allows all unspecified fields to
+     * be mass assigned. For security purposes, it is advised to set '*' to false
+     * (or remove it), and explicitly make individual fields accessible as needed.
+     *
+     * @var array
+     */
+    protected $_accessible = [
+        '*' => false,
+        'category_id' => true,
+        'title' => true,
+        'slug' => true,
+        'message' => true,
+        'is_sticky' => true,
+        'is_locked' => true,
+        'is_visible' => true,
+    ];
+
+    /**
+     * is_reported getter
+     *
+     * @return bool
+     */
+    protected function _getIsReported()
+    {
+        return $this->reported_reply || $this->reports_count;
+    }
+}

@@ -1,0 +1,24 @@
+{
+    "name": "cakedc/forum",
+    "description": "Forum plugin for CakePHP",
+    "type": "cakephp-plugin",
+    "require": {
+        "cakephp/cakephp": "^3.4",
+        "muffin/slug": "^1.1",
+        "muffin/orderly": "^1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.7|^6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "CakeDC\\Forum\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "CakeDC\\Forum\\Test\\": "tests",
+            "Cake\\Test\\": "./vendor/cakephp/cakephp/tests"
+        }
+    }
+}
