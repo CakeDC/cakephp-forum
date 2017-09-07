@@ -45,7 +45,7 @@ class UsersFixture extends TestFixture
      */
     public $records = [
         [
-            'id' => 1,
+            //'id' => 1,
             'username' => 'admin',
             'password' => '$2y$10$CmvBkngnW4Xi6Lm.C1shQ.hb3uWNHv9b/5autcmUAsONmXPXb2H5K',
             'full_name' => 'John Doe',
@@ -55,7 +55,7 @@ class UsersFixture extends TestFixture
             'modified' => '2017-07-11 00:00:00'
         ],
         [
-            'id' => 2,
+            //'id' => 2,
             'username' => 'moderator1',
             'password' => '$2y$10$CmvBkngnW4Xi6Lm.C1shQ.hb3uWNHv9b/5autcmUAsONmXPXb2H5K',
             'full_name' => 'Moderator Nick',
@@ -65,7 +65,7 @@ class UsersFixture extends TestFixture
             'modified' => '2017-07-11 00:00:00'
         ],
         [
-            'id' => 3,
+            //'id' => 3,
             'username' => 'moderator2',
             'password' => '$2y$10$CmvBkngnW4Xi6Lm.C1shQ.hb3uWNHv9b/5autcmUAsONmXPXb2H5K',
             'full_name' => 'Moderator Peter',
@@ -75,7 +75,7 @@ class UsersFixture extends TestFixture
             'modified' => '2017-07-11 00:00:00'
         ],
         [
-            'id' => 4,
+            //'id' => 4,
             'username' => 'user',
             'password' => '$2y$10$CmvBkngnW4Xi6Lm.C1shQ.hb3uWNHv9b/5autcmUAsONmXPXb2H5K',
             'full_name' => 'Simple User',

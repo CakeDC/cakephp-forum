@@ -51,14 +51,14 @@ class LikesFixture extends TestFixture
      */
     public $records = [
         [
-            'id' => 1,
+            //'id' => 1,
             'post_id' => 1,
             'user_id' => 1,
             'created' => '2017-07-20 12:13:01',
             'modified' => '2017-07-20 12:13:01'
         ],
         [
-            'id' => 2,
+            //'id' => 2,
             'post_id' => 2,
             'user_id' => 1,
             'created' => '2017-07-20 12:26:22',

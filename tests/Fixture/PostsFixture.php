@@ -69,7 +69,7 @@ class PostsFixture extends TestFixture
      */
     public $records = [
         [
-            'id' => 1,
+            //'id' => 1,
             'parent_id' => null,
             'category_id' => 2,
             'user_id' => 1,
@@ -91,7 +91,7 @@ aaa',
             'modified' => '2017-07-18 12:10:00'
         ],
         [
-            'id' => 2,
+            //'id' => 2,
             'parent_id' => 1,
             'category_id' => 2,
             'user_id' => 1,
@@ -111,7 +111,7 @@ About the Prime95 Large FFT, I\'ve gotten crashes on my Phenom II on Blend that 
             'modified' => '2017-07-14 11:01:45'
         ],
         [
-            'id' => 3,
+            //'id' => 3,
             'parent_id' => null,
             'category_id' => 2,
             'user_id' => 1,
@@ -129,7 +129,7 @@ About the Prime95 Large FFT, I\'ve gotten crashes on my Phenom II on Blend that 
             'modified' => '2017-07-14 11:28:42'
         ],
         [
-            'id' => 4,
+            //'id' => 4,
             'parent_id' => null,
             'category_id' => 2,
             'user_id' => 1,
@@ -147,7 +147,7 @@ About the Prime95 Large FFT, I\'ve gotten crashes on my Phenom II on Blend that 
             'modified' => '2017-07-14 11:27:39'
         ],
         [
-            'id' => 5,
+            //'id' => 5,
             'parent_id' => null,
             'category_id' => 7,
             'user_id' => 1,
@@ -173,7 +173,7 @@ source: ranker.sisoftware.net',
             'modified' => '2017-07-14 11:28:11'
         ],
         [
-            'id' => 6,
+            //'id' => 6,
             'parent_id' => 3,
             'category_id' => 2,
             'user_id' => 1,
@@ -191,7 +191,7 @@ source: ranker.sisoftware.net',
             'modified' => '2017-07-14 11:28:31'
         ],
         [
-            'id' => 7,
+            //'id' => 7,
             'parent_id' => 4,
             'category_id' => 2,
             'user_id' => 1,
@@ -211,7 +211,7 @@ Planned on buying a Gold 6000 series, until today. Now I may have to settle for 
             'modified' => '2017-07-14 11:29:15'
         ],
         [
-            'id' => 8,
+            //'id' => 8,
             'parent_id' => 4,
             'category_id' => 2,
             'user_id' => 1,
@@ -229,7 +229,7 @@ Planned on buying a Gold 6000 series, until today. Now I may have to settle for 
             'modified' => '2017-07-14 11:29:28'
         ],
         [
-            'id' => 9,
+            //'id' => 9,
             'parent_id' => null,
             'category_id' => 2,
             'user_id' => 1,
@@ -247,7 +247,7 @@ Planned on buying a Gold 6000 series, until today. Now I may have to settle for 
             'modified' => '2017-07-17 14:15:15'
         ],
         [
-            'id' => 10,
+            //'id' => 10,
             'parent_id' => null,
             'category_id' => 2,
             'user_id' => 1,
@@ -265,7 +265,7 @@ Planned on buying a Gold 6000 series, until today. Now I may have to settle for 
             'modified' => '2017-07-17 14:16:31'
         ],
         [
-            'id' => 11,
+            //'id' => 11,
             'parent_id' => null,
             'category_id' => 2,
             'user_id' => 2,
@@ -283,7 +283,7 @@ Planned on buying a Gold 6000 series, until today. Now I may have to settle for 
             'modified' => '2017-07-17 14:17:16'
         ],
         [
-            'id' => 12,
+            //'id' => 12,
             'parent_id' => 5,
             'category_id' => 7,
             'user_id' => 2,

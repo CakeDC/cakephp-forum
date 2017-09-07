@@ -61,7 +61,7 @@ class CategoriesFixture extends TestFixture
      */
     public $records = [
         [
-            'id' => 1,
+            //'id' => 1,
             'parent_id' => null,
             'lft' => 1,
             'rght' => 8,
@@ -75,7 +75,7 @@ class CategoriesFixture extends TestFixture
             'modified' => '2017-07-13 15:50:06'
         ],
         [
-            'id' => 2,
+            //'id' => 2,
             'parent_id' => 1,
             'lft' => 2,
             'rght' => 3,
@@ -89,7 +89,7 @@ class CategoriesFixture extends TestFixture
             'modified' => '2017-07-18 14:43:21'
         ],
         [
-            'id' => 3,
+            //'id' => 3,
             'parent_id' => null,
             'lft' => 17,
             'rght' => 26,
@@ -103,7 +103,7 @@ class CategoriesFixture extends TestFixture
             'modified' => '2017-07-13 15:50:28'
         ],
         [
-            'id' => 4,
+            //'id' => 4,
             'parent_id' => 1,
             'lft' => 6,
             'rght' => 7,
@@ -117,7 +117,7 @@ class CategoriesFixture extends TestFixture
             'modified' => '2017-07-24 14:42:49'
         ],
         [
-            'id' => 5,
+            //'id' => 5,
             'parent_id' => null,
             'lft' => 9,
             'rght' => 16,
@@ -131,7 +131,7 @@ class CategoriesFixture extends TestFixture
             'modified' => '2017-07-13 15:50:37'
         ],
         [
-            'id' => 6,
+            //'id' => 6,
             'parent_id' => 1,
             'lft' => 4,
             'rght' => 5,
@@ -145,7 +145,7 @@ class CategoriesFixture extends TestFixture
             'modified' => '2017-07-13 15:51:49'
         ],
         [
-            'id' => 7,
+            //'id' => 7,
             'parent_id' => 3,
             'lft' => 18,
             'rght' => 19,
@@ -159,7 +159,7 @@ class CategoriesFixture extends TestFixture
             'modified' => '2017-07-13 15:52:33'
         ],
         [
-            'id' => 8,
+            //'id' => 8,
             'parent_id' => 3,
             'lft' => 20,
             'rght' => 21,
@@ -173,7 +173,7 @@ class CategoriesFixture extends TestFixture
             'modified' => '2017-07-13 15:53:49'
         ],
         [
-            'id' => 9,
+            //'id' => 9,
             'parent_id' => 3,
             'lft' => 22,
             'rght' => 23,
@@ -187,7 +187,7 @@ class CategoriesFixture extends TestFixture
             'modified' => '2017-07-13 15:54:27'
         ],
         [
-            'id' => 10,
+            //'id' => 10,
             'parent_id' => 5,
             'lft' => 10,
             'rght' => 11,
@@ -201,7 +201,7 @@ class CategoriesFixture extends TestFixture
             'modified' => '2017-07-13 15:54:40'
         ],
         [
-            'id' => 11,
+            //'id' => 11,
             'parent_id' => 5,
             'lft' => 12,
             'rght' => 13,
@@ -215,7 +215,7 @@ class CategoriesFixture extends TestFixture
             'modified' => '2017-07-13 15:54:50'
         ],
         [
-            'id' => 12,
+            //'id' => 12,
             'parent_id' => 5,
             'lft' => 14,
             'rght' => 15,
@@ -229,7 +229,7 @@ class CategoriesFixture extends TestFixture
             'modified' => '2017-07-13 15:55:02'
         ],
         [
-            'id' => 13,
+            //'id' => 13,
             'parent_id' => 3,
             'lft' => 24,
             'rght' => 25,

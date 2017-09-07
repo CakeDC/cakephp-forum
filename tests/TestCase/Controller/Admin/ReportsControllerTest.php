@@ -64,7 +64,7 @@ class ReportsControllerTest extends IntegrationTestCase
         $this->assertResponseNotContains('Please remove this post');
         $reports = $this->viewVariable('reports')->toArray();
         $this->assertCount(1, $reports);
-        $this->assertEquals(2, $reports[0]->id);
+        $this->assertEquals(1, $reports[0]->id);
 
         $this->get('/forum/admin/reports?post_id=2');
         $this->assertResponseOk();
@@ -72,7 +72,7 @@ class ReportsControllerTest extends IntegrationTestCase
         $this->assertResponseContains('Please remove this post');
         $reports = $this->viewVariable('reports')->toArray();
         $this->assertCount(1, $reports);
-        $this->assertEquals(3, $reports[0]->id);
+        $this->assertEquals(2, $reports[0]->id);
 
         $this->get('/forum/admin/reports?post_id=99');
         $this->assertResponseOk();
