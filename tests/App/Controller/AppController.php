@@ -2,7 +2,6 @@
 namespace CakeDC\Forum\Test\App\Controller;
 
 use Cake\Controller\Controller;
-use Cake\Event\Event;
 
 /**
  * This is a placeholder class.

@@ -1,12 +1,12 @@
 <?php
 namespace CakeDC\Forum\Test\App\Controller;
 
-use App\Controller\AppController;
+use App\Controller\AppController as Controller;
 
 /**
  * Users Controller
  */
-class UsersController extends AppController
+class UsersController extends Controller
 {
 
     public function register()
