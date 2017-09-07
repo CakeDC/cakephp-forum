@@ -39,7 +39,7 @@ class ModeratorsFixture extends TestFixture
         ],
         '_options' => [
             'engine' => 'InnoDB',
-            'collation' => 'utf8_general_ci'
+            //'collation' => 'utf8_general_ci'
         ],
     ];
     // @codingStandardsIgnoreEnd
