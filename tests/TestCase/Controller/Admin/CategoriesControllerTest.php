@@ -1,6 +1,7 @@
 <?php
 namespace CakeDC\Forum\Test\TestCase\Controller\Admin;
 
+use Cake\Network\Exception\UnauthorizedException;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestCase;
 
@@ -64,6 +65,29 @@ class CategoriesControllerTest extends IntegrationTestCase
         $this->assertEquals('Software', $categories[1]->title);
         $this->assertCount(4, $categories[2]->children);
         $this->assertEquals('Consumer Electronics', $categories[2]->title);
+    }
+
+    /**
+     * Test index unauthorized method
+     *
+     * @return void
+     */
+    public function testIndexUnauthorized()
+    {
+        $this->session([
+            'Auth' => [
+                'User' => [
+                    'id' => 2,
+                    'username' => 'testing',
+                    'is_superuser' => false,
+                ]
+            ]
+        ]);
+
+        $this->get('/forum/admin');
+
+        // Access denied for user who is not superuser
+        $this->assertResponseError();
     }
 
     /**
