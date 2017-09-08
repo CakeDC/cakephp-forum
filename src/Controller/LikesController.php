@@ -64,13 +64,11 @@ class LikesController extends AppController
             $like = $this->Likes->patchEntity($like, $this->request->getData());
             if ($this->Likes->save($like)) {
                 $this->Flash->success(__('The like has been saved.'));
-
-                return $this->redirect(['controller' => 'Threads', 'action' => 'view', 'category' => $categorySlug, 'thread' => $threadSlug]);
-
+            } else {
+                $this->Flash->error(__('The like could not be saved. Please, try again.'));
             }
-            $this->Flash->error(__('The like could not be saved. Please, try again.'));
         }
 
-        $this->set(compact('like'));
+        return $this->redirect(['controller' => 'Threads', 'action' => 'view', 'category' => $categorySlug, 'thread' => $threadSlug]);
     }
 }
