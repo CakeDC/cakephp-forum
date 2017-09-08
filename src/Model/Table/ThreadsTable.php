@@ -267,7 +267,7 @@ class ThreadsTable extends Table
                     'UserReplies.user_id' => $userId,
                 ]
             ])
-            ->group([$this->aliasField('id'), 'Users.id', 'ReportedReplies.id', 'Categories.id']);
+            ->group([$this->aliasField('id'), 'Users.id', 'ReportedReplies.id', 'Categories.id', 'UserReplies.id']);
     }
 
     /**
