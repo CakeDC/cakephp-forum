@@ -29,7 +29,7 @@ before_script:
   - composer self-update
   - composer install --prefer-source --no-interaction --dev
   - if [ $DB = 'mysql' ]; then mysql -e 'CREATE DATABASE cakephp_test;'; fi
-#  - if [ $DB = 'pgsql' ]; then psql -c 'CREATE DATABASE cakephp_test;' -U postgres; fi
+# - if [ $DB = 'pgsql' ]; then psql -c 'CREATE DATABASE cakephp_test;' -U postgres; fi
   - if [ '$COVERALLS' = '1' ]; then mkdir -p build/logs; fi
   - command -v phpenv > /dev/null && phpenv rehash || true
 
