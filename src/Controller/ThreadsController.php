@@ -90,8 +90,8 @@ class ThreadsController extends AppController
     /**
      * View method
      *
-     * @param string $categorySlug
-     * @param string $slug
+     * @param string $categorySlug Category slug
+     * @param string $slug Thread slug
      * @return \Cake\Http\Response|void
      */
     public function view($categorySlug, $slug)
@@ -119,7 +119,7 @@ class ThreadsController extends AppController
     /**
      * Add method
      *
-     * @param string $categorySlug
+     * @param string $categorySlug Category slug
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
     public function add($categorySlug)
@@ -213,8 +213,8 @@ class ThreadsController extends AppController
     /**
      * Save thread
      *
-     * @param \CakeDC\Forum\Model\Entity\Thread $thread
-     * @param array $fieldList
+     * @param \CakeDC\Forum\Model\Entity\Thread $thread Thread
+     * @param array $fieldList Fields list
      * @return \Cake\Http\Response|null
      */
     protected function _save($thread, $fieldList = ['title', 'message'])

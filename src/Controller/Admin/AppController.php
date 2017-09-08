@@ -11,9 +11,9 @@
 
 namespace CakeDC\Forum\Controller\Admin;
 
+use CakeDC\Forum\Controller\AppController as Controller;
 use Cake\Core\Configure;
 use Cake\Network\Exception\UnauthorizedException;
-use CakeDC\Forum\Controller\AppController as Controller;
 
 /**
  * Categories Controller

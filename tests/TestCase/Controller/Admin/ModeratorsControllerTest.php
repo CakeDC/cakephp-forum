@@ -82,5 +82,4 @@ class ModeratorsControllerTest extends IntegrationTestCase
         $this->assertSession('The moderator has been deleted.', 'Flash.flash.0.message');
         $this->assertNull($Moderators->find()->where(['Moderators.id' => $moderator->id])->first());
     }
-
 }

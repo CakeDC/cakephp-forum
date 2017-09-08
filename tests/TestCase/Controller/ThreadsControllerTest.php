@@ -241,7 +241,7 @@ class ThreadsControllerTest extends IntegrationTestCase
      */
     public function testAddFailed()
     {
-        $this->post('/forum/cpus-andoverclocking/new-thread', ['title' => '','message' => '']);
+        $this->post('/forum/cpus-andoverclocking/new-thread', ['title' => '', 'message' => '']);
         $this->assertResponseOk();
         $this->assertSession('The thread could not be saved. Please, try again.', 'Flash.flash.0.message');
     }

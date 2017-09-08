@@ -175,10 +175,10 @@ class RepliesTable extends Table
     /**
      * beforeFind callback
      *
-     * @param Event $event
-     * @param Query $query
-     * @param ArrayObject $options
-     * @param $primary
+     * @param Event $event Event
+     * @param Query $query Query
+     * @param ArrayObject $options Options
+     * @param bool $primary Primary
      */
     public function beforeFind(Event $event, Query $query, ArrayObject $options, $primary)
     {

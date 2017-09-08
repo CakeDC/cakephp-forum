@@ -137,7 +137,7 @@ class CategoriesTable extends Table
     /**
      * Get options list for dropdown
      *
-     * @param bool $grouped
+     * @param bool $grouped Grouped
      * @return array
      */
     public function getOptionsList($grouped = false)

@@ -126,7 +126,7 @@ class CategoriesController extends AppController
     /**
      * Move category up
      *
-     * @param int $id
+     * @param int $id Category id
      * @return \Cake\Http\Response|null
      */
     public function moveUp($id)
@@ -147,7 +147,7 @@ class CategoriesController extends AppController
     /**
      * Move category down
      *
-     * @param int $id
+     * @param int $id Category id
      * @return \Cake\Http\Response|null
      */
     public function moveDown($id)

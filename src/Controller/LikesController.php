@@ -43,9 +43,9 @@ class LikesController extends AppController
     /**
      * Add method
      *
-     * @param string $categorySlug
-     * @param string $threadSlug
-     * @param int $postId
+     * @param string $categorySlug Category slug
+     * @param string $threadSlug Thread slug
+     * @param int $postId Post id
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
     public function add($categorySlug, $threadSlug, $postId)

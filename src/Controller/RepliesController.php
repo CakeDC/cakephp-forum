@@ -43,8 +43,8 @@ class RepliesController extends AppController
     /**
      * Add method
      *
-     * @param string $categorySlug
-     * @param string $threadSlug
+     * @param string $categorySlug Category slug
+     * @param string $threadSlug Thread slug
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
     public function add($categorySlug, $threadSlug)
@@ -93,7 +93,7 @@ class RepliesController extends AppController
      *
      * @param string $categorySlug Category slug.
      * @param string $threadSlug Thread slug.
-     * @param int $id
+     * @param int $id Reply id
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
@@ -119,7 +119,7 @@ class RepliesController extends AppController
     /**
      * Save thread
      *
-     * @param \CakeDC\Forum\Model\Entity\Reply $reply
+     * @param \CakeDC\Forum\Model\Entity\Reply $reply Reply
      * @return \Cake\Http\Response|null
      */
     protected function _save($reply)

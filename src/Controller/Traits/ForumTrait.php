@@ -19,7 +19,7 @@ trait ForumTrait
     /**
      * Check if current user is moderator
      *
-     * @param null $categoryId
+     * @param null $categoryId Category id
      * @return bool
      */
     protected function _forumUserIsModerator($categoryId = null)
@@ -38,7 +38,7 @@ trait ForumTrait
     /**
      * Get category by slug
      *
-     * @param $slug
+     * @param string $slug Category slug
      * @return \CakeDC\Forum\Model\Entity\Category
      */
     protected function _getCategory($slug)
@@ -57,7 +57,7 @@ trait ForumTrait
     /**
      * Get breadcrumbs
      *
-     * @param int $categoryId
+     * @param int $categoryId Category id
      * @return \CakeDC\Forum\Model\Entity\Category[]
      */
     protected function _getBreadcrumbs($categoryId)
@@ -73,8 +73,8 @@ trait ForumTrait
     /**
      * Get thread by category slug and thread slug
      *
-     * @param string $categorySlug
-     * @param string $slug
+     * @param string $categorySlug Category slug
+     * @param string $slug Slug
      * @return \CakeDC\Forum\Model\Entity\Thread
      */
     protected function _getThread($categorySlug, $slug)
@@ -104,9 +104,9 @@ trait ForumTrait
     /**
      * Get reply by category slug, thread slug and reply id
      *
-     * @param string $categorySlug
-     * @param string $threadSlug
-     * @param int $id
+     * @param string $categorySlug Category slug
+     * @param string $threadSlug Thread slug
+     * @param int $id Reply id
      * @return \CakeDC\Forum\Model\Entity\Reply
      */
     protected function _getReply($categorySlug, $threadSlug, $id)
@@ -127,9 +127,9 @@ trait ForumTrait
     /**
      * Get post by category slug, thread slug and post id
      *
-     * @param string $categorySlug
-     * @param string $threadSlug
-     * @param int $id
+     * @param string $categorySlug Category slug
+     * @param string $threadSlug Thread slug
+     * @param int $id Post id
      * @return \CakeDC\Forum\Model\Entity\Reply
      */
     protected function _getPost($categorySlug, $threadSlug, $id)

@@ -128,7 +128,7 @@ class PostsTable extends Table
             throw new \InvalidArgumentException('user_id is required');
         }
 
-        return $query->contain(['UserReports' => function(Query $q) use ($userId) {
+        return $query->contain(['UserReports' => function (Query $q) use ($userId) {
             return $q->where(['UserReports.user_id' => $userId]);
         }]);
     }
@@ -146,7 +146,7 @@ class PostsTable extends Table
             throw new \InvalidArgumentException('user_id is required');
         }
 
-        return $query->contain(['UserLikes' => function(Query $q) use ($userId) {
+        return $query->contain(['UserLikes' => function (Query $q) use ($userId) {
             return $q->where(['UserLikes.user_id' => $userId]);
         }]);
     }

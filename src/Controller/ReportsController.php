@@ -65,9 +65,9 @@ class ReportsController extends AppController
     /**
      * Add method
      *
-     * @param string $categorySlug
-     * @param string $threadSlug
-     * @param int $postId
+     * @param string $categorySlug Category slug
+     * @param string $threadSlug Thread slug
+     * @param int $postId Post id
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
     public function add($categorySlug, $threadSlug, $postId)
@@ -88,7 +88,6 @@ class ReportsController extends AppController
                 $this->Flash->success(__('The report has been saved.'));
 
                 return $this->redirect(['controller' => 'Threads', 'action' => 'view', 'category' => $categorySlug, 'thread' => $threadSlug]);
-
             }
             $this->Flash->error(__('The report could not be saved. Please, try again.'));
         }
@@ -99,7 +98,7 @@ class ReportsController extends AppController
     /**
      * Delete method
      *
-     * @param int $id
+     * @param int $id Report id
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */

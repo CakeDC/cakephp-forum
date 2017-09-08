@@ -98,7 +98,7 @@ class ModeratorsTable extends Table
     /**
      * Get user categories
      *
-     * @param $userId
+     * @param int $userId User id
      * @return array
      */
     public function getUserCategories($userId)

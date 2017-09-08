@@ -198,10 +198,10 @@ class ThreadsTable extends Table
     /**
      * beforeFind callback
      *
-     * @param Event $event
-     * @param Query $query
-     * @param ArrayObject $options
-     * @param $primary
+     * @param Event $event Event
+     * @param Query $query Query
+     * @param ArrayObject $options Options
+     * @param bool $primary Primary
      */
     public function beforeFind(Event $event, Query $query, ArrayObject $options, $primary)
     {
@@ -213,14 +213,14 @@ class ThreadsTable extends Table
     /**
      * afterSave callback
      *
-     * @param Event $event
-     * @param EntityInterface $entity
-     * @param ArrayObject $options
+     * @param Event $event Event
+     * @param EntityInterface $entity Entity
+     * @param ArrayObject $options Options
      */
     public function afterSave(Event $event, EntityInterface $entity, ArrayObject $options)
     {
         if ($entity->dirty('category_id')) {
-            $this->Replies->find()->where(['parent_id' => $entity->id])->all()->each(function(\CakeDC\Forum\Model\Entity\Reply $reply) use ($entity) {
+            $this->Replies->find()->where(['parent_id' => $entity->id])->all()->each(function (\CakeDC\Forum\Model\Entity\Reply $reply) use ($entity) {
                 $reply->category_id = $entity->get('category_id');
                 $this->Replies->saveOrFail($reply);
             });

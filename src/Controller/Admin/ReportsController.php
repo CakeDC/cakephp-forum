@@ -38,7 +38,7 @@ class ReportsController extends AppController
     /**
      * Delete method
      *
-     * @param int $id
+     * @param int $id Report id
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */

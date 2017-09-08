@@ -54,7 +54,7 @@ class AppController extends BaseController
     /**
      * beforeFilter callback
      *
-     * @param Event $event
+     * @param Event $event Event
      * @return \Cake\Http\Response|null|void
      */
     public function beforeFilter(Event $event)
