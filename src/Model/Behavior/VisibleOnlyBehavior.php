@@ -36,7 +36,7 @@ class VisibleOnlyBehavior extends Behavior
      * @param \Cake\Event\Event $event Event
      * @param \Cake\ORM\Query $query Query
      * @param ArrayObject $options Options
-     * @param bool $primary
+     * @param bool $primary Primary
      */
     public function beforeFind(Event $event, Query $query, ArrayObject $options, $primary)
     {
