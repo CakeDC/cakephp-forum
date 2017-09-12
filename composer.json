@@ -1,7 +1,25 @@
 {
     "name": "cakedc/forum",
-    "description": "Forum plugin for CakePHP",
+    "description": "Forum Plugin for CakePHP",
     "type": "cakephp-plugin",
+    "keywords": ["cakephp", "forum", "cakedc"],
+    "homepage": "https://github.com/CakeDC/cakephp-forum",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "CakeDC",
+            "homepage": "http://www.cakedc.com",
+            "role": "Author"
+        },
+        {
+            "name": "Others",
+            "homepage": "https://github.com/CakeDC/cakephp-forum/graphs/contributors"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/CakeDC/cakephp-forum/issues",
+        "source": "https://github.com/CakeDC/cakephp-forum"
+    },
     "require": {
         "cakephp/cakephp": "^3.4",
         "muffin/slug": "^1.1",
