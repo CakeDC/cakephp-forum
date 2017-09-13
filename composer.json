@@ -1,5 +1,5 @@
 {
-    "name": "cakedc/forum",
+    "name": "cakedc/cakephp-forum",
     "description": "Forum Plugin for CakePHP",
     "type": "cakephp-plugin",
     "keywords": ["cakephp", "forum", "cakedc"],
