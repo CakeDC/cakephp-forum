@@ -98,10 +98,12 @@ class ThreadsController extends AppController
     {
         $thread = $this->_getThread($categorySlug, $slug);
 
-        $query = $this->Posts
-            ->find('byThread', ['thread_id' => $thread->id])
-            ->find('withUserReport', ['user_id' => $this->Auth->user('id')])
-            ->find('withUserLike', ['user_id' => $this->Auth->user('id')]);
+        $query = $this->Posts->find('byThread', ['thread_id' => $thread->id]);
+        if ($userId = $this->Auth->user('id')) {
+            $query = $query
+                ->find('withUserReport', ['user_id' => $userId])
+                ->find('withUserLike', ['user_id' => $userId]);
+        }
         $posts = $this->paginate($query);
 
         $page = $this->request->getQuery('page');
