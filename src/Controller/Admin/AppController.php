@@ -11,6 +11,7 @@
 
 namespace CakeDC\Forum\Controller\Admin;
 
+use Cake\Utility\Hash;
 use CakeDC\Forum\Controller\AppController as Controller;
 use Cake\Core\Configure;
 use Cake\Network\Exception\UnauthorizedException;
@@ -41,7 +42,9 @@ abstract class AppController extends Controller
         $this->Auth->deny('*');
 
         if ($adminCheck = Configure::read('Forum.adminCheck')) {
-            if (!$adminCheck($this->Auth->user())) {
+            if (is_string($adminCheck) && !Hash::get($this->Auth->user(), $adminCheck)) {
+                throw new UnauthorizedException();
+            } elseif (is_callable($adminCheck) && !$adminCheck($this->Auth->user())) {
                 throw new UnauthorizedException();
             }
         }

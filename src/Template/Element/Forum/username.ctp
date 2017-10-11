@@ -18,6 +18,8 @@ if (!isset($link)) {
     $link = Configure::read('Forum.userProfileUrl');
     if (is_array($link)) {
         $link += [$user->id];
+    } elseif (is_callable($link)) {
+        $link = $link($user);
     }
 }
 

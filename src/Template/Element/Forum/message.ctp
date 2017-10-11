@@ -12,6 +12,8 @@
  * @var string $message
  */
 
-$messageRenderer = \Cake\Core\Configure::read('Forum.messageRenderer');
-
-echo $messageRenderer($message);
+if ($messageRenderer = \Cake\Core\Configure::read('Forum.messageRenderer')) {
+    echo $messageRenderer($message);
+} else {
+    echo h($message);
+}
