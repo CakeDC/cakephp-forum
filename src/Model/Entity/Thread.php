@@ -20,6 +20,7 @@ use Cake\ORM\Entity;
  * @property int $parent_id
  * @property int $category_id
  * @property int $user_id
+ * @property int $last_reply_id
  * @property string $title
  * @property string $slug
  * @property string $message

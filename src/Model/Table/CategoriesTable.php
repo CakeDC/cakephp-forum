@@ -64,11 +64,9 @@ class CategoriesTable extends Table
                 'Threads.parent_id IS' => null,
             ],
         ]);
-        $this->hasOne('LastPosts', [
+        $this->belongsTo('LastPosts', [
             'className' => 'CakeDC/Forum.Posts',
-            'foreignKey' => 'category_id',
-            'strategy' => 'select',
-            'finder' => 'last'
+            'foreignKey' => 'last_post_id',
         ]);
         $this->belongsTo('ParentCategories', [
             'className' => 'CakeDC/Forum.Categories',

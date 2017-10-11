@@ -64,7 +64,6 @@ class PostsTable extends Table
         ]);
         $this->belongsTo('Users', [
             'className' => Configure::read('Forum.userModel'),
-            'joinType' => 'INNER'
         ]);
         $this->hasOne('UserLikes', [
             'className' => 'CakeDC/Forum.Likes',
@@ -78,18 +77,6 @@ class PostsTable extends Table
             'className' => 'CakeDC/Forum.Likes',
             'foreignKey' => 'post_id'
         ]);
-    }
-
-    /**
-     * Last post finder
-     *
-     * @param \Cake\ORM\Query $query The query builder.
-     * @param array $options Options.
-     * @return \Cake\ORM\Query
-     */
-    public function findLast(Query $query, $options = [])
-    {
-        return $query->orderDesc($this->aliasField('id'));
     }
 
     /**

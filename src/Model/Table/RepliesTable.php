@@ -17,8 +17,10 @@ use Cake\Event\Event;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
+use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 use Cake\Validation\Validator;
+use CakeDC\Forum\Model\Entity\Reply;
 
 /**
  * Replies Model
@@ -60,15 +62,30 @@ class RepliesTable extends Table
 
         $options = [
             'Categories' => [
-                'replies_count'
-            ],
-            'Threads' => [
-                'last_reply_created' => function ($event, \CakeDC\Forum\Model\Entity\Reply $entity, RepliesTable $table) {
-                    if (!$lastReply = $table->find('lastReply')->where(['parent_id' => $entity->parent_id])->first()) {
+                'replies_count',
+                'last_post_id' => function ($event, Reply $entity, RepliesTable $table) {
+                    $Posts = TableRegistry::get('CakeDC/Forum.Posts');
+                    if (!$lastPost = $Posts->find()->where(['category_id' => $entity->category_id])->orderDesc('id')->first()) {
                         return null;
                     }
 
+                    return $lastPost->id;
+                },
+            ],
+            'Threads' => [
+                'last_reply_created' => function ($event, Reply $entity, RepliesTable $table) {
+                    if (!$lastReply = $table->find()->where(['parent_id' => $entity->parent_id])->orderDesc('id')->first()) {
+                        return $this->Threads->get($entity->parent_id)->created;
+                    }
+
                     return $lastReply->get('created');
+                },
+                'last_reply_id' => function ($event, Reply $entity, RepliesTable $table) {
+                    if (!$lastReply = $table->find()->where(['parent_id' => $entity->parent_id])->orderDesc('id')->first()) {
+                        return null;
+                    }
+
+                    return $lastReply->id;
                 },
                 'replies_count',
             ],

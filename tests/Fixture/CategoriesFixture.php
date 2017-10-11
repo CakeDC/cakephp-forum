@@ -26,6 +26,7 @@ class CategoriesFixture extends TestFixture
     public $fields = [
         'id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
         'parent_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'last_post_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'lft' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'rght' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'title' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
@@ -63,6 +64,7 @@ class CategoriesFixture extends TestFixture
         [
             //'id' => 1,
             'parent_id' => null,
+            'last_post_id' => null,
             'lft' => 1,
             'rght' => 8,
             'title' => 'Hardware and Technology',
@@ -77,6 +79,7 @@ class CategoriesFixture extends TestFixture
         [
             //'id' => 2,
             'parent_id' => 1,
+            'last_post_id' => 11,
             'lft' => 2,
             'rght' => 3,
             'title' => 'CPUs and Overclocking',
@@ -91,6 +94,7 @@ class CategoriesFixture extends TestFixture
         [
             //'id' => 3,
             'parent_id' => null,
+            'last_post_id' => null,
             'lft' => 17,
             'rght' => 26,
             'title' => 'Consumer Electronics',
@@ -105,6 +109,7 @@ class CategoriesFixture extends TestFixture
         [
             //'id' => 4,
             'parent_id' => 1,
+            'last_post_id' => null,
             'lft' => 6,
             'rght' => 7,
             'title' => 'Motherboards',
@@ -119,6 +124,7 @@ class CategoriesFixture extends TestFixture
         [
             //'id' => 5,
             'parent_id' => null,
+            'last_post_id' => null,
             'lft' => 9,
             'rght' => 16,
             'title' => 'Software',
@@ -133,6 +139,7 @@ class CategoriesFixture extends TestFixture
         [
             //'id' => 6,
             'parent_id' => 1,
+            'last_post_id' => null,
             'lft' => 4,
             'rght' => 5,
             'title' => 'Memory and Storage',
@@ -147,6 +154,7 @@ class CategoriesFixture extends TestFixture
         [
             //'id' => 7,
             'parent_id' => 3,
+            'last_post_id' => 12,
             'lft' => 18,
             'rght' => 19,
             'title' => 'Digital and Video Cameras',
@@ -161,6 +169,7 @@ class CategoriesFixture extends TestFixture
         [
             //'id' => 8,
             'parent_id' => 3,
+            'last_post_id' => null,
             'lft' => 20,
             'rght' => 21,
             'title' => 'Mobile Devices and Gadgets',
@@ -175,6 +184,7 @@ class CategoriesFixture extends TestFixture
         [
             //'id' => 9,
             'parent_id' => 3,
+            'last_post_id' => null,
             'lft' => 22,
             'rght' => 23,
             'title' => 'Home Theater',
@@ -189,6 +199,7 @@ class CategoriesFixture extends TestFixture
         [
             //'id' => 10,
             'parent_id' => 5,
+            'last_post_id' => null,
             'lft' => 10,
             'rght' => 11,
             'title' => 'Software for Windows',
@@ -203,6 +214,7 @@ class CategoriesFixture extends TestFixture
         [
             //'id' => 11,
             'parent_id' => 5,
+            'last_post_id' => null,
             'lft' => 12,
             'rght' => 13,
             'title' => 'All Things Apple',
@@ -217,6 +229,7 @@ class CategoriesFixture extends TestFixture
         [
             //'id' => 12,
             'parent_id' => 5,
+            'last_post_id' => null,
             'lft' => 14,
             'rght' => 15,
             'title' => 'Operating Systems',
@@ -231,6 +244,7 @@ class CategoriesFixture extends TestFixture
         [
             //'id' => 13,
             'parent_id' => 3,
+            'last_post_id' => null,
             'lft' => 24,
             'rght' => 25,
             'title' => 'Invisible category',

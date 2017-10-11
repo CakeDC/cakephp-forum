@@ -18,6 +18,7 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property int $parent_id
+ * @property int $last_post_id
  * @property int $lft
  * @property int $rght
  * @property string $title

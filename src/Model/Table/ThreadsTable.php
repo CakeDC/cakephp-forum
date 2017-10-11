@@ -18,8 +18,10 @@ use Cake\Event\Event;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
+use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 use Cake\Validation\Validator;
+use CakeDC\Forum\Model\Entity\Thread;
 
 /**
  * Threads Model
@@ -75,7 +77,15 @@ class ThreadsTable extends Table
 
         $options = [
             'Categories' => [
-                'threads_count'
+                'threads_count',
+                'last_post_id' => function ($event, Thread $entity, ThreadsTable $table) {
+                    $Posts = TableRegistry::get('CakeDC/Forum.Posts');
+                    if (!$lastPost = $Posts->find()->where(['category_id' => $entity->category_id])->orderDesc('id')->first()) {
+                        return null;
+                    }
+
+                    return $lastPost->id;
+                },
             ],
         ];
         if ($userPostsCountField = Configure::read('Forum.userPostsCountField')) {
@@ -97,11 +107,9 @@ class ThreadsTable extends Table
             'className' => 'CakeDC/Forum.Replies',
             'foreignKey' => 'parent_id'
         ]);
-        $this->hasOne('LastReplies', [
+        $this->belongsTo('LastReplies', [
             'className' => 'CakeDC/Forum.Replies',
-            'foreignKey' => 'parent_id',
-            'strategy' => 'select',
-            'finder' => 'lastReply'
+            'foreignKey' => 'last_reply_id',
         ]);
         $this->hasOne('ReportedReplies', [
             'className' => 'CakeDC/Forum.Replies',
