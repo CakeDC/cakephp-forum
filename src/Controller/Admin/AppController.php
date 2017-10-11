@@ -11,10 +11,10 @@
 
 namespace CakeDC\Forum\Controller\Admin;
 
-use Cake\Utility\Hash;
 use CakeDC\Forum\Controller\AppController as Controller;
 use Cake\Core\Configure;
 use Cake\Network\Exception\UnauthorizedException;
+use Cake\Utility\Hash;
 
 /**
  * Admin App Controller
