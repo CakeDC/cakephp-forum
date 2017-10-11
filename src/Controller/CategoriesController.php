@@ -35,8 +35,8 @@ class CategoriesController extends AppController
     {
         parent::initialize();
 
-        $this->Auth->allow(['index']);
         $this->Auth->deny();
+        $this->Auth->allow(['index']);
     }
 
     /**
