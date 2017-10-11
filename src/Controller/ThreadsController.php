@@ -46,7 +46,7 @@ class ThreadsController extends AppController
             'limit' => Configure::read('Forum.postsPerPage'),
         ];
 
-        $this->Auth->allow('*');
+        $this->Auth->allow();
         $this->Auth->deny(['my', 'add', 'edit', 'move', 'delete']);
     }
 

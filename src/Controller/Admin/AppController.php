@@ -17,12 +17,7 @@ use Cake\Core\Configure;
 use Cake\Network\Exception\UnauthorizedException;
 
 /**
- * Categories Controller
- *
- *
- * @method \CakeDC\Forum\Model\Entity\Category[] paginate($object = null, array $settings = [])
- * @property \CakeDC\Forum\Model\Table\CategoriesTable $Categories
- * @mixin \Cake\Controller\Controller
+ * Admin App Controller
  */
 abstract class AppController extends Controller
 {
@@ -39,12 +34,16 @@ abstract class AppController extends Controller
     {
         parent::initialize();
 
-        $this->Auth->deny('*');
+        $this->Auth->deny();
+
+        if (!$user = $this->Auth->user()) {
+            return;
+        }
 
         if ($adminCheck = Configure::read('Forum.adminCheck')) {
-            if (is_string($adminCheck) && !Hash::get($this->Auth->user(), $adminCheck)) {
+            if (is_string($adminCheck) && !Hash::get($user, $adminCheck)) {
                 throw new UnauthorizedException();
-            } elseif (is_callable($adminCheck) && !$adminCheck($this->Auth->user())) {
+            } elseif (is_callable($adminCheck) && !$adminCheck($user)) {
                 throw new UnauthorizedException();
             }
         }

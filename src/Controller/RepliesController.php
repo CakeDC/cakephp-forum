@@ -37,7 +37,7 @@ class RepliesController extends AppController
     {
         parent::initialize();
 
-        $this->Auth->deny('*');
+        $this->Auth->deny();
     }
 
     /**
