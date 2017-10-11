@@ -12,6 +12,7 @@
 namespace CakeDC\Forum\Model\Table;
 
 use ArrayObject;
+use CakeDC\Forum\Model\Entity\Reply;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\ORM\Query;
@@ -20,7 +21,6 @@ use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 use Cake\Validation\Validator;
-use CakeDC\Forum\Model\Entity\Reply;
 
 /**
  * Replies Model
