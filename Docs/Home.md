@@ -11,14 +11,3 @@ Documentation
 * [Overview](Documentation/Overview.md)
 * [Installation](Documentation/Installation.md)
 * [Configuration](Documentation/Configuration.md)
-* [SimpleRbacAuthorize](https://github.com/CakeDC/auth/blob/master/Docs/Documentation/SimpleRbacAuthorize.md)
-* [SuperuserAuthorize](https://github.com/CakeDC/auth/blob/master/Docs/Documentation/SuperuserAuthorize.md)
-* [ApiKeyAuthenticate](https://github.com/CakeDC/auth/blob/master/Docs/Documentation/ApiKeyAuthenticate.md)
-* [SocialAuthenticate](Documentation/SocialAuthenticate.md)
-* [UserHelper](Documentation/UserHelper.md)
-* [Events](Documentation/Events.md)
-* [Extending the Plugin](Documentation/Extending-the-Plugin.md)
-* [Translations](Documentation/Translations.md)
-
-
-
