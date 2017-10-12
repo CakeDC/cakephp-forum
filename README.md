@@ -25,6 +25,12 @@ Documentation
 
 For documentation, as well as tutorials, see the [Docs](Docs/Home.md) directory of this repository.
 
+
+Demo
+----
+
+You can check out [CakeDC Forum demo app](http://cakephp-forum.herokuapp.com/) running on Heroku (in read-only mode) and find it's sources [here](https://github.com/CakeDC/cakephp-forum-demo-app).
+
 Support
 -------
 

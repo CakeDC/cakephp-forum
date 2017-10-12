@@ -12,8 +12,8 @@
 namespace CakeDC\Forum\Controller;
 
 use App\Controller\AppController as BaseController;
-use Cake\Event\Event;
 use CakeDC\Forum\Controller\Traits\ForumTrait;
+use Cake\Event\Event;
 
 /**
  * Forum Controller
