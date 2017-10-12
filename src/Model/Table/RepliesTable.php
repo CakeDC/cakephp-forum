@@ -57,6 +57,27 @@ class RepliesTable extends Table
         $this->setDisplayField('message');
         $this->setPrimaryKey('id');
 
+        $this->belongsTo('Threads', [
+            'className' => 'CakeDC/Forum.Threads',
+            'foreignKey' => 'parent_id'
+        ]);
+        $this->belongsTo('Categories', [
+            'className' => 'CakeDC/Forum.Categories',
+            'joinType' => 'INNER'
+        ]);
+        $this->hasMany('Reports', [
+            'className' => 'CakeDC/Forum.Reports',
+            'foreignKey' => 'post_id'
+        ]);
+        $this->hasMany('Likes', [
+            'className' => 'CakeDC/Forum.Likes',
+            'foreignKey' => 'post_id'
+        ]);
+        $this->belongsTo('Users', [
+            'className' => Configure::read('Forum.userModel'),
+            'joinType' => 'INNER'
+        ]);
+
         $this->addBehavior('Timestamp');
         $this->addBehavior('Muffin/Orderly.Orderly', ['order' => $this->aliasField('id')]);
 
@@ -94,27 +115,6 @@ class RepliesTable extends Table
             $options['Users'] = [$userPostsCountField => ['all' => true]];
         }
         $this->addBehavior('CounterCache', $options);
-
-        $this->belongsTo('Threads', [
-            'className' => 'CakeDC/Forum.Threads',
-            'foreignKey' => 'parent_id'
-        ]);
-        $this->belongsTo('Categories', [
-            'className' => 'CakeDC/Forum.Categories',
-            'joinType' => 'INNER'
-        ]);
-        $this->hasMany('Reports', [
-            'className' => 'CakeDC/Forum.Reports',
-            'foreignKey' => 'post_id'
-        ]);
-        $this->hasMany('Likes', [
-            'className' => 'CakeDC/Forum.Likes',
-            'foreignKey' => 'post_id'
-        ]);
-        $this->belongsTo('Users', [
-            'className' => Configure::read('Forum.userModel'),
-            'joinType' => 'INNER'
-        ]);
     }
 
     /**

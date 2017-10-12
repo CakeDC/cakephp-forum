@@ -2,7 +2,9 @@
 
 namespace CakeDC\Forum\Controller\Traits;
 
+use Cake\Core\Configure;
 use Cake\ORM\Query;
+use Cake\Utility\Hash;
 
 /**
  * ForumTrait
@@ -12,10 +14,35 @@ use Cake\ORM\Query;
  * @property \CakeDC\Forum\Model\Table\RepliesTable $Replies
  * @property \CakeDC\Forum\Model\Table\PostsTable $Posts
  * @property \CakeDC\Forum\Model\Table\ModeratorsTable $Moderators
+ * @mixin \CakeDC\Forum\Controller\AppController
  * @mixin \Cake\Controller\Controller
  */
 trait ForumTrait
 {
+    /**
+     * Check if current user is admin
+     *
+     * @return bool
+     */
+    protected function _forumUserIsAdmin()
+    {
+        if (!$user = $this->Auth->user()) {
+            return false;
+        }
+
+        if (!$adminCheck = Configure::read('Forum.adminCheck')) {
+            return false;
+        }
+
+        if (is_string($adminCheck) && !Hash::get($user, $adminCheck)) {
+            return false;
+        } elseif (is_callable($adminCheck) && !$adminCheck($user)) {
+            return false;
+        }
+
+        return true;
+    }
+
     /**
      * Check if current user is moderator
      *
@@ -24,6 +51,10 @@ trait ForumTrait
      */
     protected function _forumUserIsModerator($categoryId = null)
     {
+        if ($this->_forumUserIsAdmin()) {
+            return true;
+        }
+
         $this->loadModel('CakeDC/Forum.Moderators');
 
         $userCategories = $this->Moderators->getUserCategories($this->Auth->user('id'));

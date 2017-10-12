@@ -13,6 +13,7 @@ namespace CakeDC\Forum\Controller;
 
 use App\Controller\AppController as BaseController;
 use Cake\Event\Event;
+use CakeDC\Forum\Controller\Traits\ForumTrait;
 
 /**
  * Forum Controller
@@ -26,6 +27,9 @@ use Cake\Event\Event;
  */
 class AppController extends BaseController
 {
+
+    use ForumTrait;
+
     /**
      * Initialization hook method.
      *

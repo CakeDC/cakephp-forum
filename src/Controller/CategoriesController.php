@@ -21,8 +21,6 @@ namespace CakeDC\Forum\Controller;
 class CategoriesController extends AppController
 {
 
-    use \CakeDC\Forum\Controller\Traits\ForumTrait;
-
     /**
      * Initialization hook method.
      *

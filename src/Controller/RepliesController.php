@@ -23,8 +23,6 @@ use Cake\Network\Exception\UnauthorizedException;
 class RepliesController extends AppController
 {
 
-    use \CakeDC\Forum\Controller\Traits\ForumTrait;
-
     /**
      * Initialization hook method.
      *

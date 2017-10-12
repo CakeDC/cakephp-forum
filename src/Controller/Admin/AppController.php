@@ -36,16 +36,8 @@ abstract class AppController extends Controller
 
         $this->Auth->deny();
 
-        if (!$user = $this->Auth->user()) {
-            return;
-        }
-
-        if ($adminCheck = Configure::read('Forum.adminCheck')) {
-            if (is_string($adminCheck) && !Hash::get($user, $adminCheck)) {
-                throw new UnauthorizedException();
-            } elseif (is_callable($adminCheck) && !$adminCheck($user)) {
-                throw new UnauthorizedException();
-            }
+        if ($this->Auth->user() && Configure::read('Forum.adminCheck') && !$this->_forumUserIsAdmin()) {
+            throw new UnauthorizedException();
         }
     }
 }

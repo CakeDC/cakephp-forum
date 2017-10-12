@@ -23,8 +23,6 @@ use Cake\Network\Exception\BadRequestException;
 class LikesController extends AppController
 {
 
-    use \CakeDC\Forum\Controller\Traits\ForumTrait;
-
     /**
      * Initialization hook method.
      *

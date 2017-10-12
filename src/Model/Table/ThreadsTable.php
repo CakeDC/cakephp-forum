@@ -58,6 +58,44 @@ class ThreadsTable extends Table
         $this->setDisplayField('title');
         $this->setPrimaryKey('id');
 
+        $this->belongsTo('Categories', [
+            'className' => 'CakeDC/Forum.Categories',
+            'joinType' => 'INNER'
+        ]);
+        $this->hasMany('Replies', [
+            'className' => 'CakeDC/Forum.Replies',
+            'foreignKey' => 'parent_id',
+            'dependent' => true,
+            'cascadeCallbacks' => true,
+        ]);
+        $this->hasOne('UserReplies', [
+            'className' => 'CakeDC/Forum.Replies',
+            'foreignKey' => 'parent_id'
+        ]);
+        $this->belongsTo('LastReplies', [
+            'className' => 'CakeDC/Forum.Posts',
+            'foreignKey' => 'last_reply_id',
+        ]);
+        $this->hasOne('ReportedReplies', [
+            'className' => 'CakeDC/Forum.Replies',
+            'foreignKey' => 'parent_id',
+            'conditions' => [
+                'ReportedReplies.reports_count >' => 0,
+            ]
+        ]);
+        $this->hasMany('Reports', [
+            'className' => 'CakeDC/Forum.Reports',
+            'foreignKey' => 'post_id'
+        ]);
+        $this->hasMany('Likes', [
+            'className' => 'CakeDC/Forum.Likes',
+            'foreignKey' => 'post_id'
+        ]);
+        $this->belongsTo('Users', [
+            'className' => Configure::read('Forum.userModel'),
+            'joinType' => 'INNER'
+        ]);
+
         $this->addBehavior('Timestamp', [
             'events' => [
                 'Model.beforeSave' => [
@@ -92,44 +130,6 @@ class ThreadsTable extends Table
             $options['Users'] = [$userPostsCountField => ['all' => true]];
         }
         $this->addBehavior('CounterCache', $options);
-
-        $this->belongsTo('Categories', [
-            'className' => 'CakeDC/Forum.Categories',
-            'joinType' => 'INNER'
-        ]);
-        $this->hasMany('Replies', [
-            'className' => 'CakeDC/Forum.Replies',
-            'foreignKey' => 'parent_id',
-            'dependent' => true,
-            'cascadeCallbacks' => true,
-        ]);
-        $this->hasOne('UserReplies', [
-            'className' => 'CakeDC/Forum.Replies',
-            'foreignKey' => 'parent_id'
-        ]);
-        $this->belongsTo('LastReplies', [
-            'className' => 'CakeDC/Forum.Replies',
-            'foreignKey' => 'last_reply_id',
-        ]);
-        $this->hasOne('ReportedReplies', [
-            'className' => 'CakeDC/Forum.Replies',
-            'foreignKey' => 'parent_id',
-            'conditions' => [
-                'ReportedReplies.reports_count >' => 0,
-            ]
-        ]);
-        $this->hasMany('Reports', [
-            'className' => 'CakeDC/Forum.Reports',
-            'foreignKey' => 'post_id'
-        ]);
-        $this->hasMany('Likes', [
-            'className' => 'CakeDC/Forum.Likes',
-            'foreignKey' => 'post_id'
-        ]);
-        $this->belongsTo('Users', [
-            'className' => Configure::read('Forum.userModel'),
-            'joinType' => 'INNER'
-        ]);
     }
 
     /**
@@ -227,11 +227,16 @@ class ThreadsTable extends Table
      */
     public function afterSave(Event $event, EntityInterface $entity, ArrayObject $options)
     {
-        if ($entity->dirty('category_id')) {
+        if ($entity->isDirty('category_id')) {
             $this->Replies->find()->where(['parent_id' => $entity->id])->all()->each(function (\CakeDC\Forum\Model\Entity\Reply $reply) use ($entity) {
                 $reply->category_id = $entity->get('category_id');
                 $this->Replies->saveOrFail($reply);
             });
+        }
+
+        if ($entity->isNew()) {
+            $entity->set('last_reply_id', $entity->id);
+            $this->save($entity);
         }
     }
 

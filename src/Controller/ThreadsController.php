@@ -24,8 +24,6 @@ use Cake\Network\Exception\UnauthorizedException;
 class ThreadsController extends AppController
 {
 
-    use \CakeDC\Forum\Controller\Traits\ForumTrait;
-
     /**
      * Initialization hook method.
      *
