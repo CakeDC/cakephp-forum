@@ -38,12 +38,12 @@ class Initial extends AbstractMigration
                 'null' => false,
             ])
             ->addColumn('threads_count', 'integer', [
-                'default' => null,
+                'default' => 0,
                 'limit' => 11,
                 'null' => false,
             ])
             ->addColumn('replies_count', 'integer', [
-                'default' => null,
+                'default' => 0,
                 'limit' => 11,
                 'null' => false,
             ])
