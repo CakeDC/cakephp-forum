@@ -42,16 +42,13 @@ define('CONFIG', TEST_APP . 'config' . DS);
 require ROOT . '/vendor/autoload.php';
 require_once CORE_PATH . 'config/bootstrap.php';
 
-Configure::write('App', ['namespace' => 'CakeDC\Forum\Test\App']);
-
 date_default_timezone_set('UTC');
 mb_internal_encoding('UTF-8');
 
 Configure::write('debug', true);
 Configure::write('App', [
-    'namespace' => 'App',
+    'namespace' => 'CakeDC\Forum\Test\App',
     'encoding' => 'UTF-8',
-    'dir' => 'src',
     'paths' => [
         'plugins' => [dirname(APP) . DS . 'plugins' . DS],
         'templates' => [APP . 'Template' . DS]
@@ -84,9 +81,6 @@ Configure::write('plugins', [
 ]);
 
 Plugin::load('CakeDC/Forum', ['path' => ROOT . DS, 'autoload' => true, 'bootstrap' => true]);
-
-DispatcherFactory::add('Routing');
-DispatcherFactory::add('ControllerFactory');
 
 class_alias('CakeDC\Forum\Test\App\Controller\AppController', 'App\Controller\AppController');
 class_alias('CakeDC\Forum\Test\App\Controller\UsersController', 'App\Controller\UsersController');
