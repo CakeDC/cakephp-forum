@@ -12,8 +12,8 @@
 namespace CakeDC\Forum\Controller;
 
 use Cake\Core\Configure;
-use Cake\Network\Exception\BadRequestException;
-use Cake\Network\Exception\UnauthorizedException;
+use Cake\Http\Exception\BadRequestException;
+use Cake\Http\Exception\UnauthorizedException;
 
 /**
  * Threads Controller

@@ -11,8 +11,8 @@
 
 namespace CakeDC\Forum\Controller;
 
-use Cake\Network\Exception\BadRequestException;
-use Cake\Network\Exception\UnauthorizedException;
+use Cake\Http\Exception\BadRequestException;
+use Cake\Http\Exception\UnauthorizedException;
 
 /**
  * Replies Controller
@@ -122,7 +122,7 @@ class RepliesController extends AppController
      */
     protected function _save($reply)
     {
-        $reply = $this->Replies->patchEntity($reply, $this->request->getData(), ['fieldList' => ['message']]);
+        $reply = $this->Replies->patchEntity($reply, $this->request->getData(), ['fields' => ['message']]);
         if (!$this->Replies->save($reply)) {
             $this->Flash->error(__('The reply could not be saved. Please, try again.'));
 

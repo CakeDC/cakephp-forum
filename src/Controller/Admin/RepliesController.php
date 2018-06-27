@@ -11,7 +11,7 @@
 
 namespace CakeDC\Forum\Controller\Admin;
 
-use Cake\Network\Exception\BadRequestException;
+use Cake\Http\Exception\BadRequestException;
 
 /**
  * Replies Controller

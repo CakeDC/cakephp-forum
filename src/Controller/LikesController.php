@@ -11,7 +11,7 @@
 
 namespace CakeDC\Forum\Controller;
 
-use Cake\Network\Exception\BadRequestException;
+use Cake\Http\Exception\BadRequestException;
 
 /**
  * Likes Controller
