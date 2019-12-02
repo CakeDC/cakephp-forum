@@ -12,7 +12,7 @@ Router::plugin(
         });
 
         $routes->connect('/', ['controller' => 'Categories', 'action' => 'index']);
-        $routes->connect('/admin', ['controller' => 'Categories', 'action' => 'index', 'prefix' => 'admin']);
+        $routes->connect('/admin', ['controller' => 'Categories', 'action' => 'index', 'prefix' => 'Admin']);
         $routes->connect('/reports', ['controller' => 'Reports', 'action' => 'index'], ['routeClass' => 'InflectedRoute']);
         $routes->connect('/reports/:action/*', ['controller' => 'Reports'], ['routeClass' => 'InflectedRoute']);
         $routes->connect('/my-conversations', ['controller' => 'Threads', 'action' => 'my']);
