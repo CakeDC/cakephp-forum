@@ -114,6 +114,11 @@ Configure::write('Session', [
     'defaults' => 'php',
 ]);
 
+Configure::write('plugins', [
+    'Muffin/Slug' => ROOT . DS . 'vendor' . DS . 'muffin' . DS . 'slug',
+    'Muffin/Orderly' => ROOT . DS . 'vendor' . DS . 'muffin' . DS . 'orderly',
+]);
+
 Log::setConfig([
     'debug' => [
         'engine' => 'Cake\Log\Engine\FileLog',
