@@ -81,7 +81,7 @@ class ReportsController extends AppController
         $report->post_id = $post->id;
 
         if ($this->request->is(['post'])) {
-            $report = $this->Reports->patchEntity($report, $this->request->getData(), ['fieldList' => ['message']]);
+            $report = $this->Reports->patchEntity($report, $this->request->getData(), ['fields' => ['message']]);
             if ($this->Reports->save($report)) {
                 $this->Flash->success(__('The report has been saved.'));
 

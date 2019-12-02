@@ -122,7 +122,7 @@ class RepliesController extends AppController
      */
     protected function _save($reply)
     {
-        $reply = $this->Replies->patchEntity($reply, $this->request->getData(), ['fieldList' => ['message']]);
+        $reply = $this->Replies->patchEntity($reply, $this->request->getData(), ['fields' => ['message']]);
         if (!$this->Replies->save($reply)) {
             $this->Flash->error(__('The reply could not be saved. Please, try again.'));
 
