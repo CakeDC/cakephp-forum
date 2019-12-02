@@ -76,7 +76,7 @@ class LikesTable extends Table
     {
         $validator
             ->integer('id')
-            ->allowEmpty('id', 'create');
+            ->allowEmptyString('id', 'create');
 
         return $validator;
     }

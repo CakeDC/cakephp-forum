@@ -16,13 +16,13 @@ class CategoriesControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.CakeDC/Forum.categories',
-        'plugin.CakeDC/Forum.posts',
-        'plugin.CakeDC/Forum.moderators',
-        'plugin.CakeDC/Forum.users',
+        'plugin.CakeDC/Forum.Categories',
+        'plugin.CakeDC/Forum.Posts',
+        'plugin.CakeDC/Forum.Moderators',
+        'plugin.CakeDC/Forum.Users',
     ];
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
