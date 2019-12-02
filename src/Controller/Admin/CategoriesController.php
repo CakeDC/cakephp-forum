@@ -58,7 +58,7 @@ class CategoriesController extends AppController
      */
     public function add()
     {
-        $category = $this->Categories->newEntity();
+        $category = $this->Categories->newEmptyEntity();
         if ($this->request->is('post')) {
             $category = $this->Categories->patchEntity($category, $this->request->getData());
             if ($this->Categories->save($category)) {

@@ -93,17 +93,17 @@ class CategoriesTable extends Table
     {
         $validator
             ->integer('id')
-            ->allowEmpty('id', 'create');
+            ->allowEmptyString('id', 'create');
 
         $validator
             ->requirePresence('title', 'create')
-            ->notEmpty('title');
+            ->notBlank('title');
 
         $validator
-            ->allowEmpty('slug');
+            ->allowEmptyString('slug');
 
         $validator
-            ->allowEmpty('description');
+            ->allowEmptyString('description');
 
         $validator
             ->integer('threads_count');
@@ -114,7 +114,7 @@ class CategoriesTable extends Table
         $validator
             ->boolean('is_visible')
             ->requirePresence('is_visible', 'create')
-            ->notEmpty('is_visible');
+            ->notEmptyString('is_visible');
 
         return $validator;
     }
