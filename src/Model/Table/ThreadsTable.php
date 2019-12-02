@@ -145,33 +145,33 @@ class ThreadsTable extends Table
     {
         $validator
             ->integer('id')
-            ->allowEmpty('id', 'create');
+            ->allowEmptyString('id', 'create');
 
         $validator
-            ->notEmpty('category_id');
+            ->notEmptyString('category_id');
 
         $validator
             ->requirePresence('title', 'create')
-            ->notEmpty('title');
+            ->notEmptyString('title');
 
         $validator
-            ->allowEmpty('slug');
+            ->allowEmptyString('slug');
 
         $validator
             ->requirePresence('message', 'create')
-            ->notEmpty('message');
+            ->notEmptyString('message');
 
         $validator
             ->boolean('is_sticky')
-            ->allowEmpty('is_sticky');
+            ->allowEmptyString('is_sticky');
 
         $validator
             ->boolean('is_locked')
-            ->allowEmpty('is_locked');
+            ->allowEmptyString('is_locked');
 
         $validator
             ->boolean('is_visible')
-            ->allowEmpty('is_visible');
+            ->allowEmptyString('is_visible');
 
         return $validator;
     }
@@ -186,7 +186,7 @@ class ThreadsTable extends Table
     {
         $validator
             ->requirePresence('category_id')
-            ->notEmpty('category_id');
+            ->notEmptyString('category_id');
 
         return $validator;
     }
