@@ -21,7 +21,7 @@ class RepliesControllerTest extends IntegrationTestCase
         'plugin.CakeDC/Forum.users',
     ];
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

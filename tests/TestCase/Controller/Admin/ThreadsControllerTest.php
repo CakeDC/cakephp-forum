@@ -16,13 +16,13 @@ class ThreadsControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.CakeDC/Forum.categories',
-        'plugin.CakeDC/Forum.posts',
-        'plugin.CakeDC/Forum.users',
-        'plugin.CakeDC/Forum.likes',
+        'plugin.CakeDC/Forum.Categories',
+        'plugin.CakeDC/Forum.Posts',
+        'plugin.CakeDC/Forum.Users',
+        'plugin.CakeDC/Forum.Likes',
     ];
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
