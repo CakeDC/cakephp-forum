@@ -133,7 +133,7 @@ class RepliesControllerTest extends IntegrationTestCase
      */
     public function testDelete()
     {
-        $Replies = TableRegistry::get('CakeDC/Forum.Replies');
+        $Replies = TableRegistry::getTableLocator()->get('CakeDC/Forum.Replies');
         $reply = $Replies->newEntity(['message' => 'test message']);
         $reply->parent_id = 1;
         $reply->category_id = 2;
