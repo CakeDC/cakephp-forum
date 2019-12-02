@@ -52,7 +52,7 @@ class RepliesController extends AppController
             throw new BadRequestException();
         }
 
-        $reply = $this->Replies->newEntity();
+        $reply = $this->Replies->newEmptyEntity();
         $reply->user_id = $this->Auth->user('id');
         $reply->set('category', $thread->category);
         $reply->set('thread', $thread);

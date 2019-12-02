@@ -76,7 +76,7 @@ class ReportsController extends AppController
             throw new BadRequestException();
         }
 
-        $report = $this->Reports->newEntity();
+        $report = $this->Reports->newEmptyEntity();
         $report->user_id = $this->Auth->user('id');
         $report->post_id = $post->id;
 

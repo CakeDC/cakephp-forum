@@ -54,7 +54,7 @@ class LikesController extends AppController
             throw new BadRequestException();
         }
 
-        $like = $this->Likes->newEntity();
+        $like = $this->Likes->newEmptyEntity();
         $like->user_id = $this->Auth->user('id');
         $like->post_id = $post->id;
 

@@ -28,7 +28,7 @@ class ModeratorsController extends AppController
      */
     public function add()
     {
-        $moderator = $this->Moderators->newEntity();
+        $moderator = $this->Moderators->newEmptyEntity();
         if ($this->request->is('post')) {
             $moderator = $this->Moderators->patchEntity($moderator, $this->request->getData());
             if ($this->Moderators->save($moderator)) {

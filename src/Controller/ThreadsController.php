@@ -111,7 +111,7 @@ class ThreadsController extends AppController
             $posts = $this->paginate($query);
         }
 
-        $reply = $this->Replies->newEntity();
+        $reply = $this->Replies->newEmptyEntity();
 
         $this->set(compact('posts', 'reply'));
     }
@@ -129,7 +129,7 @@ class ThreadsController extends AppController
             throw new BadRequestException();
         }
 
-        $thread = $this->Threads->newEntity();
+        $thread = $this->Threads->newEmptyEntity();
         $thread->user_id = $this->Auth->user('id');
         $thread->set('category', $category);
 
