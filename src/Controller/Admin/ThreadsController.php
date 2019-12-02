@@ -95,7 +95,7 @@ class ThreadsController extends AppController
      */
     public function add()
     {
-        $thread = $this->Threads->newEntity();
+        $thread = $this->Threads->newEmptyEntity();
         $thread->user_id = $this->Auth->user('id');
         if ($this->request->is('post')) {
             $thread = $this->Threads->patchEntity($thread, $this->request->getData());
