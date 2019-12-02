@@ -16,15 +16,15 @@ class ReportsControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.CakeDC/Forum.categories',
-        'plugin.CakeDC/Forum.posts',
-        'plugin.CakeDC/Forum.users',
-        'plugin.CakeDC/Forum.reports',
-        'plugin.CakeDC/Forum.moderators',
-        'plugin.CakeDC/Forum.likes',
+        'plugin.CakeDC/Forum.Categories',
+        'plugin.CakeDC/Forum.Posts',
+        'plugin.CakeDC/Forum.Users',
+        'plugin.CakeDC/Forum.Reports',
+        'plugin.CakeDC/Forum.Moderators',
+        'plugin.CakeDC/Forum.Likes',
     ];
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -137,6 +137,7 @@ class ReportsControllerTest extends IntegrationTestCase
         $report->user_id = 1;
         $this->assertNotFalse($Reports->save($report));
 
+        $this->_request['headers']['REFERER'] = 'http://localhost/';
         $this->delete('/forum/reports/delete/' . $report->id);
         $this->assertRedirect('/');
         $this->assertSession('The report has been deleted.', 'Flash.flash.0.message');

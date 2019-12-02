@@ -11,8 +11,8 @@
 
 namespace CakeDC\Forum\Controller;
 
-use Cake\Network\Exception\BadRequestException;
-use Cake\Network\Exception\UnauthorizedException;
+use Cake\Http\Exception\BadRequestException;
+use Cake\Http\Exception\UnauthorizedException;
 
 /**
  * Reports Controller
@@ -32,7 +32,7 @@ class ReportsController extends AppController
      *
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 

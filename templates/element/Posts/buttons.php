@@ -26,13 +26,13 @@ $updateUrl = $isThread
 <?php if (!isset($noButtons) || !$noButtons): ?>
     <div class="pull-right">
         <?php if (!$post->user_like): ?>
-            <?= $this->Form->postLink('', ['controller' => 'Likes', 'action' => 'add', 'category' => $category->slug, 'thread' => $thread->slug, 'post' => $post->id], ['title' => __('Like'), 'class' => 'btn btn-xs btn-default glyphicon glyphicon-thumbs-up']) ?>
+            <?= $this->Form->postLink('', ['controller' => 'Likes', 'action' => 'add', 'category' => $category->slug, 'thread' => $thread->slug, 'post' => (string)$post->id], ['title' => __('Like'), 'class' => 'btn btn-xs btn-default glyphicon glyphicon-thumbs-up']) ?>
         <?php endif; ?>
         <?php if (!$thread->is_locked): ?>
             <?= $this->Html->link('', '#reply', ['title' => __('Reply'), 'class' => 'btn btn-xs btn-default glyphicon glyphicon-share-alt']) ?>
         <?php endif; ?>
         <?php if (!$post->user_report): ?>
-            <?= $this->Html->link('', ['controller' => 'Reports', 'action' => 'add', 'category' => $category->slug, 'thread' => $thread->slug, 'post' => $post->id], ['title' => __('Report'), 'class' => 'btn btn-xs btn-default glyphicon glyphicon-exclamation-sign']) ?>
+            <?= $this->Html->link('', ['controller' => 'Reports', 'action' => 'add', 'category' => $category->slug, 'thread' => $thread->slug, 'post' => (string)$post->id], ['title' => __('Report'), 'class' => 'btn btn-xs btn-default glyphicon glyphicon-exclamation-sign']) ?>
         <?php endif; ?>
         <?php if ($own): ?>
             <?= $this->Html->link('', $updateUrl + ['action' => 'edit'], ['title' => __('Edit'), 'class' => 'btn btn-xs btn-default glyphicon glyphicon-pencil']) ?>
