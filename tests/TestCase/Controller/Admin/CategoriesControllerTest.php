@@ -48,10 +48,9 @@ class CategoriesControllerTest extends TestCase
      *
      * @return void
      */
-    public function testIndex()
+    public function testIndexOkay()
     {
         $this->get('/forum/admin');
-
         $this->assertResponseOk();
         $this->assertResponseContains('Hardware and Technology');
         $this->assertResponseContains('>Hidden<');
