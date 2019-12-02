@@ -52,7 +52,7 @@ class Application extends \Cake\Http\BaseApplication
      */
     public function bootstrap(): void
     {
-        $this->addPlugin('CakeDC/Users', [
+        $this->addPlugin(\CakeDC\Forum\Plugin::class, [
             'path' => dirname(dirname(__FILE__)) . DS,
             'routes' => true,
         ]);
