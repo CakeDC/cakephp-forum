@@ -87,12 +87,13 @@ class ReportsControllerTest extends IntegrationTestCase
      */
     public function testDelete()
     {
-        $Reports = TableRegistry::get('CakeDC/Forum.Reports');
+        $Reports = TableRegistry::getTableLocator()->get('CakeDC/Forum.Reports');
         $report = $Reports->newEntity(['message' => 'test report message']);
         $report->post_id = 1;
         $report->user_id = 1;
         $this->assertNotFalse($Reports->save($report));
 
+        $this->_request['headers']['REFERER'] = 'http://localhost/';
         $this->delete('/forum/admin/reports/delete/' . $report->id);
 
         $this->assertRedirect('/');
