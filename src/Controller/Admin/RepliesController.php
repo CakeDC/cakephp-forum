@@ -53,7 +53,7 @@ class RepliesController extends AppController
         }
 
         $thread = $this->Replies->Threads->get($parentId);
-        $reply = $this->Replies->newEntity();
+        $reply = $this->Replies->newEmptyEntity();
         $reply->user_id = $this->Auth->user('id');
         $reply->parent_id = $thread->id;
         $reply->category_id = $thread->category_id;

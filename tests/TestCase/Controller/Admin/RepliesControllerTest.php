@@ -16,9 +16,9 @@ class RepliesControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.CakeDC/Forum.categories',
-        'plugin.CakeDC/Forum.posts',
-        'plugin.CakeDC/Forum.users',
+        'plugin.CakeDC/Forum.Categories',
+        'plugin.CakeDC/Forum.Posts',
+        'plugin.CakeDC/Forum.Users',
     ];
 
     public function setUp(): void
