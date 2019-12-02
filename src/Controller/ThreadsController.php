@@ -12,8 +12,8 @@
 namespace CakeDC\Forum\Controller;
 
 use Cake\Core\Configure;
-use Cake\Network\Exception\BadRequestException;
-use Cake\Network\Exception\UnauthorizedException;
+use Cake\Http\Exception\BadRequestException;
+use Cake\Http\Exception\UnauthorizedException;
 
 /**
  * Threads Controller
@@ -32,7 +32,7 @@ class ThreadsController extends AppController
      *
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 
@@ -214,16 +214,16 @@ class ThreadsController extends AppController
      * Save thread
      *
      * @param \CakeDC\Forum\Model\Entity\Thread $thread Thread
-     * @param array $fieldList Fields list
+     * @param array $fields Fields list
      * @return \Cake\Http\Response|null
      */
-    protected function _save($thread, $fieldList = ['title', 'message'])
+    protected function _save($thread, $fields = ['title', 'message'])
     {
         if ($this->_forumUserIsModerator($thread->category_id)) {
-            $fieldList = array_merge($fieldList, ['is_sticky', 'is_locked']);
+            $fields = array_merge($fields, ['is_sticky', 'is_locked']);
         }
 
-        $thread = $this->Threads->patchEntity($thread, $this->request->getData(), compact('fieldList'));
+        $thread = $this->Threads->patchEntity($thread, $this->request->getData(), compact('fields'));
         $reloadCategory = $thread->isDirty('category_id');
 
         if (!$this->Threads->save($thread)) {

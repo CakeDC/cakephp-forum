@@ -16,15 +16,15 @@ class ThreadsControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.CakeDC/Forum.categories',
-        'plugin.CakeDC/Forum.posts',
-        'plugin.CakeDC/Forum.users',
-        'plugin.CakeDC/Forum.reports',
-        'plugin.CakeDC/Forum.moderators',
-        'plugin.CakeDC/Forum.likes',
+        'plugin.CakeDC/Forum.Categories',
+        'plugin.CakeDC/Forum.Posts',
+        'plugin.CakeDC/Forum.Users',
+        'plugin.CakeDC/Forum.Reports',
+        'plugin.CakeDC/Forum.Moderators',
+        'plugin.CakeDC/Forum.Likes',
     ];
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -78,7 +78,6 @@ class ThreadsControllerTest extends IntegrationTestCase
     public function testView()
     {
         $this->get('/forum/cpus-andoverclocking/overclocking-cpu-gpu-memory-stability-testing-guidelines');
-
         $this->assertResponseOk();
         $this->assertResponseContains('>Overclocking CPU/GPU/Memory Stability Testing Guidelines<');
         $this->assertResponseContains('>Reply<');
@@ -254,7 +253,7 @@ class ThreadsControllerTest extends IntegrationTestCase
     public function testDelete()
     {
         // Delete own thread
-        $Threads = TableRegistry::get('CakeDC/Forum.Threads');
+        $Threads = TableRegistry::getTableLocator()->get('CakeDC/Forum.Threads');
         $thread = $Threads->newEntity(['title' => 'thread to delete', 'message' => 'test thread message']);
         $thread->category_id = 2;
         $thread->user_id = 1;
@@ -263,7 +262,14 @@ class ThreadsControllerTest extends IntegrationTestCase
         $this->assertRedirect('/forum/cpus-andoverclocking');
         $this->assertSession('The thread has been deleted.', 'Flash.flash.0.message');
         $this->assertNull($Threads->find()->where(['Threads.id' => $thread->id])->first());
-
+    }
+    /**
+     * Test delete method
+     *
+     * @return void
+     */
+    public function testDeleteNotModerator()
+    {
         // Deleting a thread when user is not moderator
         $this->session([
             'Auth' => [
@@ -273,6 +279,7 @@ class ThreadsControllerTest extends IntegrationTestCase
                 ]
             ]
         ]);
+        $Threads = TableRegistry::getTableLocator()->get('CakeDC/Forum.Threads');
         $thread = $Threads->newEntity(['title' => 'thread to delete', 'message' => 'test thread message']);
         $thread->category_id = 2;
         $thread->user_id = 1;

@@ -20,7 +20,7 @@ $own = ($post->user_id == $userInfo['id']);
 $isThread = !$post->parent_id;
 $updateUrl = $isThread
     ? ['controller' => 'Threads', 'category' => $category->slug, 'thread' => $thread->slug]
-    : ['controller' => 'Replies', 'category' => $category->slug, 'thread' => $thread->slug, 'reply' => $post->id]
+    : ['controller' => 'Replies', 'category' => $category->slug, 'thread' => $thread->slug, 'reply' => (string)$post->id]
 ?>
 
 <?php if (!isset($noButtons) || !$noButtons): ?>
