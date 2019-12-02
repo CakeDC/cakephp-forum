@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
  *
@@ -12,6 +13,7 @@
 namespace CakeDC\Forum\Controller;
 
 use App\Controller\AppController as BaseController;
+use Cake\Event\EventInterface;
 use CakeDC\Forum\Controller\Traits\ForumTrait;
 use Cake\Event\Event;
 
@@ -38,7 +40,7 @@ class AppController extends BaseController
      *
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 
@@ -59,16 +61,15 @@ class AppController extends BaseController
          * see https://book.cakephp.org/3.0/en/controllers/components/security.html
          */
         $this->loadComponent('Security');
-        $this->loadComponent('Csrf');
     }
 
     /**
      * beforeFilter callback
      *
-     * @param Event $event Event
+     * @param \Cake\Event\EventInterface $event Event
      * @return \Cake\Http\Response|null|void
      */
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
 
