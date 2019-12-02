@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * Test suite bootstrap for Forum.
  *
@@ -10,15 +12,32 @@
 // @codingStandardsIgnoreFile
 
 use Cake\Cache\Cache;
+use Cake\Chronos\Chronos;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Datasource\ConnectionManager;
+use Cake\Log\Log;
 use Cake\Routing\DispatcherFactory;
+use Cake\Utility\Security;
+
+$findRoot = function ($root) {
+    do {
+        $lastRoot = $root;
+        $root = dirname($root);
+        if (is_dir($root . '/vendor/cakephp/cakephp')) {
+            return $root;
+        }
+    } while ($root !== $lastRoot);
+    throw new Exception("Cannot find the root of the application, unable to run tests");
+};
+$root = $findRoot(__FILE__);
+unset($findRoot);
+chdir($root);
 
 if (!defined('DS')) {
     define('DS', DIRECTORY_SEPARATOR);
 }
-define('ROOT', dirname(__DIR__));
+define('ROOT', $root);
 define('APP_DIR', 'TestApp');
 define('WEBROOT_DIR', 'webroot');
 
@@ -51,7 +70,15 @@ Configure::write('debug', true);
 Configure::write('App', [
     'namespace' => 'App',
     'encoding' => 'UTF-8',
-    'dir' => 'src',
+    'base' => false,
+    'baseUrl' => false,
+    'dir' => APP_DIR,
+    'webroot' => 'webroot',
+    'wwwRoot' => WWW_ROOT,
+    'fullBaseUrl' => 'http://localhost',
+    'imageBaseUrl' => 'img/',
+    'jsBaseUrl' => 'js/',
+    'cssBaseUrl' => 'css/',
     'paths' => [
         'plugins' => [dirname(APP) . DS . 'plugins' . DS],
         'templates' => [APP . 'Template' . DS]
@@ -65,32 +92,14 @@ Cache::setConfig([
     '_cake_core_' => [
         'engine' => 'File',
         'prefix' => 'cake_core_',
-        'serialize' => true
+        'serialize' => true,
     ],
     '_cake_model_' => [
         'engine' => 'File',
         'prefix' => 'cake_model_',
-        'serialize' => true
-    ]
+        'serialize' => true,
+    ],
 ]);
-
-Configure::write('Session', [
-    'defaults' => 'php'
-]);
-
-Configure::write('plugins', [
-    'Muffin/Slug' => ROOT . DS . 'vendor' . DS . 'muffin' . DS . 'slug',
-    'Muffin/Orderly' => ROOT . DS . 'vendor' . DS . 'muffin' . DS . 'orderly',
-]);
-
-Plugin::load('CakeDC/Forum', ['path' => ROOT . DS, 'autoload' => true, 'bootstrap' => true]);
-
-DispatcherFactory::add('Routing');
-DispatcherFactory::add('ControllerFactory');
-
-class_alias('CakeDC\Forum\Test\App\Controller\AppController', 'App\Controller\AppController');
-class_alias('CakeDC\Forum\Test\App\Controller\UsersController', 'App\Controller\UsersController');
-
 // Ensure default test connection is defined
 if (!getenv('db_dsn')) {
     putenv('db_dsn=sqlite:///:memory:');
@@ -100,3 +109,37 @@ ConnectionManager::setConfig('test', [
     'url' => getenv('db_dsn'),
     'timezone' => 'UTC'
 ]);
+
+Configure::write('Session', [
+    'defaults' => 'php',
+]);
+
+Log::setConfig([
+    'debug' => [
+        'engine' => 'Cake\Log\Engine\FileLog',
+        'levels' => ['notice', 'info', 'debug'],
+        'file' => 'debug',
+        'path' => LOGS,
+    ],
+    'error' => [
+        'engine' => 'Cake\Log\Engine\FileLog',
+        'levels' => ['warning', 'error', 'critical', 'alert', 'emergency'],
+        'file' => 'error',
+        'path' => LOGS,
+    ],
+]);
+class_alias('CakeDC\Forum\Test\App\Controller\AppController', 'App\Controller\AppController');
+class_alias('CakeDC\Forum\Test\App\Controller\UsersController', 'App\Controller\UsersController');
+class_alias('CakeDC\Forum\Test\App\Application', 'App\Application');
+
+Chronos::setTestNow(Chronos::now());
+Security::setSalt('a-long-but-not-random-value');
+
+ini_set('intl.default_locale', 'en_US');
+ini_set('session.gc_divisor', '1');
+
+// Fixate sessionid early on, as php7.2+
+// does not allow the sessionid to be set after stdout
+// has been written to.
+session_id('cli');
+
