@@ -11,6 +11,8 @@
 
 namespace CakeDC\Forum\Model\Table;
 
+use InvalidArgumentException;
+use Cake\Event\EventInterface;
 use ArrayObject;
 use CakeDC\Forum\Model\Entity\Reply;
 use Cake\Core\Configure;
@@ -49,7 +51,7 @@ class RepliesTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
 
@@ -123,7 +125,7 @@ class RepliesTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator
             ->integer('id')
@@ -143,7 +145,7 @@ class RepliesTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
+    public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules->add($rules->existsIn(['parent_id'], 'Threads'));
         $rules->add($rules->existsIn(['category_id'], 'Categories'));
@@ -174,7 +176,7 @@ class RepliesTable extends Table
     public function findByThreadAndCategory(Query $query, $options = [])
     {
         if (!($categorySlug = Hash::get($options, 'categorySlug')) || !($threadSlug = Hash::get($options, 'threadSlug'))) {
-            throw new \InvalidArgumentException('categorySlug and threadSlug are required');
+            throw new InvalidArgumentException('categorySlug and threadSlug are required');
         }
 
         return $query->contain([
@@ -197,7 +199,7 @@ class RepliesTable extends Table
      * @param ArrayObject $options Options
      * @param bool $primary Primary
      */
-    public function beforeFind(Event $event, Query $query, ArrayObject $options, $primary)
+    public function beforeFind(EventInterface $event, Query $query, ArrayObject $options, $primary)
     {
         if (!Hash::get($options, 'all')) {
             $query->where([$query->newExpr()->isNotNull($this->aliasField('parent_id'))]);

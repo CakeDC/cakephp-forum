@@ -11,6 +11,9 @@
 
 namespace CakeDC\Forum\Model\Table;
 
+use Cake\Event\EventInterface;
+use CakeDC\Forum\Model\Entity\Reply;
+use InvalidArgumentException;
 use ArrayObject;
 use CakeDC\Forum\Model\Entity\Thread;
 use Cake\Core\Configure;
@@ -50,7 +53,7 @@ class ThreadsTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
 
@@ -138,7 +141,7 @@ class ThreadsTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator
             ->integer('id')
@@ -195,7 +198,7 @@ class ThreadsTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
+    public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules->add($rules->existsIn(['category_id'], 'Categories'));
         $rules->add($rules->existsIn(['user_id'], 'Users'));
@@ -211,7 +214,7 @@ class ThreadsTable extends Table
      * @param ArrayObject $options Options
      * @param bool $primary Primary
      */
-    public function beforeFind(Event $event, Query $query, ArrayObject $options, $primary)
+    public function beforeFind(EventInterface $event, Query $query, ArrayObject $options, $primary)
     {
         if (!Hash::get($options, 'all')) {
             $query->where([$query->newExpr()->isNull($this->aliasField('parent_id'))]);
@@ -225,10 +228,10 @@ class ThreadsTable extends Table
      * @param EntityInterface $entity Entity
      * @param ArrayObject $options Options
      */
-    public function afterSave(Event $event, EntityInterface $entity, ArrayObject $options)
+    public function afterSave(EventInterface $event, EntityInterface $entity, ArrayObject $options)
     {
         if ($entity->isDirty('category_id')) {
-            $this->Replies->find()->where(['parent_id' => $entity->id])->all()->each(function (\CakeDC\Forum\Model\Entity\Reply $reply) use ($entity) {
+            $this->Replies->find()->where(['parent_id' => $entity->id])->all()->each(function (Reply $reply) use ($entity) {
                 $reply->category_id = $entity->get('category_id');
                 $this->Replies->saveOrFail($reply);
             });
@@ -250,7 +253,7 @@ class ThreadsTable extends Table
     public function findByCategory(Query $query, $options = [])
     {
         if (!$categoryId = Hash::get($options, 'category_id')) {
-            throw new \InvalidArgumentException('category_id is required');
+            throw new InvalidArgumentException('category_id is required');
         }
 
         return $query
@@ -271,7 +274,7 @@ class ThreadsTable extends Table
     public function findByUser(Query $query, $options = [])
     {
         if (!$userId = Hash::get($options, 'user_id')) {
-            throw new \InvalidArgumentException('user_id is required');
+            throw new InvalidArgumentException('user_id is required');
         }
 
         return $query
@@ -303,11 +306,11 @@ class ThreadsTable extends Table
     public function findForEdit(Query $query, $options = [])
     {
         if (!$categoryId = Hash::get($options, 'category_id')) {
-            throw new \InvalidArgumentException('category_id is required');
+            throw new InvalidArgumentException('category_id is required');
         }
 
         if (!$slug = Hash::get($options, 'slug')) {
-            throw new \InvalidArgumentException('slug is required');
+            throw new InvalidArgumentException('slug is required');
         }
 
         return $query

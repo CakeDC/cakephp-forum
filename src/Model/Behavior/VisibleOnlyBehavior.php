@@ -11,6 +11,7 @@
 
 namespace CakeDC\Forum\Model\Behavior;
 
+use Cake\Event\EventInterface;
 use ArrayObject;
 use Cake\Event\Event;
 use Cake\ORM\Behavior;
@@ -38,7 +39,7 @@ class VisibleOnlyBehavior extends Behavior
      * @param ArrayObject $options Options
      * @param bool $primary Primary
      */
-    public function beforeFind(Event $event, Query $query, ArrayObject $options, $primary)
+    public function beforeFind(EventInterface $event, Query $query, ArrayObject $options, $primary)
     {
         $query->where([$this->getTable()->aliasField($this->getConfig('field')) => true]);
     }

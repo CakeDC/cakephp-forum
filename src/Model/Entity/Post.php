@@ -66,10 +66,10 @@ class Post extends Entity
     protected function _getTitle()
     {
         if ($this->parent_id) {
-            return Hash::get($this->_properties, 'thread.title');
+            return Hash::get($this->_fields, 'thread.title');
         }
 
-        return Hash::get($this->_properties, 'title');
+        return Hash::get($this->_fields, 'title');
     }
 
     /**
@@ -78,9 +78,9 @@ class Post extends Entity
     protected function _getSlug()
     {
         if ($this->parent_id) {
-            return Hash::get($this->_properties, 'thread.slug');
+            return Hash::get($this->_fields, 'thread.slug');
         }
 
-        return Hash::get($this->_properties, 'slug');
+        return Hash::get($this->_fields, 'slug');
     }
 }

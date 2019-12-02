@@ -11,6 +11,7 @@
 
 namespace CakeDC\Forum\Model\Table;
 
+use InvalidArgumentException;
 use Cake\Core\Configure;
 use Cake\ORM\Query;
 use Cake\ORM\Table;
@@ -43,7 +44,7 @@ class PostsTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
 
@@ -89,7 +90,7 @@ class PostsTable extends Table
     public function findByThread(Query $query, $options = [])
     {
         if (!$parentId = Hash::get($options, 'thread_id')) {
-            throw new \InvalidArgumentException('thread_id is required');
+            throw new InvalidArgumentException('thread_id is required');
         }
 
         return $query
@@ -112,7 +113,7 @@ class PostsTable extends Table
     public function findWithUserReport(Query $query, $options = [])
     {
         if (!$userId = Hash::get($options, 'user_id')) {
-            throw new \InvalidArgumentException('user_id is required');
+            throw new InvalidArgumentException('user_id is required');
         }
 
         return $query->contain(['UserReports' => function (Query $q) use ($userId) {
@@ -130,7 +131,7 @@ class PostsTable extends Table
     public function findWithUserLike(Query $query, $options = [])
     {
         if (!$userId = Hash::get($options, 'user_id')) {
-            throw new \InvalidArgumentException('user_id is required');
+            throw new InvalidArgumentException('user_id is required');
         }
 
         return $query->contain(['UserLikes' => function (Query $q) use ($userId) {
