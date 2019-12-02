@@ -78,11 +78,11 @@ class ReportsTable extends Table
     {
         $validator
             ->integer('id')
-            ->allowEmpty('id', 'create');
+            ->allowEmptyString('id', 'create');
 
         $validator
             ->requirePresence('message', 'create')
-            ->notEmpty('message');
+            ->notEmptyString('message');
 
         return $validator;
     }

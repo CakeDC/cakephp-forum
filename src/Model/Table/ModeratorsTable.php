@@ -71,11 +71,11 @@ class ModeratorsTable extends Table
     {
         $validator
             ->integer('id')
-            ->allowEmpty('id', 'create');
+            ->allowEmptyString('id', 'create');
 
         $validator
             ->integer('user_id')
-            ->notEmpty('user_id');
+            ->notEmptyString('user_id');
 
         return $validator;
     }
