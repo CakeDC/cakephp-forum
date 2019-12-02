@@ -1,15 +1,16 @@
 <?php
 namespace CakeDC\Forum\Test\TestCase\Controller\Admin;
 
-use Cake\Network\Exception\UnauthorizedException;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\IntegrationTestCase;
+use Cake\TestSuite\IntegrationTestTrait;
+use Cake\TestSuite\TestCase;
 
 /**
  * CakeDC\Forum\Controller\Admin\CategoriesController Test Case
  */
-class CategoriesControllerTest extends IntegrationTestCase
+class CategoriesControllerTest extends TestCase
 {
+    use IntegrationTestTrait;
 
     /**
      * Fixtures
@@ -17,13 +18,13 @@ class CategoriesControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.CakeDC/Forum.categories',
-        'plugin.CakeDC/Forum.posts',
-        'plugin.CakeDC/Forum.moderators',
-        'plugin.CakeDC/Forum.users',
+        'plugin.CakeDC/Forum.Categories',
+        'plugin.CakeDC/Forum.Posts',
+        'plugin.CakeDC/Forum.Moderators',
+        'plugin.CakeDC/Forum.Users',
     ];
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -244,12 +245,13 @@ class CategoriesControllerTest extends IntegrationTestCase
      */
     public function testMoveDown()
     {
-        $Categories = TableRegistry::get('CakeDC/Forum.Categories');
+        $Categories = TableRegistry::getTableLocator()->get('CakeDC/Forum.Categories');
 
         $categories = $Categories->find('threaded')->toArray();
         $this->assertEquals(2, $categories[0]->children[0]->id);
         $this->assertEquals(6, $categories[0]->children[1]->id);
 
+        $this->enableSecurityToken();
         $this->post('/forum/admin/categories/moveDown/2');
         $this->assertRedirect('/forum/admin');
         $this->assertSession('The category has been moved.', 'Flash.flash.0.message');
