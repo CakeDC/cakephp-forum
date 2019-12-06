@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace CakeDC\Forum\Controller\Admin;
 
-use Cake\Network\Exception\BadRequestException;
+use Cake\Http\Exception\BadRequestException;
 
 /**
  * Replies Controller
@@ -50,7 +50,7 @@ class RepliesController extends AppController
     public function add()
     {
         $thread = null;
-        $parentId = $this->request->getQuery('parent_id')
+        $parentId = $this->request->getQuery('parent_id');
         if (!$parentId) {
             throw new BadRequestException();
         }
@@ -79,7 +79,7 @@ class RepliesController extends AppController
      *
      * @param string|null $id Post id.
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Network\Exception\NotFoundException When record not found.
+     * @throws \Cake\Http\Exception\NotFoundException When record not found.
      */
     public function edit($id = null)
     {

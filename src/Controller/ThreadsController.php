@@ -149,7 +149,7 @@ class ThreadsController extends AppController
      * @param string $categorySlug Category slug.
      * @param string $threadSlug Thread slug.
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Network\Exception\NotFoundException When record not found.
+     * @throws \Cake\Http\Exception\NotFoundException When record not found.
      */
     public function edit($categorySlug, $threadSlug)
     {
@@ -169,7 +169,7 @@ class ThreadsController extends AppController
      * @param string $categorySlug Category slug.
      * @param string $threadSlug Thread slug.
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Network\Exception\NotFoundException When record not found.
+     * @throws \Cake\Http\Exception\NotFoundException When record not found.
      */
     public function move($categorySlug, $threadSlug)
     {

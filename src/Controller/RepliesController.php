@@ -72,7 +72,7 @@ class RepliesController extends AppController
      * @param string $threadSlug Thread slug.
      * @param int $id Reply id.
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Network\Exception\NotFoundException When record not found.
+     * @throws \Cake\Http\Exception\NotFoundException When record not found.
      */
     public function edit($categorySlug, $threadSlug, $id)
     {

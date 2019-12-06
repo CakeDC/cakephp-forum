@@ -121,7 +121,7 @@ class ThreadsController extends AppController
      *
      * @param string|null $id Post id.
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Network\Exception\NotFoundException When record not found.
+     * @throws \Cake\Http\Exception\NotFoundException When record not found.
      */
     public function edit($id = null)
     {
@@ -148,7 +148,7 @@ class ThreadsController extends AppController
      *
      * @param string|null $id Post id.
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Network\Exception\NotFoundException When record not found.
+     * @throws \Cake\Http\Exception\NotFoundException When record not found.
      */
     public function move($id = null)
     {
