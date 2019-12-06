@@ -120,7 +120,7 @@ class ThreadsTable extends Table
             'Categories' => [
                 'threads_count',
                 'last_post_id' => function ($event, Thread $entity, ThreadsTable $table) {
-                    $Posts = TableRegistry::get('CakeDC/Forum.Posts');
+                    $Posts = TableRegistry::getTableLocator()->get('CakeDC/Forum.Posts');
                     $lastPost = $Posts->find()->where(['category_id' => $entity->category_id])->orderDesc('id')->first();
                     if (!$lastPost) {
                         return null;
