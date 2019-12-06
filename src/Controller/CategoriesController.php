@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
  *
@@ -20,7 +22,6 @@ namespace CakeDC\Forum\Controller;
  */
 class CategoriesController extends AppController
 {
-
     /**
      * Initialization hook method.
      *

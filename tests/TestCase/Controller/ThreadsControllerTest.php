@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace CakeDC\Forum\Test\TestCase\Controller;
 
 use Cake\ORM\TableRegistry;
@@ -9,7 +11,6 @@ use Cake\TestSuite\IntegrationTestCase;
  */
 class ThreadsControllerTest extends IntegrationTestCase
 {
-
     /**
      * Fixtures
      *
@@ -33,8 +34,8 @@ class ThreadsControllerTest extends IntegrationTestCase
                 'User' => [
                     'id' => 1,
                     'username' => 'testing',
-                ]
-            ]
+                ],
+            ],
         ]);
 
         $this->enableRetainFlashMessages();
@@ -134,8 +135,8 @@ class ThreadsControllerTest extends IntegrationTestCase
                 'User' => [
                     'id' => 2,
                     'username' => 'testing',
-                ]
-            ]
+                ],
+            ],
         ]);
         $thread = TableRegistry::get('CakeDC/Forum.Threads')->find('slugged', ['slug' => 'one-more-thread'])->first();
         $this->assertFalse($thread->get('is_sticky'));
@@ -196,8 +197,8 @@ class ThreadsControllerTest extends IntegrationTestCase
                 'User' => [
                     'id' => 2,
                     'username' => 'testing',
-                ]
-            ]
+                ],
+            ],
         ]);
         $this->get('/forum/digital-and-video-cameras/overclocking-cpu-gpu-memory-stability-testing-guidelines/move');
         $this->assertResponseError();
@@ -263,6 +264,7 @@ class ThreadsControllerTest extends IntegrationTestCase
         $this->assertSession('The thread has been deleted.', 'Flash.flash.0.message');
         $this->assertNull($Threads->find()->where(['Threads.id' => $thread->id])->first());
     }
+
     /**
      * Test delete method
      *
@@ -276,8 +278,8 @@ class ThreadsControllerTest extends IntegrationTestCase
                 'User' => [
                     'id' => 2,
                     'username' => 'testing',
-                ]
-            ]
+                ],
+            ],
         ]);
         $Threads = TableRegistry::getTableLocator()->get('CakeDC/Forum.Threads');
         $thread = $Threads->newEntity(['title' => 'thread to delete', 'message' => 'test thread message']);
@@ -308,8 +310,8 @@ class ThreadsControllerTest extends IntegrationTestCase
                 'User' => [
                     'id' => 2,
                     'username' => 'testing',
-                ]
-            ]
+                ],
+            ],
         ]);
         $this->get('/forum/my-conversations');
         $threads = $this->viewVariable('threads')->toArray();

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace CakeDC\Forum\Test\TestCase\Controller\Admin;
 
 use Cake\ORM\TableRegistry;
@@ -9,7 +11,6 @@ use Cake\TestSuite\IntegrationTestCase;
  */
 class RepliesControllerTest extends IntegrationTestCase
 {
-
     /**
      * Fixtures
      *
@@ -31,8 +32,8 @@ class RepliesControllerTest extends IntegrationTestCase
                     'id' => 1,
                     'username' => 'testing',
                     'is_superuser' => true,
-                ]
-            ]
+                ],
+            ],
         ]);
 
         $this->enableRetainFlashMessages();
@@ -66,7 +67,7 @@ class RepliesControllerTest extends IntegrationTestCase
         $this->assertResponseContains('>Overclocking CPU/GPU/Memory Stability Testing Guidelines<');
 
         $data = [
-            'message' => 'test reply'
+            'message' => 'test reply',
         ];
 
         $this->post('/forum/admin/replies/add?parent_id=1', $data);

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
  *
@@ -11,12 +13,12 @@
 
 namespace CakeDC\Forum\Model\Table;
 
-use InvalidArgumentException;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Utility\Hash;
 use Cake\Validation\Validator;
+use InvalidArgumentException;
 
 /**
  * ForumCategories Model
@@ -39,7 +41,6 @@ use Cake\Validation\Validator;
  */
 class CategoriesTable extends Table
 {
-
     /**
      * Initialize method
      *

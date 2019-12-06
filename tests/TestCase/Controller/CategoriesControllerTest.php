@@ -1,7 +1,8 @@
 <?php
+declare(strict_types=1);
+
 namespace CakeDC\Forum\Test\TestCase\Controller;
 
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestCase;
 
 /**
@@ -9,7 +10,6 @@ use Cake\TestSuite\IntegrationTestCase;
  */
 class CategoriesControllerTest extends IntegrationTestCase
 {
-
     /**
      * Fixtures
      *
@@ -31,8 +31,8 @@ class CategoriesControllerTest extends IntegrationTestCase
                 'User' => [
                     'id' => 1,
                     'username' => 'testing',
-                ]
-            ]
+                ],
+            ],
         ]);
 
         $this->enableRetainFlashMessages();
@@ -82,8 +82,8 @@ class CategoriesControllerTest extends IntegrationTestCase
                 'User' => [
                     'id' => 4,
                     'username' => 'user',
-                ]
-            ]
+                ],
+            ],
         ]);
         $this->get('/forum');
         $this->assertResponseNotContains('>Reports<');

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
  *
@@ -33,7 +35,7 @@ class RepliesController extends AppController
     public function view($id = null)
     {
         $reply = $this->Replies->get($id, [
-            'contain' => ['Threads', 'Categories', 'Users']
+            'contain' => ['Threads', 'Categories', 'Users'],
         ]);
 
         $this->set(compact('reply'));
@@ -81,7 +83,7 @@ class RepliesController extends AppController
     public function edit($id = null)
     {
         $reply = $this->Replies->get($id, [
-            'contain' => ['Threads']
+            'contain' => ['Threads'],
         ]);
 
         $thread = $reply->thread;

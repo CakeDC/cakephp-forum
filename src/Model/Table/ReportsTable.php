@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
  *
@@ -36,7 +38,6 @@ use Cake\Validation\Validator;
  */
 class ReportsTable extends Table
 {
-
     /**
      * Initialize method
      *
@@ -54,17 +55,17 @@ class ReportsTable extends Table
         $this->addBehavior('Timestamp');
         $this->addBehavior('CounterCache', [
             'Posts' => [
-                'reports_count'
+                'reports_count',
             ],
         ]);
 
         $this->belongsTo('Posts', [
             'className' => 'CakeDC/Forum.Posts',
-            'joinType' => 'INNER'
+            'joinType' => 'INNER',
         ]);
         $this->belongsTo('Users', [
             'className' => Configure::read('Forum.userModel'),
-            'joinType' => 'INNER'
+            'joinType' => 'INNER',
         ]);
     }
 
@@ -114,7 +115,7 @@ class ReportsTable extends Table
         $where = [];
         $contain = [
             'Users',
-            'Posts' => ['Categories', 'Users', 'Threads.Users']
+            'Posts' => ['Categories', 'Users', 'Threads.Users'],
         ];
 
         if ($postId = Hash::get($options, 'post_id')) {

@@ -7,7 +7,6 @@ use Cake\Core\BasePlugin;
 use Cake\Core\Configure;
 use Cake\Core\PluginApplicationInterface;
 use Cake\Http\MiddlewareQueue;
-use Cake\Routing\RouteBuilder;
 use Cake\Utility\Hash;
 
 /**
@@ -65,5 +64,4 @@ class Plugin extends BasePlugin
         $config = Hash::merge($defaults, (array)Configure::read('Forum'));
         Configure::write('Forum', $config);
     }
-
 }

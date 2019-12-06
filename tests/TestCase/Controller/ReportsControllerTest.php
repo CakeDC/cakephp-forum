@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace CakeDC\Forum\Test\TestCase\Controller;
 
 use Cake\ORM\TableRegistry;
@@ -9,7 +11,6 @@ use Cake\TestSuite\IntegrationTestCase;
  */
 class ReportsControllerTest extends IntegrationTestCase
 {
-
     /**
      * Fixtures
      *
@@ -33,8 +34,8 @@ class ReportsControllerTest extends IntegrationTestCase
                 'User' => [
                     'id' => 1,
                     'username' => 'testing',
-                ]
-            ]
+                ],
+            ],
         ]);
 
         $this->enableRetainFlashMessages();
@@ -65,8 +66,8 @@ class ReportsControllerTest extends IntegrationTestCase
                 'User' => [
                     'id' => 3,
                     'username' => 'testing',
-                ]
-            ]
+                ],
+            ],
         ]);
         $this->get('/forum/reports');
         $this->assertResponseOk();
@@ -79,8 +80,8 @@ class ReportsControllerTest extends IntegrationTestCase
                 'User' => [
                     'id' => 4,
                     'username' => 'testing',
-                ]
-            ]
+                ],
+            ],
         ]);
         $this->get('/forum/reports');
         $this->assertResponseError();
@@ -99,7 +100,7 @@ class ReportsControllerTest extends IntegrationTestCase
         $this->assertResponseContains('With the exception of database software and vectorizable');
 
         $data = [
-            'message' => 'test report message'
+            'message' => 'test report message',
         ];
 
         $this->post('/forum/cpus-andoverclocking/anandtech-intels-skylake-sp-xeon-vs-amds-epyc-7000/4/report', $data);

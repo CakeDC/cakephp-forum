@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * Copyright 2010 - 2019, Cake Development Corporation (https://www.cakedc.com)
@@ -10,9 +11,7 @@
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
-
 namespace CakeDC\Forum\Test\App;
-
 
 use Cake\Error\Middleware\ErrorHandlerMiddleware;
 use Cake\Http\Middleware\CsrfProtectionMiddleware;

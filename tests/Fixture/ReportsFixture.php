@@ -9,7 +9,6 @@ use Cake\TestSuite\Fixture\TestFixture;
  */
 class ReportsFixture extends TestFixture
 {
-
     /**
      * Table name
      *
@@ -57,7 +56,7 @@ class ReportsFixture extends TestFixture
             'user_id' => 1,
             'message' => 'This post is very rude',
             'created' => '2017-07-18 14:42:56',
-            'modified' => '2017-07-18 14:42:56'
+            'modified' => '2017-07-18 14:42:56',
         ],
         [
             //'id' => 2,
@@ -65,7 +64,7 @@ class ReportsFixture extends TestFixture
             'user_id' => 1,
             'message' => 'Please remove this post',
             'created' => '2017-07-18 15:03:57',
-            'modified' => '2017-07-18 15:03:57'
+            'modified' => '2017-07-18 15:03:57',
         ],
     ];
 }

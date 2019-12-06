@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace CakeDC\Forum\Test\App\Controller;
 
 use Cake\Controller\Controller;
@@ -13,7 +15,6 @@ use Cake\Controller\Controller;
  */
 class AppController extends Controller
 {
-
     public function initialize(): void
     {
         parent::initialize();
@@ -37,14 +38,14 @@ class AppController extends Controller
                 'action' => 'login',
                 'plugin' => false,
                 'prefix' => false,
-                'home'
+                'home',
             ],
             'logoutRedirect' => [
                 'controller' => 'Users',
                 'action' => 'login',
                 'plugin' => false,
                 'prefix' => false,
-                'home'
+                'home',
             ],
         ]);
     }

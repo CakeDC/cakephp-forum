@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
  *
@@ -11,20 +13,19 @@
 
 namespace CakeDC\Forum\Model\Table;
 
-use Cake\Event\EventInterface;
-use CakeDC\Forum\Model\Entity\Reply;
-use InvalidArgumentException;
 use ArrayObject;
-use CakeDC\Forum\Model\Entity\Thread;
 use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 use Cake\Validation\Validator;
+use CakeDC\Forum\Model\Entity\Reply;
+use CakeDC\Forum\Model\Entity\Thread;
+use InvalidArgumentException;
 
 /**
  * Threads Model
@@ -46,7 +47,6 @@ use Cake\Validation\Validator;
  */
 class ThreadsTable extends Table
 {
-
     /**
      * Initialize method
      *
@@ -63,7 +63,7 @@ class ThreadsTable extends Table
 
         $this->belongsTo('Categories', [
             'className' => 'CakeDC/Forum.Categories',
-            'joinType' => 'INNER'
+            'joinType' => 'INNER',
         ]);
         $this->hasMany('Replies', [
             'className' => 'CakeDC/Forum.Replies',
@@ -73,7 +73,7 @@ class ThreadsTable extends Table
         ]);
         $this->hasOne('UserReplies', [
             'className' => 'CakeDC/Forum.Replies',
-            'foreignKey' => 'parent_id'
+            'foreignKey' => 'parent_id',
         ]);
         $this->belongsTo('LastReplies', [
             'className' => 'CakeDC/Forum.Posts',
@@ -84,19 +84,19 @@ class ThreadsTable extends Table
             'foreignKey' => 'parent_id',
             'conditions' => [
                 'ReportedReplies.reports_count >' => 0,
-            ]
+            ],
         ]);
         $this->hasMany('Reports', [
             'className' => 'CakeDC/Forum.Reports',
-            'foreignKey' => 'post_id'
+            'foreignKey' => 'post_id',
         ]);
         $this->hasMany('Likes', [
             'className' => 'CakeDC/Forum.Likes',
-            'foreignKey' => 'post_id'
+            'foreignKey' => 'post_id',
         ]);
         $this->belongsTo('Users', [
             'className' => Configure::read('Forum.userModel'),
-            'joinType' => 'INNER'
+            'joinType' => 'INNER',
         ]);
 
         $this->addBehavior('Timestamp', [
@@ -104,16 +104,16 @@ class ThreadsTable extends Table
                 'Model.beforeSave' => [
                     'created' => 'new',
                     'last_reply_created' => 'new',
-                    'modified' => 'always'
-                ]
-            ]
+                    'modified' => 'always',
+                ],
+            ],
         ]);
         $this->addBehavior('Muffin/Slug.Slug');
         $this->addBehavior('Muffin/Orderly.Orderly', [
             'order' => [
                 $this->aliasField('is_sticky') => 'DESC',
                 $this->aliasField('last_reply_created') => 'DESC',
-            ]
+            ],
         ]);
 
         $options = [
@@ -209,9 +209,9 @@ class ThreadsTable extends Table
     /**
      * beforeFind callback
      *
-     * @param Event $event Event
-     * @param Query $query Query
-     * @param ArrayObject $options Options
+     * @param \Cake\Event\Event $event Event
+     * @param \Cake\ORM\Query $query Query
+     * @param \ArrayObject $options Options
      * @param bool $primary Primary
      */
     public function beforeFind(EventInterface $event, Query $query, ArrayObject $options, $primary)
@@ -224,9 +224,9 @@ class ThreadsTable extends Table
     /**
      * afterSave callback
      *
-     * @param Event $event Event
-     * @param EntityInterface $entity Entity
-     * @param ArrayObject $options Options
+     * @param \Cake\Event\Event $event Event
+     * @param \Cake\Datasource\EntityInterface $entity Entity
+     * @param \ArrayObject $options Options
      */
     public function afterSave(EventInterface $event, EntityInterface $entity, ArrayObject $options)
     {
@@ -285,13 +285,13 @@ class ThreadsTable extends Table
                 'Categories',
                 'UserReplies' => function (Query $q) use ($userId) {
                     return $q->where(['UserReplies.user_id' => $userId]);
-                }
+                },
             ])
             ->where([
                 'OR' => [
                     $this->aliasField('user_id') => $userId,
                     'UserReplies.user_id' => $userId,
-                ]
+                ],
             ])
             ->group($this->aliasField('id'));
     }

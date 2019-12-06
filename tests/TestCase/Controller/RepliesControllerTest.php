@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace CakeDC\Forum\Test\TestCase\Controller;
 
 use Cake\ORM\TableRegistry;
@@ -9,7 +11,6 @@ use Cake\TestSuite\IntegrationTestCase;
  */
 class RepliesControllerTest extends IntegrationTestCase
 {
-
     /**
      * Fixtures
      *
@@ -33,8 +34,8 @@ class RepliesControllerTest extends IntegrationTestCase
                 'User' => [
                     'id' => 1,
                     'username' => 'testing',
-                ]
-            ]
+                ],
+            ],
         ]);
 
         $this->enableRetainFlashMessages();
@@ -55,7 +56,7 @@ class RepliesControllerTest extends IntegrationTestCase
         $this->assertResponseContains('Like others have said, sticky please!');
 
         $data = [
-            'message' => 'test updated message'
+            'message' => 'test updated message',
         ];
 
         $this->post('/forum/cpus-andoverclocking/overclocking-cpu-gpu-memory-stability-testing-guidelines/2/edit', $data);

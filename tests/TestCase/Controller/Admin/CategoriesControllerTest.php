@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace CakeDC\Forum\Test\TestCase\Controller\Admin;
 
 use Cake\ORM\TableRegistry;
@@ -34,8 +36,8 @@ class CategoriesControllerTest extends TestCase
                     'id' => 1,
                     'username' => 'testing',
                     'is_superuser' => true,
-                ]
-            ]
+                ],
+            ],
         ]);
 
         $this->enableRetainFlashMessages();
@@ -80,8 +82,8 @@ class CategoriesControllerTest extends TestCase
                     'id' => 2,
                     'username' => 'testing',
                     'is_superuser' => false,
-                ]
-            ]
+                ],
+            ],
         ]);
 
         $this->get('/forum/admin');
@@ -124,7 +126,7 @@ class CategoriesControllerTest extends TestCase
             'parent_id' => 1,
             'title' => 'New Category',
             'description' => 'New Category Description',
-            'is_visible' => 1
+            'is_visible' => 1,
         ];
 
         $this->post('/forum/admin/categories/add', $data);

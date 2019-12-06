@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
  *
@@ -15,7 +16,6 @@ namespace CakeDC\Forum\Controller;
 use App\Controller\AppController as BaseController;
 use Cake\Event\EventInterface;
 use CakeDC\Forum\Controller\Traits\ForumTrait;
-use Cake\Event\Event;
 
 /**
  * Forum Controller
@@ -29,7 +29,6 @@ use Cake\Event\Event;
  */
 class AppController extends BaseController
 {
-
     use ForumTrait;
 
     /**

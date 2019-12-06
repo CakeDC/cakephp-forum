@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
  *
@@ -11,11 +13,11 @@
 
 namespace CakeDC\Forum\Model\Table;
 
-use InvalidArgumentException;
 use Cake\Core\Configure;
 use Cake\ORM\Query;
 use Cake\ORM\Table;
 use Cake\Utility\Hash;
+use InvalidArgumentException;
 
 /**
  * Posts Model
@@ -37,7 +39,6 @@ use Cake\Utility\Hash;
  */
 class PostsTable extends Table
 {
-
     /**
      * Initialize method
      *
@@ -57,26 +58,26 @@ class PostsTable extends Table
 
         $this->belongsTo('Threads', [
             'className' => 'CakeDC/Forum.Threads',
-            'foreignKey' => 'parent_id'
+            'foreignKey' => 'parent_id',
         ]);
         $this->belongsTo('Categories', [
             'className' => 'CakeDC/Forum.Categories',
-            'joinType' => 'INNER'
+            'joinType' => 'INNER',
         ]);
         $this->belongsTo('Users', [
             'className' => Configure::read('Forum.userModel'),
         ]);
         $this->hasOne('UserLikes', [
             'className' => 'CakeDC/Forum.Likes',
-            'foreignKey' => 'post_id'
+            'foreignKey' => 'post_id',
         ]);
         $this->hasOne('UserReports', [
             'className' => 'CakeDC/Forum.Reports',
-            'foreignKey' => 'post_id'
+            'foreignKey' => 'post_id',
         ]);
         $this->hasMany('Likes', [
             'className' => 'CakeDC/Forum.Likes',
-            'foreignKey' => 'post_id'
+            'foreignKey' => 'post_id',
         ]);
     }
 

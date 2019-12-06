@@ -9,7 +9,6 @@ use Cake\TestSuite\Fixture\TestFixture;
  */
 class UsersFixture extends TestFixture
 {
-
     /**
      * Fields
      *
@@ -52,7 +51,7 @@ class UsersFixture extends TestFixture
             'posts_count' => 15,
             'is_superuser' => 1,
             'created' => '2017-07-11 00:00:00',
-            'modified' => '2017-07-11 00:00:00'
+            'modified' => '2017-07-11 00:00:00',
         ],
         [
             //'id' => 2,
@@ -62,7 +61,7 @@ class UsersFixture extends TestFixture
             'posts_count' => 0,
             'is_superuser' => 0,
             'created' => '2017-07-11 00:00:00',
-            'modified' => '2017-07-11 00:00:00'
+            'modified' => '2017-07-11 00:00:00',
         ],
         [
             //'id' => 3,
@@ -72,7 +71,7 @@ class UsersFixture extends TestFixture
             'posts_count' => 0,
             'is_superuser' => 0,
             'created' => '2017-07-11 00:00:00',
-            'modified' => '2017-07-11 00:00:00'
+            'modified' => '2017-07-11 00:00:00',
         ],
         [
             //'id' => 4,
@@ -82,7 +81,7 @@ class UsersFixture extends TestFixture
             'posts_count' => 0,
             'is_superuser' => 0,
             'created' => '2017-07-11 00:00:00',
-            'modified' => '2017-07-11 00:00:00'
+            'modified' => '2017-07-11 00:00:00',
         ],
     ];
 }

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
  *
@@ -34,7 +36,6 @@ use Cake\Validation\Validator;
  */
 class ModeratorsTable extends Table
 {
-
     /**
      * Initialize method
      *
@@ -53,11 +54,11 @@ class ModeratorsTable extends Table
 
         $this->belongsTo('Categories', [
             'className' => 'CakeDC/Forum.Categories',
-            'joinType' => 'INNER'
+            'joinType' => 'INNER',
         ]);
         $this->belongsTo('Users', [
             'className' => Configure::read('Forum.userModel'),
-            'joinType' => 'INNER'
+            'joinType' => 'INNER',
         ]);
     }
 

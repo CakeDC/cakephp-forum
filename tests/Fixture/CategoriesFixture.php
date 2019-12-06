@@ -9,7 +9,6 @@ use Cake\TestSuite\Fixture\TestFixture;
  */
 class CategoriesFixture extends TestFixture
 {
-
     /**
      * Table name
      *
@@ -74,7 +73,7 @@ class CategoriesFixture extends TestFixture
             'replies_count' => 0,
             'is_visible' => true,
             'created' => '2017-07-10 20:08:21',
-            'modified' => '2017-07-13 15:50:06'
+            'modified' => '2017-07-13 15:50:06',
         ],
         [
             //'id' => 2,
@@ -89,7 +88,7 @@ class CategoriesFixture extends TestFixture
             'replies_count' => 10,
             'is_visible' => true,
             'created' => '2017-07-10 20:08:41',
-            'modified' => '2017-07-18 14:43:21'
+            'modified' => '2017-07-18 14:43:21',
         ],
         [
             //'id' => 3,
@@ -104,7 +103,7 @@ class CategoriesFixture extends TestFixture
             'replies_count' => 0,
             'is_visible' => true,
             'created' => '2017-07-10 20:08:58',
-            'modified' => '2017-07-13 15:50:28'
+            'modified' => '2017-07-13 15:50:28',
         ],
         [
             //'id' => 4,
@@ -119,7 +118,7 @@ class CategoriesFixture extends TestFixture
             'replies_count' => 0,
             'is_visible' => true,
             'created' => '2017-07-10 20:09:15',
-            'modified' => '2017-07-24 14:42:49'
+            'modified' => '2017-07-24 14:42:49',
         ],
         [
             //'id' => 5,
@@ -134,7 +133,7 @@ class CategoriesFixture extends TestFixture
             'replies_count' => 0,
             'is_visible' => true,
             'created' => '2017-07-13 15:50:37',
-            'modified' => '2017-07-13 15:50:37'
+            'modified' => '2017-07-13 15:50:37',
         ],
         [
             //'id' => 6,
@@ -149,7 +148,7 @@ class CategoriesFixture extends TestFixture
             'replies_count' => 0,
             'is_visible' => true,
             'created' => '2017-07-13 15:51:28',
-            'modified' => '2017-07-13 15:51:49'
+            'modified' => '2017-07-13 15:51:49',
         ],
         [
             //'id' => 7,
@@ -164,7 +163,7 @@ class CategoriesFixture extends TestFixture
             'replies_count' => 0,
             'is_visible' => true,
             'created' => '2017-07-13 15:52:10',
-            'modified' => '2017-07-13 15:52:33'
+            'modified' => '2017-07-13 15:52:33',
         ],
         [
             //'id' => 8,
@@ -179,7 +178,7 @@ class CategoriesFixture extends TestFixture
             'replies_count' => 0,
             'is_visible' => true,
             'created' => '2017-07-13 15:53:49',
-            'modified' => '2017-07-13 15:53:49'
+            'modified' => '2017-07-13 15:53:49',
         ],
         [
             //'id' => 9,
@@ -194,7 +193,7 @@ class CategoriesFixture extends TestFixture
             'replies_count' => 0,
             'is_visible' => true,
             'created' => '2017-07-13 15:54:27',
-            'modified' => '2017-07-13 15:54:27'
+            'modified' => '2017-07-13 15:54:27',
         ],
         [
             //'id' => 10,
@@ -209,7 +208,7 @@ class CategoriesFixture extends TestFixture
             'replies_count' => 0,
             'is_visible' => true,
             'created' => '2017-07-13 15:54:40',
-            'modified' => '2017-07-13 15:54:40'
+            'modified' => '2017-07-13 15:54:40',
         ],
         [
             //'id' => 11,
@@ -224,7 +223,7 @@ class CategoriesFixture extends TestFixture
             'replies_count' => 0,
             'is_visible' => true,
             'created' => '2017-07-13 15:54:50',
-            'modified' => '2017-07-13 15:54:50'
+            'modified' => '2017-07-13 15:54:50',
         ],
         [
             //'id' => 12,
@@ -239,7 +238,7 @@ class CategoriesFixture extends TestFixture
             'replies_count' => 0,
             'is_visible' => true,
             'created' => '2017-07-13 15:55:02',
-            'modified' => '2017-07-13 15:55:02'
+            'modified' => '2017-07-13 15:55:02',
         ],
         [
             //'id' => 13,
@@ -254,7 +253,7 @@ class CategoriesFixture extends TestFixture
             'replies_count' => 0,
             'is_visible' => false,
             'created' => '2017-07-14 11:57:02',
-            'modified' => '2017-07-14 11:57:02'
+            'modified' => '2017-07-14 11:57:02',
         ],
     ];
 }

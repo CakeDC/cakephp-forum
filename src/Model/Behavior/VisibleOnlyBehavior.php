@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
  *
@@ -11,9 +13,8 @@
 
 namespace CakeDC\Forum\Model\Behavior;
 
-use Cake\Event\EventInterface;
 use ArrayObject;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\ORM\Behavior;
 use Cake\ORM\Query;
 
@@ -36,7 +37,7 @@ class VisibleOnlyBehavior extends Behavior
      *
      * @param \Cake\Event\Event $event Event
      * @param \Cake\ORM\Query $query Query
-     * @param ArrayObject $options Options
+     * @param \ArrayObject $options Options
      * @param bool $primary Primary
      */
     public function beforeFind(EventInterface $event, Query $query, ArrayObject $options, $primary)

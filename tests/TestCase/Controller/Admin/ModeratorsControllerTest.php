@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace CakeDC\Forum\Test\TestCase\Controller\Admin;
 
 use Cake\ORM\TableRegistry;
@@ -9,7 +11,6 @@ use Cake\TestSuite\IntegrationTestCase;
  */
 class ModeratorsControllerTest extends IntegrationTestCase
 {
-
     /**
      * Fixtures
      *
@@ -31,8 +32,8 @@ class ModeratorsControllerTest extends IntegrationTestCase
                     'id' => 1,
                     'username' => 'testing',
                     'is_superuser' => true,
-                ]
-            ]
+                ],
+            ],
         ]);
 
         $this->enableRetainFlashMessages();

@@ -9,7 +9,6 @@ use Cake\TestSuite\Fixture\TestFixture;
  */
 class PostsFixture extends TestFixture
 {
-
     /**
      * Table name
      *
@@ -91,7 +90,7 @@ aaa',
             'is_visible' => true,
             'last_reply_created' => '2017-07-18 11:41:58',
             'created' => '2017-07-14 11:00:55',
-            'modified' => '2017-07-18 12:10:00'
+            'modified' => '2017-07-18 12:10:00',
         ],
         [
             //'id' => 2,
@@ -111,7 +110,7 @@ About the Prime95 Large FFT, I\'ve gotten crashes on my Phenom II on Blend that 
             'is_visible' => true,
             'last_reply_created' => null,
             'created' => '2017-07-14 11:01:45',
-            'modified' => '2017-07-14 11:01:45'
+            'modified' => '2017-07-14 11:01:45',
         ],
         [
             //'id' => 3,
@@ -130,7 +129,7 @@ About the Prime95 Large FFT, I\'ve gotten crashes on my Phenom II on Blend that 
             'is_visible' => true,
             'last_reply_created' => '2017-07-14 11:28:31',
             'created' => '2017-07-14 11:27:10',
-            'modified' => '2017-07-14 11:28:42'
+            'modified' => '2017-07-14 11:28:42',
         ],
         [
             //'id' => 4,
@@ -149,7 +148,7 @@ About the Prime95 Large FFT, I\'ve gotten crashes on my Phenom II on Blend that 
             'is_visible' => true,
             'last_reply_created' => '2017-07-14 11:29:28',
             'created' => '2017-07-14 11:27:39',
-            'modified' => '2017-07-14 11:27:39'
+            'modified' => '2017-07-14 11:27:39',
         ],
         [
             //'id' => 5,
@@ -176,7 +175,7 @@ source: ranker.sisoftware.net',
             'is_visible' => true,
             'last_reply_created' => '2017-07-14 11:28:11',
             'created' => '2017-07-14 11:28:11',
-            'modified' => '2017-07-14 11:28:11'
+            'modified' => '2017-07-14 11:28:11',
         ],
         [
             //'id' => 6,
@@ -194,7 +193,7 @@ source: ranker.sisoftware.net',
             'is_visible' => true,
             'last_reply_created' => null,
             'created' => '2017-07-14 11:28:31',
-            'modified' => '2017-07-14 11:28:31'
+            'modified' => '2017-07-14 11:28:31',
         ],
         [
             //'id' => 7,
@@ -214,7 +213,7 @@ Planned on buying a Gold 6000 series, until today. Now I may have to settle for 
             'is_visible' => true,
             'last_reply_created' => null,
             'created' => '2017-07-14 11:29:15',
-            'modified' => '2017-07-14 11:29:15'
+            'modified' => '2017-07-14 11:29:15',
         ],
         [
             //'id' => 8,
@@ -232,7 +231,7 @@ Planned on buying a Gold 6000 series, until today. Now I may have to settle for 
             'is_visible' => true,
             'last_reply_created' => null,
             'created' => '2017-07-14 11:29:28',
-            'modified' => '2017-07-14 11:29:28'
+            'modified' => '2017-07-14 11:29:28',
         ],
         [
             //'id' => 9,
@@ -250,7 +249,7 @@ Planned on buying a Gold 6000 series, until today. Now I may have to settle for 
             'is_visible' => true,
             'last_reply_created' => '2017-07-17 15:17:44',
             'created' => '2017-07-17 14:15:15',
-            'modified' => '2017-07-17 14:15:15'
+            'modified' => '2017-07-17 14:15:15',
         ],
         [
             //'id' => 10,
@@ -268,7 +267,7 @@ Planned on buying a Gold 6000 series, until today. Now I may have to settle for 
             'is_visible' => true,
             'last_reply_created' => '2017-07-17 14:16:31',
             'created' => '2017-07-17 14:16:31',
-            'modified' => '2017-07-17 14:16:31'
+            'modified' => '2017-07-17 14:16:31',
         ],
         [
             //'id' => 11,
@@ -286,7 +285,7 @@ Planned on buying a Gold 6000 series, until today. Now I may have to settle for 
             'is_visible' => true,
             'last_reply_created' => '2017-07-17 14:48:54',
             'created' => '2017-07-17 14:17:16',
-            'modified' => '2017-07-17 14:17:16'
+            'modified' => '2017-07-17 14:17:16',
         ],
         [
             //'id' => 12,
@@ -304,7 +303,7 @@ Planned on buying a Gold 6000 series, until today. Now I may have to settle for 
             'is_visible' => true,
             'last_reply_created' => null,
             'created' => '2017-07-14 11:28:11',
-            'modified' => '2017-07-14 11:28:11'
+            'modified' => '2017-07-14 11:28:11',
         ],
     ];
 }

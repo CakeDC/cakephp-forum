@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
  *
@@ -23,7 +25,6 @@ use Cake\Core\Configure;
  */
 class ThreadsController extends AppController
 {
-
     /**
      * Index method
      *
@@ -67,7 +68,7 @@ class ThreadsController extends AppController
     public function view($id = null)
     {
         $thread = $this->Threads->get($id, [
-            'contain' => ['Categories', 'Users', 'Likes.Users']
+            'contain' => ['Categories', 'Users', 'Likes.Users'],
         ]);
 
         $replies = [];
@@ -76,7 +77,7 @@ class ThreadsController extends AppController
                 $this->loadModel('CakeDC/Forum.Replies'),
                 [
                     'conditions' => [
-                        $this->Threads->Replies->aliasField('parent_id') => $thread->id
+                        $this->Threads->Replies->aliasField('parent_id') => $thread->id,
                     ],
                     'contain' => ['Users', 'Likes.Users'],
                     'limit' => Configure::read('Forum.postsPerPage'),

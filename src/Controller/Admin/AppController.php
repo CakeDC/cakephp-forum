@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
  *
@@ -11,17 +13,14 @@
 
 namespace CakeDC\Forum\Controller\Admin;
 
-use CakeDC\Forum\Controller\AppController as Controller;
 use Cake\Core\Configure;
-use Cake\Network\Exception\UnauthorizedException;
-use Cake\Utility\Hash;
+use CakeDC\Forum\Controller\AppController as Controller;
 
 /**
  * Admin App Controller
  */
 abstract class AppController extends Controller
 {
-
     /**
      * Initialization hook method.
      *

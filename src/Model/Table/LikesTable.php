@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
  *
@@ -34,7 +36,6 @@ use Cake\Validation\Validator;
  */
 class LikesTable extends Table
 {
-
     /**
      * Initialize method
      *
@@ -52,17 +53,17 @@ class LikesTable extends Table
         $this->addBehavior('Timestamp');
         $this->addBehavior('CounterCache', [
             'Posts' => [
-                'likes_count'
+                'likes_count',
             ],
         ]);
 
         $this->belongsTo('Posts', [
             'className' => 'CakeDC/Forum.Posts',
-            'joinType' => 'INNER'
+            'joinType' => 'INNER',
         ]);
         $this->belongsTo('Users', [
             'className' => Configure::read('Forum.userModel'),
-            'joinType' => 'INNER'
+            'joinType' => 'INNER',
         ]);
     }
 

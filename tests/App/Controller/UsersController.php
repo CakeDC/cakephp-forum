@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace CakeDC\Forum\Test\App\Controller;
 
 use App\Controller\AppController as Controller;
@@ -8,7 +10,6 @@ use App\Controller\AppController as Controller;
  */
 class UsersController extends Controller
 {
-
     public function register()
     {
     }

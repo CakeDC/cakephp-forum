@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace CakeDC\Forum\Controller\Traits;
 
@@ -118,7 +119,7 @@ trait ForumTrait
                 'Categories' => function (Query $query) use ($categorySlug) {
                     return $query->find('slugged', ['slug' => $categorySlug]);
                 },
-                'Categories.SubCategories'
+                'Categories.SubCategories',
             ])
             ->find('slugged', compact('slug'))
             ->firstOrFail();
