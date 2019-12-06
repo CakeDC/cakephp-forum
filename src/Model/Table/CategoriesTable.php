@@ -30,6 +30,7 @@ use InvalidArgumentException;
  *
  * @method \CakeDC\Forum\Model\Entity\Category get($primaryKey, $options = [])
  * @method \CakeDC\Forum\Model\Entity\Category newEntity($data = null, array $options = [])
+ * @method \CakeDC\Forum\Model\Entity\Category newEmptyEntity()
  * @method \CakeDC\Forum\Model\Entity\Category[] newEntities(array $data, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Category|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \CakeDC\Forum\Model\Entity\Category patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])

@@ -29,6 +29,7 @@ use InvalidArgumentException;
  *
  * @method \CakeDC\Forum\Model\Entity\Reply get($primaryKey, $options = [])
  * @method \CakeDC\Forum\Model\Entity\Reply newEntity($data = null, array $options = [])
+ * @method \CakeDC\Forum\Model\Entity\Reply newEmptyEntity()
  * @method \CakeDC\Forum\Model\Entity\Reply[] newEntities(array $data, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Reply|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \CakeDC\Forum\Model\Entity\Reply patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])

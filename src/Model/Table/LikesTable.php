@@ -26,6 +26,7 @@ use Cake\Validation\Validator;
  *
  * @method \CakeDC\Forum\Model\Entity\Like get($primaryKey, $options = [])
  * @method \CakeDC\Forum\Model\Entity\Like newEntity($data = null, array $options = [])
+ * @method \CakeDC\Forum\Model\Entity\Like newEmptyEntity()
  * @method \CakeDC\Forum\Model\Entity\Like[] newEntities(array $data, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Like|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \CakeDC\Forum\Model\Entity\Like patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
