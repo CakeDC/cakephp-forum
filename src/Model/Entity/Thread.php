@@ -39,8 +39,8 @@ use Cake\ORM\Entity;
  * @property \CakeDC\Forum\Model\Entity\Category $category
  * @property \Cake\ORM\Entity $user
  * @property \CakeDC\Forum\Model\Entity\Reply[] $replies
- * @property \CakeDC\Forum\Model\Entity\Reply $reported_reply
- * @property \CakeDC\Forum\Model\Entity\Reply $last_reply
+ * @property \CakeDC\Forum\Model\Entity\Reply|null $reported_reply
+ * @property \CakeDC\Forum\Model\Entity\Reply|null $last_reply
  * @property \CakeDC\Forum\Model\Entity\Report[] $reports
  * @property \CakeDC\Forum\Model\Entity\Like[] $likes
  */

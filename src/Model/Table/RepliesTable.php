@@ -28,7 +28,7 @@ use InvalidArgumentException;
 /**
  * Replies Model
  *
- * @property \CakeDC\Forum\Model\Table\ThreadsTable|\Cake\ORM\Association\BelongsTo $Threads
+ * @property \CakeDC\Forum\Model\Table\ThreadsTable $Threads
  * @property \CakeDC\Forum\Model\Table\CategoriesTable|\Cake\ORM\Association\BelongsTo $Categories
  * @property \Cake\ORM\Association\BelongsTo $Users
  * @property \CakeDC\Forum\Model\Table\ReportsTable|\Cake\ORM\Association\HasMany $Reports
@@ -93,7 +93,7 @@ class RepliesTable extends Table
                         return null;
                     }
 
-                    return $lastPost->id;
+                    return $lastPost['id'];
                 },
             ],
             'Threads' => [
@@ -103,7 +103,7 @@ class RepliesTable extends Table
                         return $this->Threads->get($entity->parent_id)->created;
                     }
 
-                    return $lastReply->get('created');
+                    return $lastReply['created'];
                 },
                 'last_reply_id' => function ($event, Reply $entity, RepliesTable $table) {
                     $lastReply = $table->find()->where(['parent_id' => $entity->parent_id])->orderDesc('id')->first();
@@ -111,7 +111,7 @@ class RepliesTable extends Table
                         return null;
                     }
 
-                    return $lastReply->id;
+                    return $lastReply['id'];
                 },
                 'replies_count',
             ],

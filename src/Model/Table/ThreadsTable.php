@@ -32,7 +32,7 @@ use InvalidArgumentException;
  *
  * @property \CakeDC\Forum\Model\Table\CategoriesTable|\Cake\ORM\Association\BelongsTo $Categories
  * @property \Cake\ORM\Association\BelongsTo $Users
- * @property \CakeDC\Forum\Model\Table\RepliesTable|\Cake\ORM\Association\HasMany $Replies
+ * @property \CakeDC\Forum\Model\Table\RepliesTable $Replies
  * @property \CakeDC\Forum\Model\Table\ReportsTable|\Cake\ORM\Association\HasMany $Reports
  *
  * @method \CakeDC\Forum\Model\Entity\Thread get($primaryKey, $options = [])
@@ -126,7 +126,7 @@ class ThreadsTable extends Table
                         return null;
                     }
 
-                    return $lastPost->id;
+                    return $lastPost['id'];
                 },
             ],
         ];
