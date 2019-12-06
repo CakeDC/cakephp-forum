@@ -140,7 +140,7 @@ class RepliesController extends AppController
             'controller' => 'Threads',
             'action' => 'view',
             'category' => $reply['category']['slug'],
-            'thread' => $reply['thread']['slug']
+            'thread' => $reply['thread']['slug'],
         ]);
     }
 }
