@@ -50,7 +50,8 @@ class ReportsController extends AppController
         $filter = array_intersect_key($this->request->getQueryParams(), array_flip(['post_id', 'thread_id']));
 
         $this->loadModel('CakeDC/Forum.Moderators');
-        if (!$categoryIds = $this->Moderators->getUserCategories($this->Auth->user('id'))) {
+        $categoryIds = $this->Moderators->getUserCategories($this->Auth->user('id'));
+        if (!$categoryIds) {
             throw new UnauthorizedException();
         }
         $filter['category_id'] = $categoryIds;

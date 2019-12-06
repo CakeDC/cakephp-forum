@@ -50,7 +50,8 @@ class RepliesController extends AppController
     public function add()
     {
         $thread = null;
-        if (!$parentId = $this->request->getQuery('parent_id')) {
+        $parentId = $this->request->getQuery('parent_id')
+        if (!$parentId) {
             throw new BadRequestException();
         }
 

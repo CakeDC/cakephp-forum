@@ -36,20 +36,22 @@ class ThreadsController extends AppController
         $contain = ['Users', 'LastReplies.Users', 'ReportedReplies'];
         $group = 'Threads.id';
         $conditions = [];
-
-        if ($categoryId = $this->request->getQuery('category_id')) {
+        $categoryId = $this->request->getQuery('category_id');
+        if ($categoryId) {
             $conditions[$this->Threads->aliasField('category_id')] = $categoryId;
         }
-        if (($isSticky = $this->request->getQuery('is_sticky', '')) !== '') {
+        $isSticky = $this->request->getQuery('is_sticky', '');
+        if ($isSticky !== '') {
             $conditions[$this->Threads->aliasField('is_sticky')] = ((int)$isSticky == 1);
         }
-        if (($isLocked = $this->request->getQuery('is_locked', '')) !== '') {
+        $isLocked = $this->request->getQuery('is_locked', '');
+        if ($isLocked !== '') {
             $conditions[$this->Threads->aliasField('is_locked')] = ((int)$isLocked == 1);
         }
-        if (($isVisible = $this->request->getQuery('is_visible', '')) !== '') {
+        $isVisible = $this->request->getQuery('is_visible', '');
+        if ($isVisible !== '') {
             $conditions[$this->Threads->aliasField('is_visible')] = ((int)$isVisible == 1);
         }
-
         $threads = $this->paginate($this->Threads, compact('contain', 'conditions', 'limit', 'group'));
 
         $categories = $this->Threads->Categories->getOptionsList(true);
