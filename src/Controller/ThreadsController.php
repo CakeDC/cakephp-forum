@@ -56,13 +56,14 @@ class ThreadsController extends AppController
      */
     public function index()
     {
-        if (!$categorySlug = func_get_arg(0)) {
+        $categorySlug = func_get_arg(0);
+        if (!$categorySlug) {
             throw new BadRequestException();
         }
 
         $category = $this->_getCategory($categorySlug);
-
-        if ($subCategories = $category->children) {
+        $subCategories = $category->children;
+        if ($subCategories) {
             $this->set('categories', $subCategories);
             $this->render('category');
 
@@ -98,7 +99,8 @@ class ThreadsController extends AppController
         $thread = $this->_getThread($categorySlug, $slug);
 
         $query = $this->Posts->find('byThread', ['thread_id' => $thread->id]);
-        if ($userId = $this->Auth->user('id')) {
+        $userId = $this->Auth->user('id');
+        if ($userId) {
             $query = $query
                 ->find('withUserReport', ['user_id' => $userId])
                 ->find('withUserLike', ['user_id' => $userId]);

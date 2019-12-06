@@ -27,11 +27,12 @@ trait ForumTrait
      */
     protected function _forumUserIsAdmin()
     {
-        if (!$user = $this->Auth->user()) {
+        $user = $this->Auth->user();
+        if (!$user) {
             return false;
         }
-
-        if (!$adminCheck = Configure::read('Forum.adminCheck')) {
+        $adminCheck = Configure::read('Forum.adminCheck');
+        if (!$adminCheck) {
             return false;
         }
 
