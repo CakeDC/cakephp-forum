@@ -27,14 +27,14 @@ use InvalidArgumentException;
  * @property \Cake\ORM\Association\BelongsTo $Users
  * @property \CakeDC\Forum\Model\Table\ReportsTable|\Cake\ORM\Association\HasMany $Reports
  *
- * @method \CakeDC\Forum\Model\Entity\Reply get($primaryKey, $options = [])
- * @method \CakeDC\Forum\Model\Entity\Reply newEntity($data = null, array $options = [])
- * @method \CakeDC\Forum\Model\Entity\Reply newEmptyEntity()
- * @method \CakeDC\Forum\Model\Entity\Reply[] newEntities(array $data, array $options = [])
- * @method \CakeDC\Forum\Model\Entity\Reply|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \CakeDC\Forum\Model\Entity\Reply patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \CakeDC\Forum\Model\Entity\Reply[] patchEntities($entities, array $data, array $options = [])
- * @method \CakeDC\Forum\Model\Entity\Reply findOrCreate($search, callable $callback = null, $options = [])
+ * @method \CakeDC\Forum\Model\Entity\Post get($primaryKey, $options = [])
+ * @method \CakeDC\Forum\Model\Entity\Post newEntity($data = null, array $options = [])
+ * @method \CakeDC\Forum\Model\Entity\Post newEmptyEntity()
+ * @method \CakeDC\Forum\Model\Entity\Post[] newEntities(array $data, array $options = [])
+ * @method \CakeDC\Forum\Model\Entity\Post|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \CakeDC\Forum\Model\Entity\Post patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \CakeDC\Forum\Model\Entity\Post[] patchEntities($entities, array $data, array $options = [])
+ * @method \CakeDC\Forum\Model\Entity\Post findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */

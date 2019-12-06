@@ -205,8 +205,10 @@ class RepliesTable extends Table
      * @param \Cake\ORM\Query $query Query
      * @param \ArrayObject $options Options
      * @param bool $primary Primary
+     *
+     * @return void
      */
-    public function beforeFind(EventInterface $event, Query $query, ArrayObject $options, $primary)
+    public function beforeFind(EventInterface $event, Query $query, ArrayObject $options, $primary): void
     {
         if (!Hash::get($options, 'all')) {
             $query->where([$query->newExpr()->isNotNull($this->aliasField('parent_id'))]);

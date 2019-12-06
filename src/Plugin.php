@@ -51,7 +51,7 @@ class Plugin extends BasePlugin
             // Posts count field in User model for CounterCache behavior. Not used if FALSE
             'userPostsCountField' => false,
             // Function for messages rendering in forum templates
-            'messageRenderer' => function ($message) {
+            'messageRenderer' => function (string $message): string {
                 return nl2br(h($message));
             },
             // Field name or callable function to check if user is has access to admin interface

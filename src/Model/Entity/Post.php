@@ -64,7 +64,7 @@ class Post extends Entity
     /**
      * Get title
      */
-    protected function _getTitle()
+    protected function _getTitle(): ?string
     {
         if ($this->parent_id) {
             return Hash::get($this->_fields, 'thread.title');
@@ -76,7 +76,7 @@ class Post extends Entity
     /**
      * Get slug
      */
-    protected function _getSlug()
+    protected function _getSlug(): ?string
     {
         if ($this->parent_id) {
             return Hash::get($this->_fields, 'thread.slug');

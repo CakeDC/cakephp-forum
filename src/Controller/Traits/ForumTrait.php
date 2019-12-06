@@ -163,7 +163,7 @@ trait ForumTrait
      * @param string $categorySlug Category slug
      * @param string $threadSlug Thread slug
      * @param int $id Post id
-     * @return \CakeDC\Forum\Model\Entity\Reply
+     * @return \CakeDC\Forum\Model\Entity\Post
      */
     protected function _getPost($categorySlug, $threadSlug, $id)
     {

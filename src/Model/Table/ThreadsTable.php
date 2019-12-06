@@ -216,8 +216,10 @@ class ThreadsTable extends Table
      * @param \Cake\ORM\Query $query Query
      * @param \ArrayObject $options Options
      * @param bool $primary Primary
+     *
+     * @return void
      */
-    public function beforeFind(EventInterface $event, Query $query, ArrayObject $options, $primary)
+    public function beforeFind(EventInterface $event, Query $query, ArrayObject $options, $primary): void
     {
         if (!Hash::get($options, 'all')) {
             $query->where([$query->newExpr()->isNull($this->aliasField('parent_id'))]);
@@ -230,18 +232,20 @@ class ThreadsTable extends Table
      * @param \Cake\Event\Event $event Event
      * @param \Cake\Datasource\EntityInterface $entity Entity
      * @param \ArrayObject $options Options
+     *
+     * @return void
      */
-    public function afterSave(EventInterface $event, EntityInterface $entity, ArrayObject $options)
+    public function afterSave(EventInterface $event, EntityInterface $entity, ArrayObject $options): void
     {
         if ($entity->isDirty('category_id')) {
-            $this->Replies->find()->where(['parent_id' => $entity->id])->all()->each(function (Reply $reply) use ($entity) {
+            $this->Replies->find()->where(['parent_id' => $entity['id']])->all()->each(function (Reply $reply) use ($entity) {
                 $reply->category_id = $entity->get('category_id');
                 $this->Replies->saveOrFail($reply);
             });
         }
 
         if ($entity->isNew()) {
-            $entity->set('last_reply_id', $entity->id);
+            $entity->set('last_reply_id', $entity['id']);
             $this->save($entity);
         }
     }
