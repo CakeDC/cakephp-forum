@@ -88,7 +88,8 @@ class RepliesTable extends Table
                 'replies_count',
                 'last_post_id' => function ($event, Reply $entity, RepliesTable $table) {
                     $Posts = TableRegistry::get('CakeDC/Forum.Posts');
-                    if (!$lastPost = $Posts->find()->where(['category_id' => $entity->category_id])->orderDesc('id')->first()) {
+                    $lastPost = $Posts->find()->where(['category_id' => $entity->category_id])->orderDesc('id')->first();
+                    if (!$lastPost) {
                         return null;
                     }
 
@@ -97,14 +98,16 @@ class RepliesTable extends Table
             ],
             'Threads' => [
                 'last_reply_created' => function ($event, Reply $entity, RepliesTable $table) {
-                    if (!$lastReply = $table->find()->where(['parent_id' => $entity->parent_id])->orderDesc('id')->first()) {
+                    $lastReply = $table->find()->where(['parent_id' => $entity->parent_id])->orderDesc('id')->first();
+                    if (!$lastReply) {
                         return $this->Threads->get($entity->parent_id)->created;
                     }
 
                     return $lastReply->get('created');
                 },
                 'last_reply_id' => function ($event, Reply $entity, RepliesTable $table) {
-                    if (!$lastReply = $table->find()->where(['parent_id' => $entity->parent_id])->orderDesc('id')->first()) {
+                    $lastReply = $table->find()->where(['parent_id' => $entity->parent_id])->orderDesc('id')->first();
+                    if (!$lastReply) {
                         return null;
                     }
 
@@ -113,7 +116,8 @@ class RepliesTable extends Table
                 'replies_count',
             ],
         ];
-        if ($userPostsCountField = Configure::read('Forum.userPostsCountField')) {
+        $userPostsCountField = Configure::read('Forum.userPostsCountField');
+        if ($userPostsCountField) {
             $options['Users'] = [$userPostsCountField => ['all' => true]];
         }
         $this->addBehavior('CounterCache', $options);
@@ -175,7 +179,9 @@ class RepliesTable extends Table
      */
     public function findByThreadAndCategory(Query $query, $options = [])
     {
-        if (!($categorySlug = Hash::get($options, 'categorySlug')) || !($threadSlug = Hash::get($options, 'threadSlug'))) {
+        $categorySlug = Hash::get($options, 'categorySlug');
+        $threadSlug = Hash::get($options, 'threadSlug');
+        if (!$categorySlug || !$threadSlug) {
             throw new InvalidArgumentException('categorySlug and threadSlug are required');
         }
 

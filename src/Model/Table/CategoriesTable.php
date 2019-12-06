@@ -172,7 +172,8 @@ class CategoriesTable extends Table
      */
     public function findChildren(Query $query, $options = [])
     {
-        if (!$category = Hash::get($options, 'category')) {
+        $category = Hash::get($options, 'category');
+        if (!$category) {
             throw new InvalidArgumentException('Category is required');
         }
 

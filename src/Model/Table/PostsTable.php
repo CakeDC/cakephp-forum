@@ -90,7 +90,8 @@ class PostsTable extends Table
      */
     public function findByThread(Query $query, $options = [])
     {
-        if (!$parentId = Hash::get($options, 'thread_id')) {
+        $parentId = Hash::get($options, 'thread_id');
+        if (!$parentId) {
             throw new InvalidArgumentException('thread_id is required');
         }
 
@@ -113,7 +114,8 @@ class PostsTable extends Table
      */
     public function findWithUserReport(Query $query, $options = [])
     {
-        if (!$userId = Hash::get($options, 'user_id')) {
+        $userId = Hash::get($options, 'user_id');
+        if (!$userId) {
             throw new InvalidArgumentException('user_id is required');
         }
 
@@ -131,7 +133,8 @@ class PostsTable extends Table
      */
     public function findWithUserLike(Query $query, $options = [])
     {
-        if (!$userId = Hash::get($options, 'user_id')) {
+        $userId = Hash::get($options, 'user_id');
+        if (!$userId) {
             throw new InvalidArgumentException('user_id is required');
         }
 

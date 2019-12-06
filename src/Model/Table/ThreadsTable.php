@@ -121,7 +121,8 @@ class ThreadsTable extends Table
                 'threads_count',
                 'last_post_id' => function ($event, Thread $entity, ThreadsTable $table) {
                     $Posts = TableRegistry::get('CakeDC/Forum.Posts');
-                    if (!$lastPost = $Posts->find()->where(['category_id' => $entity->category_id])->orderDesc('id')->first()) {
+                    $lastPost = $Posts->find()->where(['category_id' => $entity->category_id])->orderDesc('id')->first();
+                    if (!$lastPost) {
                         return null;
                     }
 
@@ -129,7 +130,8 @@ class ThreadsTable extends Table
                 },
             ],
         ];
-        if ($userPostsCountField = Configure::read('Forum.userPostsCountField')) {
+        $userPostsCountField = Configure::read('Forum.userPostsCountField');
+        if ($userPostsCountField) {
             $options['Users'] = [$userPostsCountField => ['all' => true]];
         }
         $this->addBehavior('CounterCache', $options);
@@ -252,7 +254,8 @@ class ThreadsTable extends Table
      */
     public function findByCategory(Query $query, $options = [])
     {
-        if (!$categoryId = Hash::get($options, 'category_id')) {
+        $categoryId = Hash::get($options, 'category_id');
+        if (!$categoryId) {
             throw new InvalidArgumentException('category_id is required');
         }
 
@@ -273,7 +276,8 @@ class ThreadsTable extends Table
      */
     public function findByUser(Query $query, $options = [])
     {
-        if (!$userId = Hash::get($options, 'user_id')) {
+        $userId = Hash::get($options, 'user_id');
+        if (!$userId) {
             throw new InvalidArgumentException('user_id is required');
         }
 
@@ -305,11 +309,12 @@ class ThreadsTable extends Table
      */
     public function findForEdit(Query $query, $options = [])
     {
-        if (!$categoryId = Hash::get($options, 'category_id')) {
+        $categoryId = Hash::get($options, 'category_id');
+        if (!$categoryId) {
             throw new InvalidArgumentException('category_id is required');
         }
-
-        if (!$slug = Hash::get($options, 'slug')) {
+        $slug = Hash::get($options, 'slug');
+        if (!$slug) {
             throw new InvalidArgumentException('slug is required');
         }
 

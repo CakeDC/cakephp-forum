@@ -118,16 +118,18 @@ class ReportsTable extends Table
             'Posts' => ['Categories', 'Users', 'Threads.Users'],
         ];
 
-        if ($postId = Hash::get($options, 'post_id')) {
+        $postId = Hash::get($options, 'post_id');
+        $threadId = Hash::get($options, 'thread_id');
+        if ($postId) {
             $where['Reports.post_id'] = $postId;
-        } elseif ($threadId = Hash::get($options, 'thread_id')) {
+        } elseif ($threadId) {
             $where['OR'] = [
                 'Posts.id' => $threadId,
                 'Posts.parent_id' => $threadId,
             ];
         }
-
-        if (!is_null($categoryId = Hash::get($options, 'category_id'))) {
+        $categoryId = Hash::get($options, 'category_id');
+        if (!is_null($categoryId)) {
             $where['Posts.category_id IN'] = (array)$categoryId;
         }
 
