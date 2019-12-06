@@ -30,10 +30,10 @@ use InvalidArgumentException;
 /**
  * Threads Model
  *
- * @property \CakeDC\Forum\Model\Table\CategoriesTable|\Cake\ORM\Association\BelongsTo $Categories
+ * @property \CakeDC\Forum\Model\Table\CategoriesTable $Categories
  * @property \Cake\ORM\Association\BelongsTo $Users
  * @property \CakeDC\Forum\Model\Table\RepliesTable $Replies
- * @property \CakeDC\Forum\Model\Table\ReportsTable|\Cake\ORM\Association\HasMany $Reports
+ * @property \CakeDC\Forum\Model\Table\ReportsTable $Reports
  *
  * @method \CakeDC\Forum\Model\Entity\Thread get($primaryKey, $options = [])
  * @method \CakeDC\Forum\Model\Entity\Thread newEntity($data = null, array $options = [])

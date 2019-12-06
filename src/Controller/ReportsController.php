@@ -118,6 +118,6 @@ class ReportsController extends AppController
             $this->Flash->error(__('The report could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect($this->request->referer());
+        return $this->redirect($this->request->referer() ?? '/');
     }
 }

@@ -21,7 +21,7 @@ use Cake\Validation\Validator;
 /**
  * Moderators Model
  *
- * @property \CakeDC\Forum\Model\Table\CategoriesTable|\Cake\ORM\Association\BelongsTo $Categories
+ * @property \CakeDC\Forum\Model\Table\CategoriesTable $Categories
  * @property \Cake\ORM\Association\BelongsTo $Users
  *
  * @method \CakeDC\Forum\Model\Entity\Moderator get($primaryKey, $options = [])

@@ -32,9 +32,9 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  *
- * @property \CakeDC\Forum\Model\Entity\Category $category
- * @property \Cake\ORM\Entity $user
- * @property \CakeDC\Forum\Model\Entity\Thread $thread
+ * @property \CakeDC\Forum\Model\Entity\Category|null $category
+ * @property \Cake\ORM\Entity|null $user
+ * @property \CakeDC\Forum\Model\Entity\Thread|null $thread
  * @property \CakeDC\Forum\Model\Entity\Report[] $reports
  * @property \CakeDC\Forum\Model\Entity\Like[] $likes
  */

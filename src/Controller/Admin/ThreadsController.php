@@ -40,17 +40,12 @@ class ThreadsController extends AppController
         if ($categoryId) {
             $conditions[$this->Threads->aliasField('category_id')] = $categoryId;
         }
-        $isSticky = $this->request->getQuery('is_sticky', '');
-        if ($isSticky !== '') {
-            $conditions[$this->Threads->aliasField('is_sticky')] = ((int)$isSticky == 1);
-        }
-        $isLocked = $this->request->getQuery('is_locked', '');
-        if ($isLocked !== '') {
-            $conditions[$this->Threads->aliasField('is_locked')] = ((int)$isLocked == 1);
-        }
-        $isVisible = $this->request->getQuery('is_visible', '');
-        if ($isVisible !== '') {
-            $conditions[$this->Threads->aliasField('is_visible')] = ((int)$isVisible == 1);
+        foreach (['is_sticky', 'is_locked', 'is_visible'] as $field) {
+            $fieldValue = $this->request->getQuery($field, '');
+            if ($fieldValue !== '') {
+                $fieldValue = is_scalar($fieldValue) ? (int)$fieldValue : 0;
+                $conditions[$this->Threads->aliasField($field)] = $fieldValue == 1;
+            }
         }
         $threads = $this->paginate($this->Threads, compact('contain', 'conditions', 'limit', 'group'));
 

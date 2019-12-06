@@ -136,6 +136,11 @@ class RepliesController extends AppController
             $this->Replies->loadInto($reply, ['Categories', 'Threads']);
         }
 
-        return $this->redirect(['controller' => 'Threads', 'action' => 'view', 'category' => $reply->category->slug, 'thread' => $reply->thread->slug]);
+        return $this->redirect([
+            'controller' => 'Threads',
+            'action' => 'view',
+            'category' => $reply['category']['slug'],
+            'thread' => $reply['thread']['slug']
+        ]);
     }
 }

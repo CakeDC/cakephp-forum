@@ -48,7 +48,7 @@ trait ForumTrait
     /**
      * Check if current user is moderator
      *
-     * @param null $categoryId Category id
+     * @param int|null $categoryId Category id
      * @return bool
      */
     protected function _forumUserIsModerator($categoryId = null)
