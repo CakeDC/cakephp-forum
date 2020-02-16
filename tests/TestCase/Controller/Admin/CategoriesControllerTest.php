@@ -207,7 +207,7 @@ class CategoriesControllerTest extends TestCase
     public function testDelete()
     {
         $Categories = TableRegistry::get('CakeDC/Forum.Categories');
-        $category = $Categories->newEntity(['parent_id' => 1, 'title' => 'test cat', 'is_visible' => 1]);
+        $category = $Categories->newEntity(['parent_id' => 1, 'title' => 'test cat', 'is_visible' => 1, 'description' => '']);
         $this->assertNotFalse($Categories->save($category));
 
         $this->delete('/forum/admin/categories/delete/' . $category->id);

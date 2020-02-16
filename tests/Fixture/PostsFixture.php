@@ -137,7 +137,7 @@ About the Prime95 Large FFT, I\'ve gotten crashes on my Phenom II on Blend that 
             'category_id' => 2,
             'last_reply_id' => 8,
             'user_id' => 1,
-            'title' => 'Anandtech：Intel\'s Skylake-SP Xeon VS AMD\'s EPYC 7000',
+            'title' => 'Anandtech:Intel\'s Skylake-SP Xeon VS AMD\'s EPYC 7000',
             'slug' => 'anandtech-intels-skylake-sp-xeon-vs-amds-epyc-7000',
             'message' => 'With the exception of database software and vectorizable HPC code, AMD\'s EPYC 7601 ($4200) offers slightly less or slightly better performance than Intel\'s Xeon 8176 ($8000+).',
             'replies_count' => 2,
