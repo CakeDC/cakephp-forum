@@ -17,9 +17,10 @@ class ModeratorsControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'plugin.CakeDC/Forum.categories',
-        'plugin.CakeDC/Forum.moderators',
-        'plugin.CakeDC/Forum.users',
+        'plugin.CakeDC/Forum.Categories',
+        'plugin.CakeDC/Forum.Moderators',
+        'plugin.CakeDC/Forum.Users',
+        'plugin.CakeDC/Forum.Posts',
     ];
 
     public function setUp(): void
