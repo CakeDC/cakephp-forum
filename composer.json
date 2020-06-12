@@ -24,7 +24,7 @@
         "cakephp/cakephp": "^3.4",
         "muffin/slug": "^1.1",
         "muffin/orderly": "^1.0",
-        "cakephp/migrations": "^1.7"
+        "cakephp/migrations": "@stable"
     },
     "require-dev": {
         "phpunit/phpunit": "^5.7|^6.0"
