@@ -22,8 +22,8 @@
     },
     "require": {
         "cakephp/cakephp": "^4.0.0",
-        "muffin/slug": "dev-cake-4.x",
-        "muffin/orderly": "dev-cake-4.x",
+        "muffin/slug": "^2.0.0",
+        "muffin/orderly": "^2.0.0",
         "cakephp/migrations": "^4.0.0"
     },
     "require-dev": {
