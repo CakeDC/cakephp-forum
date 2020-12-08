@@ -36,8 +36,6 @@ class ReportsController extends AppController
     public function initialize(): void
     {
         parent::initialize();
-
-        $this->Auth->deny();
     }
 
     /**
@@ -50,7 +48,7 @@ class ReportsController extends AppController
         $filter = array_intersect_key($this->request->getQueryParams(), array_flip(['post_id', 'thread_id']));
 
         $this->loadModel('CakeDC/Forum.Moderators');
-        $categoryIds = $this->Moderators->getUserCategories($this->Auth->user('id'));
+        $categoryIds = $this->Moderators->getUserCategories($this->_getAuthenticatedUserId());
         if (!$categoryIds) {
             throw new UnauthorizedException();
         }
@@ -73,13 +71,13 @@ class ReportsController extends AppController
     public function add($categorySlug, $threadSlug, $postId)
     {
         $post = $this->_getPost($categorySlug, $threadSlug, $postId);
-
-        if ($this->Reports->find()->where(['user_id' => $this->Auth->user('id'), 'post_id' => $post->id])->first()) {
+        $userId = $this->_getAuthenticatedUserId();
+        if ($this->Reports->find()->where(['user_id' => $userId, 'post_id' => $post->id])->first()) {
             throw new BadRequestException();
         }
 
         $report = $this->Reports->newEmptyEntity();
-        $report->user_id = $this->Auth->user('id');
+        $report->user_id = $userId;
         $report->post_id = $post->id;
 
         if ($this->request->is(['post'])) {

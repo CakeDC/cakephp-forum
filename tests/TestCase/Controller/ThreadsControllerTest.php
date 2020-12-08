@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace CakeDC\Forum\Test\TestCase\Controller;
 
+use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestCase;
 
@@ -29,14 +30,12 @@ class ThreadsControllerTest extends IntegrationTestCase
     {
         parent::setUp();
 
-        $this->session([
-            'Auth' => [
-                'User' => [
-                    'id' => 1,
-                    'username' => 'testing',
-                ],
-            ],
-        ]);
+        Configure::write('Forum.authenticatedUserCallable', function(\Cake\Controller\Controller $controller) {
+            return [
+                'id' => 1,
+                'username' => 'testing',
+            ];
+        });
 
         $this->enableRetainFlashMessages();
         $this->enableCsrfToken();
@@ -130,14 +129,12 @@ class ThreadsControllerTest extends IntegrationTestCase
         $this->assertEquals($data['is_sticky'], $thread->get('is_sticky'));
         $this->assertEquals($data['is_locked'], $thread->get('is_locked'));
 
-        $this->session([
-            'Auth' => [
-                'User' => [
-                    'id' => 2,
-                    'username' => 'testing',
-                ],
-            ],
-        ]);
+        Configure::write('Forum.authenticatedUserCallable', function(\Cake\Controller\Controller $controller) {
+            return [
+                'id' => 2,
+                'username' => 'testing',
+            ];
+        });
         $thread = TableRegistry::get('CakeDC/Forum.Threads')->find('slugged', ['slug' => 'one-more-thread'])->first();
         $this->assertFalse($thread->get('is_sticky'));
         $this->assertFalse($thread->get('is_locked'));
@@ -192,14 +189,12 @@ class ThreadsControllerTest extends IntegrationTestCase
         $this->assertEquals(7, $thread->get('category_id'));
         $this->assertEmpty(array_diff(collection($thread->get('replies'))->extract('category_id')->toArray(), [7]));
 
-        $this->session([
-            'Auth' => [
-                'User' => [
-                    'id' => 2,
-                    'username' => 'testing',
-                ],
-            ],
-        ]);
+        Configure::write('Forum.authenticatedUserCallable', function(\Cake\Controller\Controller $controller) {
+            return [
+                'id' => 2,
+                'username' => 'testing',
+            ];
+        });
         $this->get('/forum/digital-and-video-cameras/overclocking-cpu-gpu-memory-stability-testing-guidelines/move');
         $this->assertResponseError();
     }
@@ -273,14 +268,12 @@ class ThreadsControllerTest extends IntegrationTestCase
     public function testDeleteNotModerator()
     {
         // Deleting a thread when user is not moderator
-        $this->session([
-            'Auth' => [
-                'User' => [
-                    'id' => 2,
-                    'username' => 'testing',
-                ],
-            ],
-        ]);
+        Configure::write('Forum.authenticatedUserCallable', function(\Cake\Controller\Controller $controller) {
+            return [
+                'id' => 2,
+                'username' => 'testing',
+            ];
+        });
         $Threads = TableRegistry::getTableLocator()->get('CakeDC/Forum.Threads');
         $thread = $Threads->newEntity(['title' => 'thread to delete', 'message' => 'test thread message']);
         $thread->category_id = 2;
@@ -305,14 +298,12 @@ class ThreadsControllerTest extends IntegrationTestCase
         $this->assertCount(6, $threads);
         $this->assertEquals('Overclocking CPU/GPU/Memory Stability Testing Guidelines', $threads[0]->title);
 
-        $this->session([
-            'Auth' => [
-                'User' => [
-                    'id' => 2,
-                    'username' => 'testing',
-                ],
-            ],
-        ]);
+        Configure::write('Forum.authenticatedUserCallable', function(\Cake\Controller\Controller $controller) {
+            return [
+                'id' => 2,
+                'username' => 'testing',
+            ];
+        });
         $this->get('/forum/my-conversations');
         $threads = $this->viewVariable('threads')->toArray();
         $this->assertNotEmpty($threads);

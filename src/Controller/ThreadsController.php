@@ -45,8 +45,8 @@ class ThreadsController extends AppController
             'limit' => Configure::read('Forum.postsPerPage'),
         ];
 
-        $this->Auth->allow();
-        $this->Auth->deny(['my', 'add', 'edit', 'move', 'delete']);
+//        $this->Auth->allow();
+//        $this->Auth->deny(['my', 'add', 'edit', 'move', 'delete']);
     }
 
     /**
@@ -82,7 +82,7 @@ class ThreadsController extends AppController
      */
     public function my()
     {
-        $threads = $this->paginate($this->Threads->find('byUser', ['user_id' => $this->Auth->user('id')]));
+        $threads = $this->paginate($this->Threads->find('byUser', ['user_id' => $this->_getAuthenticatedUserId()]));
 
         $this->set(compact('threads'));
     }
@@ -99,7 +99,7 @@ class ThreadsController extends AppController
         $thread = $this->_getThread($categorySlug, $slug);
 
         $query = $this->Posts->find('byThread', ['thread_id' => $thread->id]);
-        $userId = $this->Auth->user('id');
+        $userId = $this->_getAuthenticatedUserId();
         if ($userId) {
             $query = $query
                 ->find('withUserReport', ['user_id' => $userId])
@@ -133,7 +133,7 @@ class ThreadsController extends AppController
         }
 
         $thread = $this->Threads->newEmptyEntity();
-        $thread->user_id = $this->Auth->user('id');
+        $thread->user_id = $this->_getAuthenticatedUserId();
         $thread->set('category', $category);
 
         $this->set(compact('thread'));
@@ -154,7 +154,7 @@ class ThreadsController extends AppController
     public function edit($categorySlug, $threadSlug)
     {
         $thread = $this->_getThread($categorySlug, $threadSlug);
-        if ($thread->user_id != $this->Auth->user('id')) {
+        if ($thread->user_id != $this->_getAuthenticatedUserId()) {
             throw new UnauthorizedException();
         }
 
@@ -200,7 +200,7 @@ class ThreadsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
 
         $thread = $this->_getThread($categorySlug, $threadSlug);
-        if ($thread->user_id !== $this->Auth->user('id') && !$this->_forumUserIsModerator($thread->category_id)) {
+        if ($thread->user_id !== $this->_getAuthenticatedUserId() && !$this->_forumUserIsModerator($thread->category_id)) {
             throw new UnauthorizedException();
         }
 
