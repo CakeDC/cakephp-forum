@@ -35,8 +35,6 @@ class RepliesController extends AppController
     public function initialize(): void
     {
         parent::initialize();
-
-        $this->Auth->deny();
     }
 
     /**
@@ -54,7 +52,7 @@ class RepliesController extends AppController
         }
 
         $reply = $this->Replies->newEmptyEntity();
-        $reply->user_id = $this->Auth->user('id');
+        $reply->user_id = $this->_getAuthenticatedUserId();
         $reply->set('category', $thread->category);
         $reply->set('thread', $thread);
 
@@ -78,7 +76,7 @@ class RepliesController extends AppController
     {
         $reply = $this->_getReply($categorySlug, $threadSlug, $id);
 
-        if ($reply->user_id != $this->Auth->user('id')) {
+        if ($reply->user_id != $this->_getAuthenticatedUserId()) {
             throw new UnauthorizedException();
         }
 
@@ -102,7 +100,7 @@ class RepliesController extends AppController
 
         $reply = $this->_getReply($categorySlug, $threadSlug, $id);
 
-        if ($reply->user_id !== $this->Auth->user('id') && !$this->_forumUserIsModerator($reply->category_id)) {
+        if ($reply->user_id !== $this->_getAuthenticatedUserId() && !$this->_forumUserIsModerator($reply->category_id)) {
             throw new UnauthorizedException();
         }
 
