@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace CakeDC\Forum\Test\TestCase\Controller\Admin;
 
+use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestCase;
 
@@ -27,15 +28,13 @@ class ThreadsControllerTest extends IntegrationTestCase
     {
         parent::setUp();
 
-        $this->session([
-            'Auth' => [
-                'User' => [
-                    'id' => 1,
-                    'username' => 'testing',
-                    'is_superuser' => true,
-                ],
-            ],
-        ]);
+        Configure::write('Forum.authenticatedUserCallable', function(\Cake\Controller\Controller $controller) {
+            return [
+                'id' => 1,
+                'username' => 'testing',
+                'is_superuser' => true,
+            ];
+        });
 
         $this->enableRetainFlashMessages();
         $this->enableCsrfToken();

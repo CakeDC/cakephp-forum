@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace CakeDC\Forum\Test\TestCase\Controller\Admin;
 
+use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
@@ -30,15 +31,13 @@ class CategoriesControllerTest extends TestCase
     {
         parent::setUp();
 
-        $this->session([
-            'Auth' => [
-                'User' => [
-                    'id' => 1,
-                    'username' => 'testing',
-                    'is_superuser' => true,
-                ],
-            ],
-        ]);
+        Configure::write('Forum.authenticatedUserCallable', function(\Cake\Controller\Controller $controller) {
+            return [
+                'id' => 1,
+                'username' => 'testing',
+                'is_superuser' => true,
+            ];
+        });
 
         $this->enableRetainFlashMessages();
         $this->enableCsrfToken();
@@ -76,15 +75,13 @@ class CategoriesControllerTest extends TestCase
      */
     public function testIndexUnauthorized()
     {
-        $this->session([
-            'Auth' => [
-                'User' => [
-                    'id' => 2,
-                    'username' => 'testing',
-                    'is_superuser' => false,
-                ],
-            ],
-        ]);
+        Configure::write('Forum.authenticatedUserCallable', function(\Cake\Controller\Controller $controller) {
+            return [
+                'id' => 2,
+                'username' => 'testing',
+                'is_superuser' => false,
+            ];
+        });
 
         $this->get('/forum/admin');
 
