@@ -33,8 +33,6 @@ abstract class AppController extends Controller
     {
         parent::initialize();
 
-//        $this->Auth->deny();
-
         if ($this->_getAuthenticatedUser() && Configure::read('Forum.adminCheck') && !$this->_forumUserIsAdmin()) {
             throw new \Cake\Http\Exception\UnauthorizedException();
         }
