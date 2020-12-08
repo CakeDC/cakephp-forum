@@ -24,13 +24,23 @@ bin/cake migrations seed --seed=EverythingSeed --plugin=CakeDC/Forum
 Loading the Plugin
 ------------------
 
-Ensure the Users Plugin is loaded in your config/bootstrap.php file
+In your Application::bootstrap method ensure the Forum Plugin is loaded and can get user data
 
 ```php
-Plugin::load('CakeDC/Forum', ['bootstrap' => true, 'routes' => true]);
+//A sample code to work with authentication plugin
+Configure::write('Forum.authenticatedUserCallable', function($controller) {
+    return $controller->getRequest()->getAttribute('identity');
+});
+$this->addPlugin('CakeDC/Forum', ['bootstrap' => true, 'routes' => true]);
 ```
 
 Now your Forum index pages should be available under `/forum` URL. Admin interface under `/forum/admin`.
+
+Authorization
+-------------
+Authorization checks are optional but can be done easily with the plugins
+cakedc/users plugin and cakedc/auth plugin. You can find a sample file with rbac
+permissions at [config/permissions.php](../../config/permissions.php).
 
 Configuration
 -------------

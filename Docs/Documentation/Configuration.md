@@ -28,6 +28,9 @@ return [
     'threadsPerPage' => 20,
     // Posts limit per page
     'postsPerPage' => 20,
+    'authenticatedUserCallable' => function($controller) {
+        return $controller->getRequest()->getAttribute('identity');
+    },
 ];
 ```
 
