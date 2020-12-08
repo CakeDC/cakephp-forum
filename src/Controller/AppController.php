@@ -82,7 +82,7 @@ class AppController extends BaseController
         parent::beforeFilter($event);
 
         if ($this->request->getParam('prefix') != 'admin') {
-            $this->set('userInfo', $this->Auth->user());
+            $this->set('userInfo', $this->_getAuthenticatedUser());
         }
     }
 }
