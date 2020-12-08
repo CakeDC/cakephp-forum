@@ -21,6 +21,16 @@ use Cake\Utility\Hash;
 trait ForumTrait
 {
     /**
+     * Get the authenticated user id. See _getAuthenticatedUser
+     *
+     * @return mixed
+     */
+    protected function _getAuthenticatedUserId()
+    {
+        return $this->_getAuthenticatedUser()['id'] ?? null;
+    }
+
+    /**
      * Get the authenticated user. Try to use config Forum.authenticatedUserCallable to
      * when $this->loadedAuthenticatedUser is false.
      *

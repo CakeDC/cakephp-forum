@@ -35,8 +35,6 @@ class LikesController extends AppController
     public function initialize(): void
     {
         parent::initialize();
-
-        $this->Auth->deny();
     }
 
     /**
@@ -50,13 +48,13 @@ class LikesController extends AppController
     public function add($categorySlug, $threadSlug, $postId)
     {
         $post = $this->_getPost($categorySlug, $threadSlug, $postId);
-
-        if ($this->Likes->find()->where(['user_id' => $this->Auth->user('id'), 'post_id' => $post->id])->first()) {
+        $userId = $this->_getAuthenticatedUserId();
+        if ($this->Likes->find()->where(['user_id' => $userId, 'post_id' => $post->id])->first()) {
             throw new BadRequestException();
         }
 
         $like = $this->Likes->newEmptyEntity();
-        $like->user_id = $this->Auth->user('id');
+        $like->user_id = $userId;
         $like->post_id = $post->id;
 
         if ($this->request->is(['post'])) {
