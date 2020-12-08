@@ -29,6 +29,15 @@ use CakeDC\Forum\Controller\Traits\ForumTrait;
  */
 class AppController extends BaseController
 {
+    /**
+     * @var array|\ArrayAccess|null
+     */
+    protected $authenticatedUser;
+    /**
+     * @var bool
+     */
+    protected $loadedAuthenticatedUser = false;
+
     use ForumTrait;
 
     /**

@@ -21,13 +21,36 @@ use Cake\Utility\Hash;
 trait ForumTrait
 {
     /**
+     * Get the authenticated user. Try to use config Forum.authenticatedUserCallable to
+     * when $this->loadedAuthenticatedUser is false.
+     *
+     * @return array|\ArrayAccess|null
+     */
+    protected function _getAuthenticatedUser()
+    {
+        if ($this->loadedAuthenticatedUser) {
+            return $this->authenticatedUser;
+        }
+        $callable = Configure::read('Forum.authenticatedUserCallable');
+        if (!is_callable($callable)) {
+            throw new \UnexpectedValueException(
+                __('Config key "Forum.authenticatedUserCallable" must be a valid callable')
+            );
+        }
+        $this->authenticatedUser = $callable($this);
+        $this->loadedAuthenticatedUser = true;
+
+        return $this->authenticatedUser;
+    }
+
+    /**
      * Check if current user is admin
      *
      * @return bool
      */
     protected function _forumUserIsAdmin()
     {
-        $user = $this->Auth->user();
+        $user = $this->_getAuthenticatedUser();
         if (!$user) {
             return false;
         }
@@ -59,7 +82,9 @@ trait ForumTrait
 
         $this->loadModel('CakeDC/Forum.Moderators');
 
-        $userCategories = $this->Moderators->getUserCategories($this->Auth->user('id'));
+        $userCategories = $this->Moderators->getUserCategories(
+            $this->_getAuthenticatedUser()['id']
+        );
 
         if (!$categoryId) {
             return !empty($userCategories);
