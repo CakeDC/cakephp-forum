@@ -44,6 +44,8 @@ class VisibleOnlyBehavior extends Behavior
      */
     public function beforeFind(EventInterface $event, Query $query, ArrayObject $options, $primary): void
     {
-        $query->where([$this->getTable()->aliasField($this->getConfig('field')) => true]);
+        $query->where([
+            $this->table()->aliasField($this->getConfig('field')) => true
+        ]);
     }
 }
