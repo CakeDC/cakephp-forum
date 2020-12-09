@@ -5,7 +5,6 @@ use Cake\TestSuite\Fixture\TestFixture;
 
 /**
  * ModeratorsFixture
- *
  */
 class ModeratorsFixture extends TestFixture
 {

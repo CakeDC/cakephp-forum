@@ -26,7 +26,6 @@ use InvalidArgumentException;
  * @property \CakeDC\Forum\Model\Table\CategoriesTable|\Cake\ORM\Association\BelongsTo $Categories
  * @property \Cake\ORM\Association\BelongsTo $Users
  * @property \CakeDC\Forum\Model\Table\ReportsTable|\Cake\ORM\Association\HasMany $Reports
- *
  * @method \CakeDC\Forum\Model\Entity\Post get($primaryKey, $options = [])
  * @method \CakeDC\Forum\Model\Entity\Post newEntity($data = null, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Post newEmptyEntity()
@@ -35,7 +34,6 @@ use InvalidArgumentException;
  * @method \CakeDC\Forum\Model\Entity\Post patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Post[] patchEntities($entities, array $data, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Post findOrCreate($search, callable $callback = null, $options = [])
- *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class PostsTable extends Table

@@ -16,7 +16,6 @@ namespace CakeDC\Forum\Controller;
 /**
  * Categories Controller
  *
- *
  * @method \CakeDC\Forum\Model\Entity\Category[] paginate($object = null, array $settings = [])
  * @mixin \Cake\Controller\Controller
  */
@@ -33,9 +32,6 @@ class CategoriesController extends AppController
     public function initialize(): void
     {
         parent::initialize();
-
-        $this->Auth->deny();
-        $this->Auth->allow(['index']);
     }
 
     /**

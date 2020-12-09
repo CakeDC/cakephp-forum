@@ -27,7 +27,6 @@ use InvalidArgumentException;
  * @property \CakeDC\Forum\Model\Table\CategoriesTable|\Cake\ORM\Association\HasMany $ChildCategories
  * @property \CakeDC\Forum\Model\Table\ModeratorsTable|\Cake\ORM\Association\HasMany $Moderators
  * @property \CakeDC\Forum\Model\Table\PostsTable|\Cake\ORM\Association\HasMany $Posts
- *
  * @method \CakeDC\Forum\Model\Entity\Category get($primaryKey, $options = [])
  * @method \CakeDC\Forum\Model\Entity\Category newEntity($data = null, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Category newEmptyEntity()
@@ -36,7 +35,6 @@ use InvalidArgumentException;
  * @method \CakeDC\Forum\Model\Entity\Category patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Category[] patchEntities($entities, array $data, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Category findOrCreate($search, callable $callback = null, $options = [])
- *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Cake\ORM\Behavior\TreeBehavior
  */

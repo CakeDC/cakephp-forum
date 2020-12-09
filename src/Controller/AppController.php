@@ -32,6 +32,15 @@ class AppController extends BaseController
     use ForumTrait;
 
     /**
+     * @var array|\ArrayAccess|null
+     */
+    protected $authenticatedUser;
+    /**
+     * @var bool
+     */
+    protected $loadedAuthenticatedUser = false;
+
+    /**
      * Initialization hook method.
      *
      * Implement this method to avoid having to overwrite
@@ -73,7 +82,7 @@ class AppController extends BaseController
         parent::beforeFilter($event);
 
         if ($this->request->getParam('prefix') != 'admin') {
-            $this->set('userInfo', $this->Auth->user());
+            $this->set('userInfo', $this->_getAuthenticatedUser());
         }
     }
 }

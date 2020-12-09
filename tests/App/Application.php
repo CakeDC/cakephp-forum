@@ -25,7 +25,6 @@ class Application extends \Cake\Http\BaseApplication
      * Setup the middleware queue
      *
      * @param \Cake\Http\MiddlewareQueue $middleware The middleware queue to set in your App Class
-     *
      * @return \Cake\Http\MiddlewareQueue
      */
 
@@ -47,7 +46,7 @@ class Application extends \Cake\Http\BaseApplication
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function bootstrap(): void
     {

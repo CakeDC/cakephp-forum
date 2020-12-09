@@ -34,7 +34,6 @@ use InvalidArgumentException;
  * @property \Cake\ORM\Association\BelongsTo $Users
  * @property \CakeDC\Forum\Model\Table\RepliesTable $Replies
  * @property \CakeDC\Forum\Model\Table\ReportsTable $Reports
- *
  * @method \CakeDC\Forum\Model\Entity\Thread get($primaryKey, $options = [])
  * @method \CakeDC\Forum\Model\Entity\Thread newEntity($data = null, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Thread newEmptyEntity()
@@ -43,7 +42,6 @@ use InvalidArgumentException;
  * @method \CakeDC\Forum\Model\Entity\Thread patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Thread[] patchEntities($entities, array $data, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Thread findOrCreate($search, callable $callback = null, $options = [])
- *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class ThreadsTable extends Table
@@ -216,7 +214,6 @@ class ThreadsTable extends Table
      * @param \Cake\ORM\Query $query Query
      * @param \ArrayObject $options Options
      * @param bool $primary Primary
-     *
      * @return void
      */
     public function beforeFind(EventInterface $event, Query $query, ArrayObject $options, $primary): void
@@ -232,7 +229,6 @@ class ThreadsTable extends Table
      * @param \Cake\Event\Event $event Event
      * @param \Cake\Datasource\EntityInterface $entity Entity
      * @param \ArrayObject $options Options
-     *
      * @return void
      */
     public function afterSave(EventInterface $event, EntityInterface $entity, ArrayObject $options): void

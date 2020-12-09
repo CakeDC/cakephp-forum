@@ -18,7 +18,6 @@ use Cake\Http\Exception\BadRequestException;
 /**
  * Replies Controller
  *
- *
  * @method \CakeDC\Forum\Model\Entity\Reply[] paginate($object = null, array $settings = [])
  * @property \CakeDC\Forum\Model\Table\RepliesTable $Replies
  * @mixin \Cake\Controller\Controller
@@ -45,7 +44,7 @@ class RepliesController extends AppController
     /**
      * Add method
      *
-     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
+     * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
     public function add()
     {
@@ -57,7 +56,7 @@ class RepliesController extends AppController
 
         $thread = $this->Replies->Threads->get($parentId);
         $reply = $this->Replies->newEmptyEntity();
-        $reply->user_id = $this->Auth->user('id');
+        $reply->user_id = $this->_getAuthenticatedUserId();
         $reply->parent_id = $thread->id;
         $reply->category_id = $thread->category_id;
         if ($this->request->is('post')) {
@@ -78,7 +77,7 @@ class RepliesController extends AppController
      * Edit method
      *
      * @param string|null $id Post id.
-     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
+     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Http\Exception\NotFoundException When record not found.
      */
     public function edit($id = null)
@@ -107,7 +106,7 @@ class RepliesController extends AppController
      * Delete method
      *
      * @param string|null $id Post id.
-     * @return \Cake\Http\Response|null Redirects to index.
+     * @return \Cake\Http\Response|null|void Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function delete($id = null)

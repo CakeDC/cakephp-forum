@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace CakeDC\Forum\Test\TestCase\Controller;
 
+use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestCase;
 
@@ -29,14 +30,12 @@ class ReportsControllerTest extends IntegrationTestCase
     {
         parent::setUp();
 
-        $this->session([
-            'Auth' => [
-                'User' => [
-                    'id' => 1,
-                    'username' => 'testing',
-                ],
-            ],
-        ]);
+        Configure::write('Forum.authenticatedUserCallable', function (\Cake\Controller\Controller $controller) {
+            return [
+                'id' => 1,
+                'username' => 'testing',
+            ];
+        });
 
         $this->enableRetainFlashMessages();
         $this->enableCsrfToken();
@@ -61,28 +60,24 @@ class ReportsControllerTest extends IntegrationTestCase
         $this->assertCount(2, $reports);
 
         // Another category moderator
-        $this->session([
-            'Auth' => [
-                'User' => [
-                    'id' => 3,
-                    'username' => 'testing',
-                ],
-            ],
-        ]);
+        Configure::write('Forum.authenticatedUserCallable', function (\Cake\Controller\Controller $controller) {
+            return [
+                'id' => 3,
+                'username' => 'testing',
+            ];
+        });
         $this->get('/forum/reports');
         $this->assertResponseOk();
         $reports = $this->viewVariable('reports')->toArray();
         $this->assertCount(0, $reports);
 
         // Non-moderator
-        $this->session([
-            'Auth' => [
-                'User' => [
-                    'id' => 4,
-                    'username' => 'testing',
-                ],
-            ],
-        ]);
+        Configure::write('Forum.authenticatedUserCallable', function (\Cake\Controller\Controller $controller) {
+            return [
+                'id' => 4,
+                'username' => 'testing',
+            ];
+        });
         $this->get('/forum/reports');
         $this->assertResponseError();
     }

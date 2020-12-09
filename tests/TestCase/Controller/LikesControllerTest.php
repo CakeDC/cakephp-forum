@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace CakeDC\Forum\Test\TestCase\Controller;
 
+use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestCase;
 
@@ -28,14 +29,12 @@ class LikesControllerTest extends IntegrationTestCase
     {
         parent::setUp();
 
-        $this->session([
-            'Auth' => [
-                'User' => [
-                    'id' => 1,
-                    'username' => 'testing',
-                ],
-            ],
-        ]);
+        Configure::write('Forum.authenticatedUserCallable', function (\Cake\Controller\Controller $controller) {
+            return [
+                'id' => 1,
+                'username' => 'testing',
+            ];
+        });
 
         $this->enableRetainFlashMessages();
         $this->enableCsrfToken();

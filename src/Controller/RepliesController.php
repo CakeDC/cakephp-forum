@@ -35,8 +35,6 @@ class RepliesController extends AppController
     public function initialize(): void
     {
         parent::initialize();
-
-        $this->Auth->deny();
     }
 
     /**
@@ -44,7 +42,7 @@ class RepliesController extends AppController
      *
      * @param string $categorySlug Category slug
      * @param string $threadSlug Thread slug
-     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
+     * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
     public function add($categorySlug, $threadSlug)
     {
@@ -54,7 +52,7 @@ class RepliesController extends AppController
         }
 
         $reply = $this->Replies->newEmptyEntity();
-        $reply->user_id = $this->Auth->user('id');
+        $reply->user_id = $this->_getAuthenticatedUserId();
         $reply->set('category', $thread->category);
         $reply->set('thread', $thread);
 
@@ -71,14 +69,14 @@ class RepliesController extends AppController
      * @param string $categorySlug Category slug.
      * @param string $threadSlug Thread slug.
      * @param int $id Reply id.
-     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
+     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Http\Exception\NotFoundException When record not found.
      */
     public function edit($categorySlug, $threadSlug, $id)
     {
         $reply = $this->_getReply($categorySlug, $threadSlug, $id);
 
-        if ($reply->user_id != $this->Auth->user('id')) {
+        if ($reply->user_id != $this->_getAuthenticatedUserId()) {
             throw new UnauthorizedException();
         }
 
@@ -93,7 +91,7 @@ class RepliesController extends AppController
      * @param string $categorySlug Category slug.
      * @param string $threadSlug Thread slug.
      * @param int $id Reply id
-     * @return \Cake\Http\Response|null Redirects to index.
+     * @return \Cake\Http\Response|null|void Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function delete($categorySlug, $threadSlug, $id)
@@ -102,7 +100,7 @@ class RepliesController extends AppController
 
         $reply = $this->_getReply($categorySlug, $threadSlug, $id);
 
-        if ($reply->user_id !== $this->Auth->user('id') && !$this->_forumUserIsModerator($reply->category_id)) {
+        if ($reply->user_id !== $this->_getAuthenticatedUserId() && !$this->_forumUserIsModerator($reply->category_id)) {
             throw new UnauthorizedException();
         }
 

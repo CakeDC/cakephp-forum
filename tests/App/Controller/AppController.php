@@ -11,7 +11,6 @@ use Cake\Controller\Controller;
  *
  * Add your application-wide methods in the class below, your controllers
  * will inherit them.
- *
  */
 class AppController extends Controller
 {
@@ -21,32 +20,5 @@ class AppController extends Controller
 
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
-        $this->loadComponent('Auth', [
-            'authenticate' => [
-                'Form' => [
-                    'userModel' => 'Users',
-                ],
-            ],
-            'loginAction' => [
-                'controller' => 'Users',
-                'action' => 'login',
-                'plugin' => false,
-                'prefix' => false,
-            ],
-            'loginRedirect' => [
-                'controller' => 'Users',
-                'action' => 'login',
-                'plugin' => false,
-                'prefix' => false,
-                'home',
-            ],
-            'logoutRedirect' => [
-                'controller' => 'Users',
-                'action' => 'login',
-                'plugin' => false,
-                'prefix' => false,
-                'home',
-            ],
-        ]);
     }
 }

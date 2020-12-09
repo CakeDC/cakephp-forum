@@ -23,7 +23,6 @@ use Cake\Validation\Validator;
  *
  * @property \CakeDC\Forum\Model\Table\PostsTable|\Cake\ORM\Association\BelongsTo $Posts
  * @property \Cake\ORM\Association\BelongsTo $Users
- *
  * @method \CakeDC\Forum\Model\Entity\Like get($primaryKey, $options = [])
  * @method \CakeDC\Forum\Model\Entity\Like newEntity($data = null, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Like newEmptyEntity()
@@ -32,7 +31,6 @@ use Cake\Validation\Validator;
  * @method \CakeDC\Forum\Model\Entity\Like patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Like[] patchEntities($entities, array $data, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Like findOrCreate($search, callable $callback = null, $options = [])
- *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class LikesTable extends Table

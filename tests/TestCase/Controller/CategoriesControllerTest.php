@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace CakeDC\Forum\Test\TestCase\Controller;
 
+use Cake\Core\Configure;
 use Cake\TestSuite\IntegrationTestCase;
 
 /**
@@ -25,19 +26,29 @@ class CategoriesControllerTest extends IntegrationTestCase
     public function setUp(): void
     {
         parent::setUp();
-
-        $this->session([
-            'Auth' => [
-                'User' => [
-                    'id' => 1,
-                    'username' => 'testing',
-                ],
-            ],
-        ]);
+        Configure::write('Forum.authenticatedUserCallable', function (\Cake\Controller\Controller $controller) {
+            return [
+                'id' => 1,
+                'username' => 'testing',
+            ];
+        });
 
         $this->enableRetainFlashMessages();
         $this->enableCsrfToken();
         $this->enableSecurityToken();
+    }
+
+    /**
+     * Test index method
+     *
+     * @return void
+     */
+    public function testIndexCantGetAuthenticatedUser()
+    {
+        Configure::write('Forum.authenticatedUserCallable', 'notAValidCallable');
+        $this->get('/forum');
+        $this->assertResponseFailure();
+        $this->assertResponseContains('Error: Config key &quot;Forum.authenticatedUserCallable&quot; must be a valid callable');
     }
 
     /**
@@ -76,15 +87,12 @@ class CategoriesControllerTest extends IntegrationTestCase
         $this->assertResponseContains('>Reports<');
         $forumUserIsModerator = $this->viewVariable('forumUserIsModerator');
         $this->assertTrue($forumUserIsModerator);
-
-        $this->session([
-            'Auth' => [
-                'User' => [
-                    'id' => 4,
-                    'username' => 'user',
-                ],
-            ],
-        ]);
+        Configure::write('Forum.authenticatedUserCallable', function (\Cake\Controller\Controller $controller) {
+            return [
+                'id' => 4,
+                'username' => 'user',
+            ];
+        });
         $this->get('/forum');
         $this->assertResponseNotContains('>Reports<');
         $forumUserIsModerator = $this->viewVariable('forumUserIsModerator');
