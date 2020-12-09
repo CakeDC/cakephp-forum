@@ -1,0 +1,7 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Call to an undefined method Cake\\\\Collection\\\\CollectionInterface\\:\\:printer\\(\\)\\.$#"
+			count: 1
+			path: src/Model/Table/CategoriesTable.php
+
