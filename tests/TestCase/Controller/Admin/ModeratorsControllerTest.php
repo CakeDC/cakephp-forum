@@ -28,7 +28,7 @@ class ModeratorsControllerTest extends IntegrationTestCase
     {
         parent::setUp();
 
-        Configure::write('Forum.authenticatedUserCallable', function(\Cake\Controller\Controller $controller) {
+        Configure::write('Forum.authenticatedUserCallable', function (\Cake\Controller\Controller $controller) {
             return [
                 'id' => 1,
                 'username' => 'testing',

@@ -32,7 +32,6 @@ use InvalidArgumentException;
  * @property \CakeDC\Forum\Model\Table\CategoriesTable|\Cake\ORM\Association\BelongsTo $Categories
  * @property \Cake\ORM\Association\BelongsTo $Users
  * @property \CakeDC\Forum\Model\Table\ReportsTable|\Cake\ORM\Association\HasMany $Reports
- *
  * @method \CakeDC\Forum\Model\Entity\Reply get($primaryKey, $options = [])
  * @method \CakeDC\Forum\Model\Entity\Reply newEntity($data = null, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Reply newEmptyEntity()
@@ -41,7 +40,6 @@ use InvalidArgumentException;
  * @method \CakeDC\Forum\Model\Entity\Reply patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Reply[] patchEntities($entities, array $data, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Reply findOrCreate($search, callable $callback = null, $options = [])
- *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class RepliesTable extends Table
@@ -205,7 +203,6 @@ class RepliesTable extends Table
      * @param \Cake\ORM\Query $query Query
      * @param \ArrayObject $options Options
      * @param bool $primary Primary
-     *
      * @return void
      */
     public function beforeFind(EventInterface $event, Query $query, ArrayObject $options, $primary): void

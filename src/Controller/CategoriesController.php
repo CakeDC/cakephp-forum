@@ -16,7 +16,6 @@ namespace CakeDC\Forum\Controller;
 /**
  * Categories Controller
  *
- *
  * @method \CakeDC\Forum\Model\Entity\Category[] paginate($object = null, array $settings = [])
  * @mixin \Cake\Controller\Controller
  */

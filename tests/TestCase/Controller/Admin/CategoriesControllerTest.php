@@ -31,7 +31,7 @@ class CategoriesControllerTest extends TestCase
     {
         parent::setUp();
 
-        Configure::write('Forum.authenticatedUserCallable', function(\Cake\Controller\Controller $controller) {
+        Configure::write('Forum.authenticatedUserCallable', function (\Cake\Controller\Controller $controller) {
             return [
                 'id' => 1,
                 'username' => 'testing',
@@ -75,7 +75,7 @@ class CategoriesControllerTest extends TestCase
      */
     public function testIndexUnauthorized()
     {
-        Configure::write('Forum.authenticatedUserCallable', function(\Cake\Controller\Controller $controller) {
+        Configure::write('Forum.authenticatedUserCallable', function (\Cake\Controller\Controller $controller) {
             return [
                 'id' => 2,
                 'username' => 'testing',

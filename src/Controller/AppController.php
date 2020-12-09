@@ -29,6 +29,8 @@ use CakeDC\Forum\Controller\Traits\ForumTrait;
  */
 class AppController extends BaseController
 {
+    use ForumTrait;
+
     /**
      * @var array|\ArrayAccess|null
      */
@@ -37,8 +39,6 @@ class AppController extends BaseController
      * @var bool
      */
     protected $loadedAuthenticatedUser = false;
-
-    use ForumTrait;
 
     /**
      * Initialization hook method.

@@ -39,13 +39,12 @@ class VisibleOnlyBehavior extends Behavior
      * @param \Cake\ORM\Query $query Query
      * @param \ArrayObject $options Options
      * @param bool $primary Primary
-     *
      * @return void
      */
     public function beforeFind(EventInterface $event, Query $query, ArrayObject $options, $primary): void
     {
         $query->where([
-            $this->getTable()->aliasField($this->getConfig('field')) => true
+            $this->getTable()->aliasField($this->getConfig('field')) => true,
         ]);
     }
 }

@@ -26,7 +26,7 @@ class CategoriesControllerTest extends IntegrationTestCase
     public function setUp(): void
     {
         parent::setUp();
-        Configure::write('Forum.authenticatedUserCallable', function(\Cake\Controller\Controller $controller) {
+        Configure::write('Forum.authenticatedUserCallable', function (\Cake\Controller\Controller $controller) {
             return [
                 'id' => 1,
                 'username' => 'testing',
@@ -87,7 +87,7 @@ class CategoriesControllerTest extends IntegrationTestCase
         $this->assertResponseContains('>Reports<');
         $forumUserIsModerator = $this->viewVariable('forumUserIsModerator');
         $this->assertTrue($forumUserIsModerator);
-        Configure::write('Forum.authenticatedUserCallable', function(\Cake\Controller\Controller $controller) {
+        Configure::write('Forum.authenticatedUserCallable', function (\Cake\Controller\Controller $controller) {
             return [
                 'id' => 4,
                 'username' => 'user',

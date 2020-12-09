@@ -16,7 +16,6 @@ namespace CakeDC\Forum\Controller\Admin;
 /**
  * Moderators Controller
  *
- *
  * @method \CakeDC\Forum\Model\Entity\Moderator[] paginate($object = null, array $settings = [])
  * @property \CakeDC\Forum\Model\Table\ModeratorsTable $Moderators
  * @mixin \Cake\Controller\Controller

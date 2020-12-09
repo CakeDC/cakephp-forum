@@ -18,7 +18,6 @@ use Cake\Http\Exception\BadRequestException;
 /**
  * Replies Controller
  *
- *
  * @method \CakeDC\Forum\Model\Entity\Reply[] paginate($object = null, array $settings = [])
  * @property \CakeDC\Forum\Model\Table\RepliesTable $Replies
  * @mixin \Cake\Controller\Controller

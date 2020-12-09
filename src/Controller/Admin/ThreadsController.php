@@ -18,7 +18,6 @@ use Cake\Core\Configure;
 /**
  * Threads Controller
  *
- *
  * @method \CakeDC\Forum\Model\Entity\Thread[] paginate($object = null, array $settings = [])
  * @property \CakeDC\Forum\Model\Table\ThreadsTable $Threads
  * @mixin \Cake\Controller\Controller

@@ -30,7 +30,7 @@ class ReportsControllerTest extends IntegrationTestCase
     {
         parent::setUp();
 
-        Configure::write('Forum.authenticatedUserCallable', function(\Cake\Controller\Controller $controller) {
+        Configure::write('Forum.authenticatedUserCallable', function (\Cake\Controller\Controller $controller) {
             return [
                 'id' => 1,
                 'username' => 'testing',
@@ -60,7 +60,7 @@ class ReportsControllerTest extends IntegrationTestCase
         $this->assertCount(2, $reports);
 
         // Another category moderator
-        Configure::write('Forum.authenticatedUserCallable', function(\Cake\Controller\Controller $controller) {
+        Configure::write('Forum.authenticatedUserCallable', function (\Cake\Controller\Controller $controller) {
             return [
                 'id' => 3,
                 'username' => 'testing',
@@ -72,7 +72,7 @@ class ReportsControllerTest extends IntegrationTestCase
         $this->assertCount(0, $reports);
 
         // Non-moderator
-        Configure::write('Forum.authenticatedUserCallable', function(\Cake\Controller\Controller $controller) {
+        Configure::write('Forum.authenticatedUserCallable', function (\Cake\Controller\Controller $controller) {
             return [
                 'id' => 4,
                 'username' => 'testing',

@@ -5,7 +5,6 @@ use Cake\TestSuite\Fixture\TestFixture;
 
 /**
  * LikesFixture
- *
  */
 class LikesFixture extends TestFixture
 {
