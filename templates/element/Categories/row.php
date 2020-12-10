@@ -32,7 +32,7 @@
         </td>
         <td style="width:350px">
             <?php if ($category->last_post): ?>
-                <?= __('Latest: {0}', $this->Html->link($this->Text->truncate($category->last_post->title, 40), ['controller' => 'Threads', 'action' => 'view', 'category' => $category->slug, 'thread' => $category->last_post->slug, '#' => 'post' . $category->last_post->id])) ?><br />
+                <?= __('Latest: {0}', $this->Html->link($this->Text->truncate($category->last_post->title ?? '', 40), ['controller' => 'Threads', 'action' => 'view', 'category' => $category->slug, 'thread' => $category->last_post->slug, '#' => 'post' . $category->last_post->id])) ?><br />
                 <?= $this->element('Forum/username', ['user' => $category->last_post->user]) ?>, <?= $category->last_post->created->timeAgoInWords() ?>
             <?php endif; ?>
         </td>
