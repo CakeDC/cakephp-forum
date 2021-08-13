@@ -55,29 +55,12 @@ class PostsTable extends Table
         $this->addBehavior('Timestamp');
         $this->addBehavior('Muffin/Orderly.Orderly', ['order' => $this->aliasField('id')]);
 
-        $this->belongsTo('Threads', [
-            'className' => 'CakeDC/Forum.Threads',
-            'foreignKey' => 'parent_id',
-        ]);
-        $this->belongsTo('Categories', [
-            'className' => 'CakeDC/Forum.Categories',
-            'joinType' => 'INNER',
-        ]);
-        $this->belongsTo('Users', [
-            'className' => Configure::read('Forum.userModel'),
-        ]);
-        $this->hasOne('UserLikes', [
-            'className' => 'CakeDC/Forum.Likes',
-            'foreignKey' => 'post_id',
-        ]);
-        $this->hasOne('UserReports', [
-            'className' => 'CakeDC/Forum.Reports',
-            'foreignKey' => 'post_id',
-        ]);
-        $this->hasMany('Likes', [
-            'className' => 'CakeDC/Forum.Likes',
-            'foreignKey' => 'post_id',
-        ]);
+        $this->belongsTo('Threads')->setClassName('CakeDC/Forum.Threads')->setForeignKey('parent_id');
+        $this->belongsTo('Categories')->setClassName('CakeDC/Forum.Categories')->setJoinType('INNER');
+        $this->belongsTo('Users')->setClassName(Configure::read('Forum.userModel'));
+        $this->hasOne('UserLikes')->setClassName('CakeDC/Forum.Likes')->setForeignKey('post_id');
+        $this->hasOne('UserReports')->setClassName('CakeDC/Forum.Reports')->setForeignKey('post_id');
+        $this->hasMany('Likes')->setClassName('CakeDC/Forum.Likes')->setForeignKey('post_id');
     }
 
     /**

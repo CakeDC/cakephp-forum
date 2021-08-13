@@ -60,43 +60,16 @@ class ThreadsTable extends Table
         $this->setDisplayField('title');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Categories', [
-            'className' => 'CakeDC/Forum.Categories',
-            'joinType' => 'INNER',
+        $this->belongsTo('Categories')->setClassName('CakeDC/Forum.Categories')->setJoinType('INNER');
+        $this->hasMany('Replies')->setClassName('CakeDC/Forum.Replies')->setForeignKey('parent_id')->setDependent(true)->setCascadeCallbacks(true);
+        $this->hasOne('UserReplies')->setClassName('CakeDC/Forum.Replies')->setForeignKey('parent_id');
+        $this->belongsTo('LastReplies')->setClassName('CakeDC/Forum.Posts')->setForeignKey('last_reply_id');
+        $this->hasOne('ReportedReplies')->setClassName('CakeDC/Forum.Replies')->setForeignKey('parent_id')->setConditions([
+            'ReportedReplies.reports_count >' => 0,
         ]);
-        $this->hasMany('Replies', [
-            'className' => 'CakeDC/Forum.Replies',
-            'foreignKey' => 'parent_id',
-            'dependent' => true,
-            'cascadeCallbacks' => true,
-        ]);
-        $this->hasOne('UserReplies', [
-            'className' => 'CakeDC/Forum.Replies',
-            'foreignKey' => 'parent_id',
-        ]);
-        $this->belongsTo('LastReplies', [
-            'className' => 'CakeDC/Forum.Posts',
-            'foreignKey' => 'last_reply_id',
-        ]);
-        $this->hasOne('ReportedReplies', [
-            'className' => 'CakeDC/Forum.Replies',
-            'foreignKey' => 'parent_id',
-            'conditions' => [
-                'ReportedReplies.reports_count >' => 0,
-            ],
-        ]);
-        $this->hasMany('Reports', [
-            'className' => 'CakeDC/Forum.Reports',
-            'foreignKey' => 'post_id',
-        ]);
-        $this->hasMany('Likes', [
-            'className' => 'CakeDC/Forum.Likes',
-            'foreignKey' => 'post_id',
-        ]);
-        $this->belongsTo('Users', [
-            'className' => Configure::read('Forum.userModel'),
-            'joinType' => 'INNER',
-        ]);
+        $this->hasMany('Reports')->setClassName('CakeDC/Forum.Reports')->setForeignKey('post_id');
+        $this->hasMany('Likes')->setClassName('CakeDC/Forum.Likes')->setForeignKey('post_id');
+        $this->belongsTo('Users')->setClassName(Configure::read('Forum.userModel'))->setJoinType('INNER');
 
         $this->addBehavior('Timestamp', [
             'events' => [
@@ -321,6 +294,6 @@ class ThreadsTable extends Table
 
         return $query
             ->where([$this->aliasField('category_id') => $categoryId])
-            ->find('slugged', compact('slug'));
+            ->find('slugged', ['slug' => $slug]);
     }
 }

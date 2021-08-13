@@ -59,28 +59,13 @@ class CategoriesTable extends Table
         $this->addBehavior('Muffin/Slug.Slug');
         $this->addBehavior('Muffin/Orderly.Orderly', ['order' => $this->aliasField('lft')]);
 
-        $this->hasMany('Threads', [
-            'className' => 'CakeDC/Forum.Threads',
-            'conditions' => [
-                'Threads.parent_id IS' => null,
-            ],
+        $this->hasMany('Threads')->setClassName('CakeDC/Forum.Threads')->setConditions([
+            'Threads.parent_id IS' => null,
         ]);
-        $this->belongsTo('LastPosts', [
-            'className' => 'CakeDC/Forum.Posts',
-            'foreignKey' => 'last_post_id',
-        ]);
-        $this->belongsTo('ParentCategories', [
-            'className' => 'CakeDC/Forum.Categories',
-            'foreignKey' => 'parent_id',
-        ]);
-        $this->hasMany('SubCategories', [
-            'className' => 'CakeDC/Forum.Categories',
-            'foreignKey' => 'parent_id',
-        ]);
-        $this->hasMany('Moderators', [
-            'className' => 'CakeDC/Forum.Moderators',
-            'foreignKey' => 'category_id',
-        ]);
+        $this->belongsTo('LastPosts')->setClassName('CakeDC/Forum.Posts')->setForeignKey('last_post_id');
+        $this->belongsTo('ParentCategories')->setClassName('CakeDC/Forum.Categories')->setForeignKey('parent_id');
+        $this->hasMany('SubCategories')->setClassName('CakeDC/Forum.Categories')->setForeignKey('parent_id');
+        $this->hasMany('Moderators')->setClassName('CakeDC/Forum.Moderators')->setForeignKey('category_id');
     }
 
     /**

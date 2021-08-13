@@ -58,14 +58,8 @@ class ReportsTable extends Table
             ],
         ]);
 
-        $this->belongsTo('Posts', [
-            'className' => 'CakeDC/Forum.Posts',
-            'joinType' => 'INNER',
-        ]);
-        $this->belongsTo('Users', [
-            'className' => Configure::read('Forum.userModel'),
-            'joinType' => 'INNER',
-        ]);
+        $this->belongsTo('Posts')->setClassName('CakeDC/Forum.Posts')->setJoinType('INNER');
+        $this->belongsTo('Users')->setClassName(Configure::read('Forum.userModel'))->setJoinType('INNER');
     }
 
     /**

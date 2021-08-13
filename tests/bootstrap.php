@@ -158,3 +158,7 @@ ini_set('session.gc_divisor', '1');
 // has been written to.
 session_id('cli');
 
+\Cake\Routing\Router::reload();
+$application = new \CakeDC\Forum\Test\App\Application(CONFIG);
+$application->bootstrap();
+$application->pluginBootstrap();

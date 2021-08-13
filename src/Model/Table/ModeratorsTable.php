@@ -51,14 +51,8 @@ class ModeratorsTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('Categories', [
-            'className' => 'CakeDC/Forum.Categories',
-            'joinType' => 'INNER',
-        ]);
-        $this->belongsTo('Users', [
-            'className' => Configure::read('Forum.userModel'),
-            'joinType' => 'INNER',
-        ]);
+        $this->belongsTo('Categories')->setClassName('CakeDC/Forum.Categories')->setJoinType('INNER');
+        $this->belongsTo('Users')->setClassName(Configure::read('Forum.userModel'))->setJoinType('INNER');
     }
 
     /**

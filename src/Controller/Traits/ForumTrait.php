@@ -112,10 +112,10 @@ trait ForumTrait
     protected function _getCategory($slug)
     {
         /** @var \CakeDC\Forum\Model\Entity\Category $category */
-        $category = $this->Categories->find('slugged', compact('slug'))->firstOrFail();
-        $category->set('children', $this->Categories->find('children', compact('category'))->toArray());
+        $category = $this->Categories->find('slugged', ['slug' => $slug])->firstOrFail();
+        $category->set('children', $this->Categories->find('children', ['category' => $category])->toArray());
 
-        $this->set(compact('category'));
+        $this->set(['category' => $category]);
 
         $this->_getBreadcrumbs($category->id);
 
@@ -133,7 +133,7 @@ trait ForumTrait
         $breadcrumbs = $this->Categories->find('path', ['for' => $categoryId])->toArray();
         $forumUserIsModerator = $this->_forumUserIsModerator($categoryId);
 
-        $this->set(compact('breadcrumbs', 'forumUserIsModerator'));
+        $this->set(['breadcrumbs' => $breadcrumbs, 'forumUserIsModerator' => $forumUserIsModerator]);
 
         return $breadcrumbs;
     }
@@ -157,14 +157,14 @@ trait ForumTrait
                 },
                 'Categories.SubCategories',
             ])
-            ->find('slugged', compact('slug'))
+            ->find('slugged', ['slug' => $slug])
             ->firstOrFail();
 
         $category = $thread->category;
 
         $this->_getBreadcrumbs($thread->category_id);
 
-        $this->set(compact('thread', 'category'));
+        $this->set(['thread' => $thread, 'category' => $category]);
 
         return $thread;
     }
@@ -180,14 +180,14 @@ trait ForumTrait
     protected function _getReply($categorySlug, $threadSlug, $id)
     {
         /** @var \CakeDC\Forum\Model\Entity\Reply $reply */
-        $reply = $this->Replies->get($id, ['finder' => 'byThreadAndCategory'] + compact('categorySlug', 'threadSlug'));
+        $reply = $this->Replies->get($id, ['finder' => 'byThreadAndCategory'] + ['categorySlug' => $categorySlug, 'threadSlug' => $threadSlug]);
 
         $category = $reply->category;
         $thread = $reply->thread;
 
         $this->_getBreadcrumbs($reply->category_id);
 
-        $this->set(compact('thread', 'category', 'reply'));
+        $this->set(['thread' => $thread, 'category' => $category, 'reply' => $reply]);
 
         return $reply;
     }
@@ -205,7 +205,7 @@ trait ForumTrait
         $thread = $this->_getThread($categorySlug, $threadSlug);
         $post = $this->Posts->get($id, ['finder' => 'byThread', 'thread_id' => $thread->id]);
 
-        $this->set(compact('post'));
+        $this->set(['post' => $post]);
 
         return $post;
     }
