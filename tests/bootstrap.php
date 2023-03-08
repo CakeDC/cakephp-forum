@@ -162,3 +162,19 @@ session_id('cli');
 $application = new \CakeDC\Forum\Test\App\Application(CONFIG);
 $application->bootstrap();
 $application->pluginBootstrap();
+
+// Use migrations to build test database schema.
+//
+// Will rebuild the database if the migration state differs
+// from the migration history in files.
+//
+// If you are not using CakePHP's migrations you can
+// hook into your migration tool of choice here or
+// load schema from a SQL dump file with
+// use Cake\TestSuite\Fixture\SchemaLoader;
+// (new SchemaLoader())->loadSqlFiles('./tests/schema.sql', 'test');
+// in tests/bootstrap.php
+use Cake\TestSuite\Fixture\SchemaLoader;
+
+//(new SchemaLoader())->loadSqlFiles('path/to/schema.sql', 'test');
+//(new \Migrations\TestSuite\Migrator())->run();

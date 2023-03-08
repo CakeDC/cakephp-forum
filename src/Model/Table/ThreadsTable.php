@@ -192,7 +192,7 @@ class ThreadsTable extends Table
     public function beforeFind(EventInterface $event, Query $query, ArrayObject $options, $primary): void
     {
         if (!Hash::get($options, 'all')) {
-            $query->where([$query->newExpr()->isNull($this->aliasField('parent_id'))]);
+            $query->where([$query->expr()->isNull($this->aliasField('parent_id'))]);
         }
     }
 

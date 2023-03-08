@@ -99,6 +99,7 @@ class ModeratorsTable extends Table
     {
         return $this->find()
             ->where(['user_id' => $userId])
+            ->all()
             ->extract('category_id')
             ->toArray();
     }

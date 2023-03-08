@@ -193,7 +193,7 @@ class RepliesTable extends Table
     public function beforeFind(EventInterface $event, Query $query, ArrayObject $options, $primary): void
     {
         if (!Hash::get($options, 'all')) {
-            $query->where([$query->newExpr()->isNotNull($this->aliasField('parent_id'))]);
+            $query->where([$query->expr()->isNotNull($this->aliasField('parent_id'))]);
         }
     }
 }

@@ -163,8 +163,8 @@ class CategoriesTable extends Table
 
         return $query
             ->where([
-                $query->newExpr()->gt('lft', $category->get('lft')),
-                $query->newExpr()->lt('rght', $category->get('rght')),
+                $query->expr()->gt('lft', $category->get('lft')),
+                $query->expr()->lt('rght', $category->get('rght')),
             ])
             ->contain(['LastPosts.Users', 'LastPosts.Threads']);
     }
