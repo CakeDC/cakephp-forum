@@ -2,19 +2,18 @@
 declare(strict_types=1);
 
 /**
- * Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
+ * Copyright 2010 - 2023, Cake Development Corporation (https://www.cakedc.com)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
+ * @copyright Copyright 2010 - 2023, Cake Development Corporation (https://www.cakedc.com)
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-
 namespace CakeDC\Forum\Model\Table;
 
 use Cake\Core\Configure;
-use Cake\ORM\Query;
+use Cake\ORM\Query\SelectQuery;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Utility\Hash;
@@ -23,8 +22,9 @@ use Cake\Validation\Validator;
 /**
  * ForumReports Model
  *
- * @property \CakeDC\Forum\Model\Table\PostsTable|\Cake\ORM\Association\BelongsTo $Posts
- * @property \Cake\ORM\Association\BelongsTo $Users
+ * @property \CakeDC\Forum\Model\Table\PostsTable&\Cake\ORM\Association\BelongsTo $Posts
+ * @property \Cake\ORM\Table&\Cake\ORM\Association\BelongsTo $Users
+ *
  * @method \CakeDC\Forum\Model\Entity\Report get($primaryKey, $options = [])
  * @method \CakeDC\Forum\Model\Entity\Report newEntity($data = null, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Report newEmptyEntity()
@@ -33,7 +33,9 @@ use Cake\Validation\Validator;
  * @method \CakeDC\Forum\Model\Entity\Report patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Report[] patchEntities($entities, array $data, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Report findOrCreate($search, callable $callback = null, $options = [])
+ *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @mixin \Cake\ORM\Behavior\CounterCacheBehavior
  */
 class ReportsTable extends Table
 {
@@ -99,11 +101,11 @@ class ReportsTable extends Table
     /**
      * Find filtered
      *
-     * @param \Cake\ORM\Query $query The query builder.
+     * @param \Cake\ORM\Query\SelectQuery $query The query builder.
      * @param array $options Options.
-     * @return \Cake\ORM\Query
+     * @return \Cake\ORM\Query\SelectQuery
      */
-    public function findFiltered(Query $query, $options = [])
+    public function findFiltered(SelectQuery $query, array $options = []): SelectQuery
     {
         $where = [];
         $contain = [

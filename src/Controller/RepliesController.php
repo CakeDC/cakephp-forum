@@ -2,41 +2,29 @@
 declare(strict_types=1);
 
 /**
- * Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
+ * Copyright 2010 - 2023, Cake Development Corporation (https://www.cakedc.com)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
+ * @copyright Copyright 2010 - 2023, Cake Development Corporation (https://www.cakedc.com)
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-
 namespace CakeDC\Forum\Controller;
 
 use Cake\Http\Exception\BadRequestException;
 use Cake\Http\Exception\UnauthorizedException;
+use Cake\Http\Response;
+use CakeDC\Forum\Model\Entity\Reply;
 
 /**
  * Replies Controller
  *
- * @method \CakeDC\Forum\Model\Entity\Reply[] paginate($object = null, array $settings = [])
+ * @method Reply[] paginate($object = null, array $settings = [])
  * @mixin \Cake\Controller\Controller
  */
 class RepliesController extends AppController
 {
-    /**
-     * Initialization hook method.
-     *
-     * Implement this method to avoid having to overwrite
-     * the constructor and call parent.
-     *
-     * @return void
-     */
-    public function initialize(): void
-    {
-        parent::initialize();
-    }
-
     /**
      * Add method
      *
@@ -91,10 +79,10 @@ class RepliesController extends AppController
      * @param string $categorySlug Category slug.
      * @param string $threadSlug Thread slug.
      * @param int $id Reply id
-     * @return \Cake\Http\Response|null|void Redirects to index.
+     * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($categorySlug, $threadSlug, $id)
+    public function delete($categorySlug, $threadSlug, $id): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
 
@@ -119,7 +107,7 @@ class RepliesController extends AppController
      * @param \CakeDC\Forum\Model\Entity\Reply $reply Reply
      * @return \Cake\Http\Response|null
      */
-    protected function _save($reply)
+    protected function _save(Reply $reply): ?Response
     {
         $reply = $this->Replies->patchEntity($reply, $this->request->getData(), ['fields' => ['message']]);
         if (!$this->Replies->save($reply)) {

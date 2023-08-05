@@ -2,18 +2,18 @@
 declare(strict_types=1);
 
 /**
- * Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
+ * Copyright 2010 - 2023, Cake Development Corporation (https://www.cakedc.com)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
+ * @copyright Copyright 2010 - 2023, Cake Development Corporation (https://www.cakedc.com)
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-
 namespace CakeDC\Forum\Controller\Admin;
 
 use Cake\Http\Exception\BadRequestException;
+use Cake\Http\Response;
 
 /**
  * Replies Controller
@@ -28,17 +28,17 @@ class RepliesController extends AppController
      * View method
      *
      * @param string|null $id Post id.
-     * @return \Cake\Http\Response|void
+     * @return void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view($id = null): void
     {
         $reply = $this->Replies->get($id, [
             'contain' => ['Threads', 'Categories', 'Users'],
         ]);
 
         $this->set(compact('reply'));
-        $this->set('_serialize', ['reply']);
+        $this->viewBuilder()->setOption('serialize', ['reply']);
     }
 
     /**
@@ -48,7 +48,6 @@ class RepliesController extends AppController
      */
     public function add()
     {
-        $thread = null;
         $parentId = $this->request->getQuery('parent_id');
         if (!$parentId) {
             throw new BadRequestException();
@@ -70,7 +69,7 @@ class RepliesController extends AppController
         }
 
         $this->set(compact('reply', 'thread'));
-        $this->set('_serialize', ['reply', 'thread']);
+        $this->viewBuilder()->setOption('serialize', ['reply', 'thread']);
     }
 
     /**
@@ -99,17 +98,17 @@ class RepliesController extends AppController
         }
 
         $this->set(compact('reply', 'thread'));
-        $this->set('_serialize', ['reply', 'thread']);
+        $this->viewBuilder()->setOption('serialize', ['reply', 'thread']);
     }
 
     /**
      * Delete method
      *
      * @param string|null $id Post id.
-     * @return \Cake\Http\Response|null|void Redirects to index.
+     * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+    public function delete($id = null): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
         $reply = $this->Replies->get($id);

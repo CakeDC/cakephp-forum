@@ -2,21 +2,20 @@
 declare(strict_types=1);
 
 /**
- * Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
+ * Copyright 2010 - 2023, Cake Development Corporation (https://www.cakedc.com)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
+ * @copyright Copyright 2010 - 2023, Cake Development Corporation (https://www.cakedc.com)
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-
 namespace CakeDC\Forum\Model\Table;
 
 use ArrayObject;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
-use Cake\ORM\Query;
+use Cake\ORM\Query\SelectQuery;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
@@ -28,10 +27,12 @@ use InvalidArgumentException;
 /**
  * Replies Model
  *
- * @property \CakeDC\Forum\Model\Table\ThreadsTable $Threads
- * @property \CakeDC\Forum\Model\Table\CategoriesTable|\Cake\ORM\Association\BelongsTo $Categories
- * @property \Cake\ORM\Association\BelongsTo $Users
- * @property \CakeDC\Forum\Model\Table\ReportsTable|\Cake\ORM\Association\HasMany $Reports
+ * @property \CakeDC\Forum\Model\Table\ThreadsTable&\Cake\ORM\Association\BelongsTo $Threads
+ * @property \CakeDC\Forum\Model\Table\CategoriesTable&\Cake\ORM\Association\BelongsTo $Categories
+ * @property \Cake\ORM\Table&\Cake\ORM\Association\BelongsTo $Users
+ * @property \CakeDC\Forum\Model\Table\ReportsTable&\Cake\ORM\Association\HasMany $Reports
+ * @property \CakeDC\Forum\Model\Table\LikesTable&\Cake\ORM\Association\HasMany $Likes
+ *
  * @method \CakeDC\Forum\Model\Entity\Reply get($primaryKey, $options = [])
  * @method \CakeDC\Forum\Model\Entity\Reply newEntity($data = null, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Reply newEmptyEntity()
@@ -40,7 +41,9 @@ use InvalidArgumentException;
  * @method \CakeDC\Forum\Model\Entity\Reply patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Reply[] patchEntities($entities, array $data, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Reply findOrCreate($search, callable $callback = null, $options = [])
+ *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @mixin \Muffin\Orderly\Model\Behavior\OrderlyBehavior
  */
 class RepliesTable extends Table
 {
@@ -72,7 +75,7 @@ class RepliesTable extends Table
                 'replies_count',
                 'last_post_id' => function ($event, Reply $entity, RepliesTable $table) {
                     $Posts = TableRegistry::getTableLocator()->get('CakeDC/Forum.Posts');
-                    $lastPost = $Posts->find()->where(['category_id' => $entity->category_id])->orderDesc('id')->first();
+                    $lastPost = $Posts->find()->where(['category_id' => $entity->category_id])->orderByDesc('id')->first();
                     if (!$lastPost) {
                         return null;
                     }
@@ -82,7 +85,7 @@ class RepliesTable extends Table
             ],
             'Threads' => [
                 'last_reply_created' => function ($event, Reply $entity, RepliesTable $table) {
-                    $lastReply = $table->find()->where(['parent_id' => $entity->parent_id])->orderDesc('id')->first();
+                    $lastReply = $table->find()->where(['parent_id' => $entity->parent_id])->orderByDesc('id')->first();
                     if (!$lastReply) {
                         return $this->Threads->get($entity->parent_id)->created;
                     }
@@ -90,7 +93,7 @@ class RepliesTable extends Table
                     return $lastReply['created'];
                 },
                 'last_reply_id' => function ($event, Reply $entity, RepliesTable $table) {
-                    $lastReply = $table->find()->where(['parent_id' => $entity->parent_id])->orderDesc('id')->first();
+                    $lastReply = $table->find()->where(['parent_id' => $entity->parent_id])->orderByDesc('id')->first();
                     if (!$lastReply) {
                         return null;
                     }
@@ -145,23 +148,23 @@ class RepliesTable extends Table
     /**
      * Last reply finder
      *
-     * @param \Cake\ORM\Query $query The query builder.
+     * @param \Cake\ORM\Query\SelectQuery $query The query builder.
      * @param array $options Options.
-     * @return \Cake\ORM\Query
+     * @return \Cake\ORM\Query\SelectQuery
      */
-    public function findLastReply(Query $query, $options = [])
+    public function findLastReply(SelectQuery $query, array $options = []): SelectQuery
     {
-        return $query->orderDesc($this->aliasField('id'));
+        return $query->orderByDesc($this->aliasField('id'));
     }
 
     /**
      * Find by ID and parent_id
      *
-     * @param \Cake\ORM\Query $query The query builder.
+     * @param \Cake\ORM\Query\SelectQuery $query The query builder.
      * @param array $options Options.
-     * @return \Cake\ORM\Query
+     * @return \Cake\ORM\Query\SelectQuery
      */
-    public function findByThreadAndCategory(Query $query, $options = [])
+    public function findByThreadAndCategory(SelectQuery $query, array $options = []): SelectQuery
     {
         $categorySlug = Hash::get($options, 'categorySlug');
         $threadSlug = Hash::get($options, 'threadSlug');
@@ -171,12 +174,8 @@ class RepliesTable extends Table
 
         return $query->contain([
             'Users',
-            'Categories' => function (Query $query) use ($categorySlug) {
-                return $query->find('slugged', ['slug' => $categorySlug]);
-            },
-            'Threads' => function (Query $query) use ($threadSlug) {
-                return $query->find('slugged', ['slug' => $threadSlug]);
-            },
+            'Categories' => fn(SelectQuery $query): SelectQuery => $query->find('slugged', ['slug' => $categorySlug]),
+            'Threads' => fn(SelectQuery $query): SelectQuery => $query->find('slugged', ['slug' => $threadSlug]),
             'Threads.Users',
         ]);
     }
@@ -185,12 +184,12 @@ class RepliesTable extends Table
      * beforeFind callback
      *
      * @param \Cake\Event\Event $event Event
-     * @param \Cake\ORM\Query $query Query
+     * @param \Cake\ORM\Query\SelectQuery $query Query
      * @param \ArrayObject $options Options
      * @param bool $primary Primary
      * @return void
      */
-    public function beforeFind(EventInterface $event, Query $query, ArrayObject $options, $primary): void
+    public function beforeFind(EventInterface $event, SelectQuery $query, ArrayObject $options, bool $primary): void
     {
         if (!Hash::get($options, 'all')) {
             $query->where([$query->expr()->isNotNull($this->aliasField('parent_id'))]);

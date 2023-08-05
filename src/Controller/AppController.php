@@ -2,15 +2,14 @@
 declare(strict_types=1);
 
 /**
- * Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
+ * Copyright 2010 - 2023, Cake Development Corporation (https://www.cakedc.com)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
+ * @copyright Copyright 2010 - 2023, Cake Development Corporation (https://www.cakedc.com)
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-
 namespace CakeDC\Forum\Controller;
 
 use App\Controller\AppController as BaseController;
@@ -47,15 +46,15 @@ class AppController extends BaseController
      * the constructor and call parent.
      *
      * @return void
+     * @throws \Exception
      */
     public function initialize(): void
     {
         parent::initialize();
-
-        $this->loadModel('CakeDC/Forum.Categories');
-        $this->loadModel('CakeDC/Forum.Threads');
-        $this->loadModel('CakeDC/Forum.Replies');
-        $this->loadModel('CakeDC/Forum.Posts');
+        $this->Categories = $this->fetchTable('CakeDC/Forum.Categories');
+        $this->Threads = $this->fetchTable('CakeDC/Forum.Threads');
+        $this->Replies = $this->fetchTable('CakeDC/Forum.Replies');
+        $this->Posts = $this->fetchTable('CakeDC/Forum.Posts');
 
         if (!$this->request->getParam('prefix')) {
             $this->Categories->addBehavior('CakeDC/Forum.VisibleOnly');
@@ -64,20 +63,16 @@ class AppController extends BaseController
             $this->Posts->addBehavior('CakeDC/Forum.VisibleOnly');
         }
 
-        /*
-         * Enable the following components for recommended CakePHP security settings.
-         * see https://book.cakephp.org/3.0/en/controllers/components/security.html
-         */
-        $this->loadComponent('Security');
+        $this->loadComponent('FormProtection');
     }
 
     /**
      * beforeFilter callback
      *
      * @param \Cake\Event\EventInterface $event Event
-     * @return \Cake\Http\Response|null|void
+     * @return void
      */
-    public function beforeFilter(EventInterface $event)
+    public function beforeFilter(EventInterface $event): void
     {
         parent::beforeFilter($event);
 

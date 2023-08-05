@@ -2,18 +2,17 @@
 declare(strict_types=1);
 
 /**
- * Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
+ * Copyright 2010 - 2023, Cake Development Corporation (https://www.cakedc.com)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
+ * @copyright Copyright 2010 - 2023, Cake Development Corporation (https://www.cakedc.com)
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-
 namespace CakeDC\Forum\Model\Table;
 
-use Cake\ORM\Query;
+use Cake\ORM\Query\SelectQuery;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Utility\Hash;
@@ -23,10 +22,12 @@ use InvalidArgumentException;
 /**
  * ForumCategories Model
  *
- * @property \CakeDC\Forum\Model\Table\CategoriesTable|\Cake\ORM\Association\BelongsTo $ParentCategories
- * @property \CakeDC\Forum\Model\Table\CategoriesTable|\Cake\ORM\Association\HasMany $ChildCategories
- * @property \CakeDC\Forum\Model\Table\ModeratorsTable|\Cake\ORM\Association\HasMany $Moderators
- * @property \CakeDC\Forum\Model\Table\PostsTable|\Cake\ORM\Association\HasMany $Posts
+ * @property \CakeDC\Forum\Model\Table\CategoriesTable&\Cake\ORM\Association\BelongsTo $ParentCategories
+ * @property \CakeDC\Forum\Model\Table\CategoriesTable&\Cake\ORM\Association\HasMany $ChildCategories
+ * @property \CakeDC\Forum\Model\Table\ModeratorsTable&\Cake\ORM\Association\HasMany $Moderators
+ * @property \CakeDC\Forum\Model\Table\PostsTable&\Cake\ORM\Association\HasMany $Posts
+ * @property \CakeDC\Forum\Model\Table\ThreadsTable&\Cake\ORM\Association\HasMany $Threads
+ *
  * @method \CakeDC\Forum\Model\Entity\Category get($primaryKey, $options = [])
  * @method \CakeDC\Forum\Model\Entity\Category newEntity($data = null, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Category newEmptyEntity()
@@ -35,8 +36,11 @@ use InvalidArgumentException;
  * @method \CakeDC\Forum\Model\Entity\Category patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Category[] patchEntities($entities, array $data, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Category findOrCreate($search, callable $callback = null, $options = [])
+ *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Cake\ORM\Behavior\TreeBehavior
+ * @mixin \Muffin\Slug\Model\Behavior\SlugBehavior
+ * @mixin \Muffin\Orderly\Model\Behavior\OrderlyBehavior
  */
 class CategoriesTable extends Table
 {
@@ -124,7 +128,7 @@ class CategoriesTable extends Table
      * @param bool $grouped Grouped
      * @return array
      */
-    public function getOptionsList($grouped = false)
+    public function getOptionsList($grouped = false): array
     {
         $categories = $this->find()->all()->nest('id', 'parent_id');
 
@@ -150,11 +154,11 @@ class CategoriesTable extends Table
     /**
      * Find category children
      *
-     * @param \Cake\ORM\Query $query The query builder.
+     * @param \Cake\ORM\Query\SelectQuery $query The query builder.
      * @param array $options Options.
-     * @return \Cake\ORM\Query
+     * @return \Cake\ORM\Query\SelectQuery
      */
-    public function findChildren(Query $query, $options = [])
+    public function findChildren(SelectQuery $query, array $options = []): SelectQuery
     {
         $category = Hash::get($options, 'category');
         if (!$category) {

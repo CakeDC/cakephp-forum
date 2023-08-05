@@ -2,16 +2,17 @@
 declare(strict_types=1);
 
 /**
- * Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
+ * Copyright 2010 - 2023, Cake Development Corporation (https://www.cakedc.com)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
+ * @copyright Copyright 2010 - 2023, Cake Development Corporation (https://www.cakedc.com)
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-
 namespace CakeDC\Forum\Controller\Admin;
+
+use Cake\Http\Response;
 
 /**
  * Moderators Controller
@@ -44,17 +45,17 @@ class ModeratorsController extends AppController
         $users = $this->Moderators->Users->find('list')->toArray();
 
         $this->set(compact('moderator', 'categories', 'users'));
-        $this->set('_serialize', ['moderator', 'categories', 'users']);
+        $this->viewBuilder()->setOption('serialize', ['moderator', 'categories', 'users']);
     }
 
     /**
      * Delete method
      *
      * @param string|null $id Post id.
-     * @return \Cake\Http\Response|null|void Redirects to index.
+     * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+    public function delete($id = null): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
         $moderator = $this->Moderators->get($id);

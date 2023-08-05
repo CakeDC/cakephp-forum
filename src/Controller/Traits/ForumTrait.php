@@ -1,11 +1,25 @@
 <?php
 declare(strict_types=1);
 
+/**
+ * Copyright 2010 - 2023, Cake Development Corporation (https://www.cakedc.com)
+ *
+ * Licensed under The MIT License
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright Copyright 2010 - 2023, Cake Development Corporation (https://www.cakedc.com)
+ * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
+ */
 namespace CakeDC\Forum\Controller\Traits;
 
 use Cake\Core\Configure;
-use Cake\ORM\Query;
+use Cake\ORM\Query\SelectQuery;
 use Cake\Utility\Hash;
+use CakeDC\Forum\Model\Entity\Category;
+use CakeDC\Forum\Model\Entity\Post;
+use CakeDC\Forum\Model\Entity\Reply;
+use CakeDC\Forum\Model\Entity\Thread;
+use UnexpectedValueException;
 
 /**
  * ForumTrait
@@ -25,7 +39,7 @@ trait ForumTrait
      *
      * @return mixed
      */
-    protected function _getAuthenticatedUserId()
+    protected function _getAuthenticatedUserId(): mixed
     {
         return $this->_getAuthenticatedUser()['id'] ?? null;
     }
@@ -36,14 +50,14 @@ trait ForumTrait
      *
      * @return array|\ArrayAccess|null
      */
-    protected function _getAuthenticatedUser()
+    protected function _getAuthenticatedUser(): \ArrayAccess|array|null
     {
         if ($this->loadedAuthenticatedUser) {
             return $this->authenticatedUser;
         }
         $callable = Configure::read('Forum.authenticatedUserCallable');
         if (!is_callable($callable)) {
-            throw new \UnexpectedValueException(
+            throw new UnexpectedValueException(
                 __('Config key "Forum.authenticatedUserCallable" must be a valid callable')
             );
         }
@@ -58,7 +72,7 @@ trait ForumTrait
      *
      * @return bool
      */
-    protected function _forumUserIsAdmin()
+    protected function _forumUserIsAdmin(): bool
     {
         $user = $this->_getAuthenticatedUser();
         if (!$user) {
@@ -84,13 +98,13 @@ trait ForumTrait
      * @param int|null $categoryId Category id
      * @return bool
      */
-    protected function _forumUserIsModerator($categoryId = null)
+    protected function _forumUserIsModerator($categoryId = null): bool
     {
         if ($this->_forumUserIsAdmin()) {
             return true;
         }
 
-        $this->loadModel('CakeDC/Forum.Moderators');
+        $this->Moderators = $this->fetchTable('CakeDC/Forum.Moderators');
 
         $userCategories = $this->Moderators->getUserCategories(
             $this->_getAuthenticatedUser()['id']
@@ -109,7 +123,7 @@ trait ForumTrait
      * @param string $slug Category slug
      * @return \CakeDC\Forum\Model\Entity\Category
      */
-    protected function _getCategory($slug)
+    protected function _getCategory(string $slug): Category
     {
         /** @var \CakeDC\Forum\Model\Entity\Category $category */
         $category = $this->Categories->find('slugged', ['slug' => $slug])->firstOrFail();
@@ -128,7 +142,7 @@ trait ForumTrait
      * @param int $categoryId Category id
      * @return \CakeDC\Forum\Model\Entity\Category[]
      */
-    protected function _getBreadcrumbs($categoryId)
+    protected function _getBreadcrumbs($categoryId): array
     {
         $breadcrumbs = $this->Categories->find('path', ['for' => $categoryId])->toArray();
         $forumUserIsModerator = $this->_forumUserIsModerator($categoryId);
@@ -145,16 +159,15 @@ trait ForumTrait
      * @param string $slug Slug
      * @return \CakeDC\Forum\Model\Entity\Thread
      */
-    protected function _getThread($categorySlug, $slug)
+    protected function _getThread($categorySlug, $slug): Thread
     {
         /** @var \CakeDC\Forum\Model\Entity\Thread $thread */
         $thread = $this->Threads
             ->find()
             ->contain([
                 'Users',
-                'Categories' => function (Query $query) use ($categorySlug) {
-                    return $query->find('slugged', ['slug' => $categorySlug]);
-                },
+                'Categories' => fn(SelectQuery $query): SelectQuery => $query
+                    ->find('slugged', ['slug' => $categorySlug]),
                 'Categories.SubCategories',
             ])
             ->find('slugged', ['slug' => $slug])
@@ -177,9 +190,8 @@ trait ForumTrait
      * @param int $id Reply id
      * @return \CakeDC\Forum\Model\Entity\Reply
      */
-    protected function _getReply($categorySlug, $threadSlug, $id)
+    protected function _getReply($categorySlug, $threadSlug, $id): Reply
     {
-        /** @var \CakeDC\Forum\Model\Entity\Reply $reply */
         $reply = $this->Replies->get($id, ['finder' => 'byThreadAndCategory'] + ['categorySlug' => $categorySlug, 'threadSlug' => $threadSlug]);
 
         $category = $reply->category;
@@ -200,7 +212,7 @@ trait ForumTrait
      * @param int $id Post id
      * @return \CakeDC\Forum\Model\Entity\Post
      */
-    protected function _getPost($categorySlug, $threadSlug, $id)
+    protected function _getPost($categorySlug, $threadSlug, $id): Post
     {
         $thread = $this->_getThread($categorySlug, $threadSlug);
         $post = $this->Posts->get($id, ['finder' => 'byThread', 'thread_id' => $thread->id]);

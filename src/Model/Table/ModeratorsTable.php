@@ -2,15 +2,14 @@
 declare(strict_types=1);
 
 /**
- * Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
+ * Copyright 2010 - 2023, Cake Development Corporation (https://www.cakedc.com)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
+ * @copyright Copyright 2010 - 2023, Cake Development Corporation (https://www.cakedc.com)
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-
 namespace CakeDC\Forum\Model\Table;
 
 use Cake\Core\Configure;
@@ -21,8 +20,9 @@ use Cake\Validation\Validator;
 /**
  * Moderators Model
  *
- * @property \CakeDC\Forum\Model\Table\CategoriesTable $Categories
- * @property \Cake\ORM\Association\BelongsTo $Users
+ * @property \CakeDC\Forum\Model\Table\CategoriesTable&\Cake\ORM\Association\BelongsTo $Categories
+ * @property \Cake\ORM\Table&\Cake\ORM\Association\BelongsTo $Users
+ *
  * @method \CakeDC\Forum\Model\Entity\Moderator get($primaryKey, $options = [])
  * @method \CakeDC\Forum\Model\Entity\Moderator newEntity($data = null, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Moderator newEmptyEntity()
@@ -95,7 +95,7 @@ class ModeratorsTable extends Table
      * @param int $userId User id
      * @return array
      */
-    public function getUserCategories($userId)
+    public function getUserCategories(int $userId): array
     {
         return $this->find()
             ->where(['user_id' => $userId])

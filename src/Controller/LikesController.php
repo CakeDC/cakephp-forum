@@ -2,18 +2,18 @@
 declare(strict_types=1);
 
 /**
- * Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
+ * Copyright 2010 - 2023, Cake Development Corporation (https://www.cakedc.com)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
+ * @copyright Copyright 2010 - 2023, Cake Development Corporation (https://www.cakedc.com)
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-
 namespace CakeDC\Forum\Controller;
 
 use Cake\Http\Exception\BadRequestException;
+use Cake\Http\Response;
 
 /**
  * Likes Controller
@@ -25,27 +25,14 @@ use Cake\Http\Exception\BadRequestException;
 class LikesController extends AppController
 {
     /**
-     * Initialization hook method.
-     *
-     * Implement this method to avoid having to overwrite
-     * the constructor and call parent.
-     *
-     * @return void
-     */
-    public function initialize(): void
-    {
-        parent::initialize();
-    }
-
-    /**
      * Add method
      *
      * @param string $categorySlug Category slug
      * @param string $threadSlug Thread slug
      * @param int $postId Post id
-     * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
+     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add($categorySlug, $threadSlug, $postId)
+    public function add($categorySlug, $threadSlug, $postId): ?Response
     {
         $post = $this->_getPost($categorySlug, $threadSlug, $postId);
         $userId = $this->_getAuthenticatedUserId();

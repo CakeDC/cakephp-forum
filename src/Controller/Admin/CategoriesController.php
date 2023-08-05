@@ -2,16 +2,17 @@
 declare(strict_types=1);
 
 /**
- * Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
+ * Copyright 2010 - 2023, Cake Development Corporation (https://www.cakedc.com)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
+ * @copyright Copyright 2010 - 2023, Cake Development Corporation (https://www.cakedc.com)
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-
 namespace CakeDC\Forum\Controller\Admin;
+
+use Cake\Http\Response;
 
 /**
  * Categories Controller
@@ -25,31 +26,31 @@ class CategoriesController extends AppController
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return void
      */
-    public function index()
+    public function index(): void
     {
         $categories = $this->Categories->find('threaded')->contain(['Moderators.Users']);
 
         $this->set(compact('categories'));
-        $this->set('_serialize', ['categories']);
+        $this->viewBuilder()->setOption('serialize', ['categories']);
     }
 
     /**
      * View method
      *
      * @param string|null $id Category id.
-     * @return \Cake\Http\Response|void
+     * @return void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view($id = null): void
     {
         $category = $this->Categories->get($id, [
             'contain' => ['ParentCategories', 'SubCategories', 'Moderators.Users'],
         ]);
 
         $this->set('category', $category);
-        $this->set('_serialize', ['category']);
+        $this->viewBuilder()->setOption('serialize', 'category');
     }
 
     /**
@@ -73,7 +74,7 @@ class CategoriesController extends AppController
         $categories = $this->Categories->find('list')->where(['parent_id IS' => null])->toArray();
 
         $this->set(compact('category', 'categories'));
-        $this->set('_serialize', ['category', 'categories']);
+        $this->viewBuilder()->setOption('serialize', ['category', 'categories']);
     }
 
     /**
@@ -101,17 +102,17 @@ class CategoriesController extends AppController
         $categories = $this->Categories->find('list')->where(['parent_id IS' => null])->toArray();
 
         $this->set(compact('category', 'categories'));
-        $this->set('_serialize', ['category', 'categories']);
+        $this->viewBuilder()->setOption('serialize', ['category', 'categories']);
     }
 
     /**
      * Delete method
      *
      * @param string|null $id Category id.
-     * @return \Cake\Http\Response|null|void Redirects to index.
+     * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+    public function delete($id = null): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
         $category = $this->Categories->get($id);
@@ -130,7 +131,7 @@ class CategoriesController extends AppController
      * @param int $id Category id
      * @return \Cake\Http\Response|null
      */
-    public function moveUp($id)
+    public function moveUp($id): ?Response
     {
         $this->request->allowMethod('post');
 
@@ -151,7 +152,7 @@ class CategoriesController extends AppController
      * @param int $id Category id
      * @return \Cake\Http\Response|null
      */
-    public function moveDown($id)
+    public function moveDown($id): ?Response
     {
         $this->request->allowMethod('post');
 

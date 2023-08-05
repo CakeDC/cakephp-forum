@@ -2,20 +2,21 @@
 declare(strict_types=1);
 
 /**
- * Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
+ * Copyright 2010 - 2023, Cake Development Corporation (https://www.cakedc.com)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
+ * @copyright Copyright 2010 - 2023, Cake Development Corporation (https://www.cakedc.com)
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-
 namespace CakeDC\Forum\Controller;
 
 use Cake\Core\Configure;
 use Cake\Http\Exception\BadRequestException;
 use Cake\Http\Exception\UnauthorizedException;
+use Cake\Http\Response;
+use CakeDC\Forum\Model\Entity\Thread;
 
 /**
  * Threads Controller
@@ -32,6 +33,7 @@ class ThreadsController extends AppController
      * the constructor and call parent.
      *
      * @return void
+     * @throws \Exception
      */
     public function initialize(): void
     {
@@ -44,17 +46,14 @@ class ThreadsController extends AppController
         $this->paginate['Posts'] = [
             'limit' => Configure::read('Forum.postsPerPage'),
         ];
-
-//        $this->Auth->allow();
-//        $this->Auth->deny(['my', 'add', 'edit', 'move', 'delete']);
     }
 
     /**
      * List threads in category method
      *
-     * @return \Cake\Http\Response|void
+     * @return void
      */
-    public function index()
+    public function index(): void
     {
         $categorySlug = func_get_arg(0);
         if (!$categorySlug) {
@@ -78,9 +77,9 @@ class ThreadsController extends AppController
     /**
      * List threads user has created or participated in
      *
-     * @return \Cake\Http\Response|void
+     * @return void
      */
-    public function my()
+    public function my(): void
     {
         $threads = $this->paginate($this->Threads->find('byUser', ['user_id' => $this->_getAuthenticatedUserId()]));
 
@@ -92,9 +91,9 @@ class ThreadsController extends AppController
      *
      * @param string $categorySlug Category slug
      * @param string $slug Thread slug
-     * @return \Cake\Http\Response|void
+     * @return void
      */
-    public function view($categorySlug, $slug)
+    public function view($categorySlug, $slug): void
     {
         $thread = $this->_getThread($categorySlug, $slug);
 
@@ -192,10 +191,10 @@ class ThreadsController extends AppController
      *
      * @param string $categorySlug Category slug.
      * @param string $threadSlug Thread slug.
-     * @return \Cake\Http\Response|null|void Redirects to index.
+     * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($categorySlug, $threadSlug)
+    public function delete($categorySlug, $threadSlug): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
 
@@ -220,7 +219,7 @@ class ThreadsController extends AppController
      * @param array $fields Fields list
      * @return \Cake\Http\Response|null
      */
-    protected function _save($thread, $fields = ['title', 'message'])
+    protected function _save(Thread $thread, array $fields = ['title', 'message']): ?Response
     {
         if ($this->_forumUserIsModerator($thread->category_id)) {
             $fields = array_merge($fields, ['is_sticky', 'is_locked']);

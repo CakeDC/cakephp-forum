@@ -17,8 +17,8 @@ It does not cover:
 Requirements
 ------------
 
-* CakePHP 3.4.0+
-* PHP 5.6+
+* CakePHP 5.0+
+* PHP 8.1+
 
 Documentation
 -------------
@@ -46,6 +46,6 @@ This repository follows the [CakeDC Plugin Standard](https://www.cakedc.com/plug
 License
 -------
 
-Copyright 2017 Cake Development Corporation (CakeDC). All rights reserved.
+Copyright 2023 Cake Development Corporation (CakeDC). All rights reserved.
 
 Licensed under the [MIT](http://www.opensource.org/licenses/mit-license.php) License. Redistributions of the source code included in this repository must retain the copyright notice found in each file. 

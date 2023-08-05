@@ -2,19 +2,19 @@
 declare(strict_types=1);
 
 /**
- * Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
+ * Copyright 2010 - 2023, Cake Development Corporation (https://www.cakedc.com)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
+ * @copyright Copyright 2010 - 2023, Cake Development Corporation (https://www.cakedc.com)
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-
 namespace CakeDC\Forum\Controller;
 
 use Cake\Http\Exception\BadRequestException;
 use Cake\Http\Exception\UnauthorizedException;
+use Cake\Http\Response;
 
 /**
  * Reports Controller
@@ -26,28 +26,15 @@ use Cake\Http\Exception\UnauthorizedException;
 class ReportsController extends AppController
 {
     /**
-     * Initialization hook method.
-     *
-     * Implement this method to avoid having to overwrite
-     * the constructor and call parent.
+     * Index method
      *
      * @return void
      */
-    public function initialize(): void
-    {
-        parent::initialize();
-    }
-
-    /**
-     * Index method
-     *
-     * @return \Cake\Http\Response|void
-     */
-    public function index()
+    public function index(): void
     {
         $filter = array_intersect_key($this->request->getQueryParams(), array_flip(['post_id', 'thread_id']));
 
-        $this->loadModel('CakeDC/Forum.Moderators');
+        $this->Moderators = $this->fetchTable('CakeDC/Forum.Moderators');
         $categoryIds = $this->Moderators->getUserCategories($this->_getAuthenticatedUserId());
         if (!$categoryIds) {
             throw new UnauthorizedException();
@@ -57,7 +44,7 @@ class ReportsController extends AppController
         $reports = $this->paginate($this->Reports, ['finder' => 'filtered'] + $filter);
 
         $this->set(compact('reports'));
-        $this->set('_serialize', ['reports']);
+        $this->viewBuilder()->setOption('serialize', ['reports']);
     }
 
     /**
@@ -97,10 +84,10 @@ class ReportsController extends AppController
      * Delete method
      *
      * @param int $id Report id
-     * @return \Cake\Http\Response|null|void Redirects to index.
+     * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id)
+    public function delete($id): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
 

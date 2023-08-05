@@ -2,18 +2,18 @@
 declare(strict_types=1);
 
 /**
- * Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
+ * Copyright 2010 - 2023, Cake Development Corporation (https://www.cakedc.com)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
+ * @copyright Copyright 2010 - 2023, Cake Development Corporation (https://www.cakedc.com)
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-
 namespace CakeDC\Forum\Controller\Admin;
 
 use Cake\Core\Configure;
+use Cake\Http\Response;
 
 /**
  * Threads Controller
@@ -27,9 +27,9 @@ class ThreadsController extends AppController
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return void
      */
-    public function index()
+    public function index(): void
     {
         $limit = Configure::read('Forum.threadsPerPage');
         $contain = ['Users', 'LastReplies.Users', 'ReportedReplies'];
@@ -51,17 +51,17 @@ class ThreadsController extends AppController
         $categories = $this->Threads->Categories->getOptionsList(true);
 
         $this->set(compact('threads', 'categories'));
-        $this->set('_serialize', ['threads', 'categories']);
+        $this->viewBuilder()->setOption('serialize', ['threads', 'categories']);
     }
 
     /**
      * View method
      *
      * @param string|null $id Thread id.
-     * @return \Cake\Http\Response|void
+     * @return void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view($id = null): void
     {
         $thread = $this->Threads->get($id, [
             'contain' => ['Categories', 'Users', 'Likes.Users'],
@@ -70,7 +70,7 @@ class ThreadsController extends AppController
         $replies = [];
         if (!$thread->parent_id) {
             $replies = $this->paginate(
-                $this->loadModel('CakeDC/Forum.Replies'),
+                $this->fetchTable('CakeDC/Forum.Replies'),
                 [
                     'conditions' => [
                         $this->Threads->Replies->aliasField('parent_id') => $thread->id,
@@ -82,7 +82,7 @@ class ThreadsController extends AppController
         }
 
         $this->set(compact('thread', 'replies'));
-        $this->set('_serialize', ['thread', 'replies']);
+        $this->viewBuilder()->setOption('serialize', ['thread', 'replies']);
     }
 
     /**
@@ -107,7 +107,7 @@ class ThreadsController extends AppController
         $categories = $this->Threads->Categories->getOptionsList(true);
 
         $this->set(compact('thread', 'categories'));
-        $this->set('_serialize', ['thread', 'categories']);
+        $this->viewBuilder()->setOption('serialize', ['thread', 'categories']);
     }
 
     /**
@@ -134,7 +134,7 @@ class ThreadsController extends AppController
         $categories = $this->Threads->Categories->getOptionsList(true);
 
         $this->set(compact('thread', 'categories'));
-        $this->set('_serialize', ['thread', 'categories']);
+        $this->viewBuilder()->setOption('serialize', ['thread', 'categories']);
     }
 
     /**
@@ -161,17 +161,17 @@ class ThreadsController extends AppController
         $categories = $this->Threads->Categories->getOptionsList(true);
 
         $this->set(compact('thread', 'categories'));
-        $this->set('_serialize', ['thread', 'categories']);
+        $this->viewBuilder()->setOption('serialize', ['thread', 'categories']);
     }
 
     /**
      * Delete method
      *
      * @param string|null $id Post id.
-     * @return \Cake\Http\Response|null|void Redirects to index.
+     * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+    public function delete($id = null): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
         $thread = $this->Threads->get($id);

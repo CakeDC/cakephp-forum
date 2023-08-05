@@ -2,15 +2,14 @@
 declare(strict_types=1);
 
 /**
- * Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
+ * Copyright 2010 - 2023, Cake Development Corporation (https://www.cakedc.com)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
+ * @copyright Copyright 2010 - 2023, Cake Development Corporation (https://www.cakedc.com)
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-
 namespace CakeDC\Forum\Model\Table;
 
 use Cake\Core\Configure;
@@ -21,8 +20,9 @@ use Cake\Validation\Validator;
 /**
  * Likes Model
  *
- * @property \CakeDC\Forum\Model\Table\PostsTable|\Cake\ORM\Association\BelongsTo $Posts
- * @property \Cake\ORM\Association\BelongsTo $Users
+ * @property \CakeDC\Forum\Model\Table\PostsTable&\Cake\ORM\Association\BelongsTo $Posts
+ * @property \Cake\ORM\Table&\Cake\ORM\Association\BelongsTo $Users
+ *
  * @method \CakeDC\Forum\Model\Entity\Like get($primaryKey, $options = [])
  * @method \CakeDC\Forum\Model\Entity\Like newEntity($data = null, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Like newEmptyEntity()
@@ -31,7 +31,9 @@ use Cake\Validation\Validator;
  * @method \CakeDC\Forum\Model\Entity\Like patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Like[] patchEntities($entities, array $data, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Like findOrCreate($search, callable $callback = null, $options = [])
+ *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @mixin \Cake\ORM\Behavior\CounterCacheBehavior
  */
 class LikesTable extends Table
 {

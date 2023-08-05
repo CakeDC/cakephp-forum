@@ -2,22 +2,21 @@
 declare(strict_types=1);
 
 /**
- * Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
+ * Copyright 2010 - 2023, Cake Development Corporation (https://www.cakedc.com)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright Copyright 2010 - 2017, Cake Development Corporation (https://www.cakedc.com)
+ * @copyright Copyright 2010 - 2023, Cake Development Corporation (https://www.cakedc.com)
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-
 namespace CakeDC\Forum\Model\Table;
 
 use ArrayObject;
 use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\EventInterface;
-use Cake\ORM\Query;
+use Cake\ORM\Query\SelectQuery;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
@@ -30,10 +29,15 @@ use InvalidArgumentException;
 /**
  * Threads Model
  *
- * @property \CakeDC\Forum\Model\Table\CategoriesTable $Categories
- * @property \Cake\ORM\Association\BelongsTo $Users
- * @property \CakeDC\Forum\Model\Table\RepliesTable $Replies
- * @property \CakeDC\Forum\Model\Table\ReportsTable $Reports
+ * @property \CakeDC\Forum\Model\Table\CategoriesTable&\Cake\ORM\Association\BelongsTo $Categories
+ * @property \Cake\ORM\Table&\Cake\ORM\Association\BelongsTo $Users
+ * @property \CakeDC\Forum\Model\Table\RepliesTable&\Cake\ORM\Association\HasOne $UserReplies
+ * @property \CakeDC\Forum\Model\Table\RepliesTable&\Cake\ORM\Association\BelongsTo $LastReplies
+ * @property \CakeDC\Forum\Model\Table\RepliesTable&\Cake\ORM\Association\HasOne $ReportedReplies
+ * @property \CakeDC\Forum\Model\Table\RepliesTable&\Cake\ORM\Association\HasMany $Replies
+ * @property \CakeDC\Forum\Model\Table\ReportsTable&\Cake\ORM\Association\HasMany $Reports
+ * @property \CakeDC\Forum\Model\Table\LikesTable&\Cake\ORM\Association\HasMany $Likes
+ *
  * @method \CakeDC\Forum\Model\Entity\Thread get($primaryKey, $options = [])
  * @method \CakeDC\Forum\Model\Entity\Thread newEntity($data = null, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Thread newEmptyEntity()
@@ -42,7 +46,10 @@ use InvalidArgumentException;
  * @method \CakeDC\Forum\Model\Entity\Thread patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Thread[] patchEntities($entities, array $data, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Thread findOrCreate($search, callable $callback = null, $options = [])
+ *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @mixin \Muffin\Slug\Model\Behavior\SlugBehavior
+ * @mixin \Muffin\Orderly\Model\Behavior\OrderlyBehavior
  */
 class ThreadsTable extends Table
 {
@@ -93,7 +100,7 @@ class ThreadsTable extends Table
                 'threads_count',
                 'last_post_id' => function ($event, Thread $entity, ThreadsTable $table) {
                     $Posts = TableRegistry::getTableLocator()->get('CakeDC/Forum.Posts');
-                    $lastPost = $Posts->find()->where(['category_id' => $entity->category_id])->orderDesc('id')->first();
+                    $lastPost = $Posts->find()->where(['category_id' => $entity->category_id])->orderByDesc('id')->first();
                     if (!$lastPost) {
                         return null;
                     }
@@ -156,7 +163,7 @@ class ThreadsTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationMoveThread(Validator $validator)
+    public function validationMoveThread(Validator $validator): Validator
     {
         $validator
             ->requirePresence('category_id')
@@ -184,12 +191,12 @@ class ThreadsTable extends Table
      * beforeFind callback
      *
      * @param \Cake\Event\Event $event Event
-     * @param \Cake\ORM\Query $query Query
+     * @param \Cake\ORM\Query\SelectQuery $query Query
      * @param \ArrayObject $options Options
      * @param bool $primary Primary
      * @return void
      */
-    public function beforeFind(EventInterface $event, Query $query, ArrayObject $options, $primary): void
+    public function beforeFind(EventInterface $event, SelectQuery $query, ArrayObject $options, bool $primary): void
     {
         if (!Hash::get($options, 'all')) {
             $query->where([$query->expr()->isNull($this->aliasField('parent_id'))]);
@@ -222,11 +229,11 @@ class ThreadsTable extends Table
     /**
      * Find threads by category
      *
-     * @param \Cake\ORM\Query $query The query builder.
+     * @param \Cake\ORM\Query\SelectQuery $query The query builder.
      * @param array $options Options.
-     * @return \Cake\ORM\Query
+     * @return \Cake\ORM\Query\SelectQuery
      */
-    public function findByCategory(Query $query, $options = [])
+    public function findByCategory(SelectQuery $query, array $options = []): SelectQuery
     {
         $categoryId = Hash::get($options, 'category_id');
         if (!$categoryId) {
@@ -238,17 +245,17 @@ class ThreadsTable extends Table
                 $this->aliasField('category_id') => $categoryId,
             ])
             ->contain(['Users', 'LastReplies' => ['Users'], 'ReportedReplies'])
-            ->group($this->aliasField('id'));
+            ->groupBy($this->aliasField('id'));
     }
 
     /**
      * Find threads user has started or participated in
      *
-     * @param \Cake\ORM\Query $query The query builder.
+     * @param \Cake\ORM\Query\SelectQuery $query The query builder.
      * @param array $options Options.
-     * @return \Cake\ORM\Query
+     * @return \Cake\ORM\Query\SelectQuery
      */
-    public function findByUser(Query $query, $options = [])
+    public function findByUser(SelectQuery $query, array $options = []): SelectQuery
     {
         $userId = Hash::get($options, 'user_id');
         if (!$userId) {
@@ -261,9 +268,7 @@ class ThreadsTable extends Table
                 'LastReplies' => ['Users'],
                 'ReportedReplies',
                 'Categories',
-                'UserReplies' => function (Query $q) use ($userId) {
-                    return $q->where(['UserReplies.user_id' => $userId]);
-                },
+                'UserReplies' => fn(SelectQuery $q): SelectQuery => $q->where(['UserReplies.user_id' => $userId]),
             ])
             ->where([
                 'OR' => [
@@ -271,17 +276,17 @@ class ThreadsTable extends Table
                     'UserReplies.user_id' => $userId,
                 ],
             ])
-            ->group($this->aliasField('id'));
+            ->groupBy($this->aliasField('id'));
     }
 
     /**
      * Find threads for edit
      *
-     * @param \Cake\ORM\Query $query The query builder.
+     * @param \Cake\ORM\Query\SelectQuery $query The query builder.
      * @param array $options Options.
-     * @return \Cake\ORM\Query
+     * @return \Cake\ORM\Query\SelectQuery
      */
-    public function findForEdit(Query $query, $options = [])
+    public function findForEdit(SelectQuery $query, array $options = []): SelectQuery
     {
         $categoryId = Hash::get($options, 'category_id');
         if (!$categoryId) {

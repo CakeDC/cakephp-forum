@@ -50,6 +50,6 @@ class Application extends \Cake\Http\BaseApplication
      */
     public function bootstrap(): void
     {
-        $this->addPlugin(\CakeDC\Forum\Plugin::class);
+        $this->addPlugin(\CakeDC\Forum\ForumPlugin::class);
     }
 }
