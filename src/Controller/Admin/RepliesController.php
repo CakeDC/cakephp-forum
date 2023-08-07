@@ -33,9 +33,7 @@ class RepliesController extends AppController
      */
     public function view($id = null): void
     {
-        $reply = $this->Replies->get($id, [
-            'contain' => ['Threads', 'Categories', 'Users'],
-        ]);
+        $reply = $this->Replies->get($id, contain: ['Threads', 'Categories', 'Users']);
 
         $this->set(compact('reply'));
         $this->viewBuilder()->setOption('serialize', ['reply']);
@@ -81,9 +79,8 @@ class RepliesController extends AppController
      */
     public function edit($id = null)
     {
-        $reply = $this->Replies->get($id, [
-            'contain' => ['Threads'],
-        ]);
+        /** @var \CakeDC\Forum\Model\Entity\Reply $reply */
+        $reply = $this->Replies->get($id, contain: ['Threads']);
 
         $thread = $reply->thread;
 

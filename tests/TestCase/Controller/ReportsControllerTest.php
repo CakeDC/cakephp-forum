@@ -3,21 +3,24 @@ declare(strict_types=1);
 
 namespace CakeDC\Forum\Test\TestCase\Controller;
 
+use Cake\Controller\Controller;
 use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
-use Cake\TestSuite\IntegrationTestCase;
+use Cake\TestSuite\IntegrationTestTrait;
+use Cake\TestSuite\TestCase;
 
 /**
  * CakeDC\Forum\Controller\ReportsController Test Case
  */
-class ReportsControllerTest extends IntegrationTestCase
+class ReportsControllerTest extends TestCase
 {
+    use IntegrationTestTrait;
+
     /**
      * Fixtures
      *
      * @var array
      */
-    public $fixtures = [
+    public array $fixtures = [
         'plugin.CakeDC/Forum.Categories',
         'plugin.CakeDC/Forum.Posts',
         'plugin.CakeDC/Forum.Users',
@@ -30,12 +33,10 @@ class ReportsControllerTest extends IntegrationTestCase
     {
         parent::setUp();
 
-        Configure::write('Forum.authenticatedUserCallable', function (\Cake\Controller\Controller $controller) {
-            return [
-                'id' => 1,
-                'username' => 'testing',
-            ];
-        });
+        Configure::write('Forum.authenticatedUserCallable', fn(Controller $controller): array => [
+            'id' => 1,
+            'username' => 'testing',
+        ]);
 
         $this->enableRetainFlashMessages();
         $this->enableCsrfToken();
@@ -60,7 +61,7 @@ class ReportsControllerTest extends IntegrationTestCase
         $this->assertCount(2, $reports);
 
         // Another category moderator
-        Configure::write('Forum.authenticatedUserCallable', function (\Cake\Controller\Controller $controller) {
+        Configure::write('Forum.authenticatedUserCallable', function (Controller $controller) {
             return [
                 'id' => 3,
                 'username' => 'testing',
@@ -72,7 +73,7 @@ class ReportsControllerTest extends IntegrationTestCase
         $this->assertCount(0, $reports);
 
         // Non-moderator
-        Configure::write('Forum.authenticatedUserCallable', function (\Cake\Controller\Controller $controller) {
+        Configure::write('Forum.authenticatedUserCallable', function (Controller $controller) {
             return [
                 'id' => 4,
                 'username' => 'testing',
@@ -102,7 +103,7 @@ class ReportsControllerTest extends IntegrationTestCase
         $this->assertRedirect('/forum/cpus-andoverclocking/anandtech-intels-skylake-sp-xeon-vs-amds-epyc-7000');
         $this->assertSession('The report has been saved.', 'Flash.flash.0.message');
 
-        $report = TableRegistry::get('CakeDC/Forum.Reports')->find()->orderDesc('Reports.id')->first();
+        $report = $this->fetchTable('CakeDC/Forum.Reports')->find()->orderByDesc('Reports.id')->first();
         $this->assertEquals(4, $report->get('post_id'));
         $this->assertEquals(1, $report->get('user_id'));
         $this->assertEquals($data['message'], $report->get('message'));
@@ -127,7 +128,7 @@ class ReportsControllerTest extends IntegrationTestCase
      */
     public function testDelete()
     {
-        $Reports = TableRegistry::get('CakeDC/Forum.Reports');
+        $Reports = $this->fetchTable('CakeDC/Forum.Reports');
         $report = $Reports->newEntity(['message' => 'test report message']);
         $report->post_id = 2;
         $report->user_id = 1;

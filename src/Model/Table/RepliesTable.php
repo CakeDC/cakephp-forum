@@ -22,7 +22,6 @@ use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 use Cake\Validation\Validator;
 use CakeDC\Forum\Model\Entity\Reply;
-use InvalidArgumentException;
 
 /**
  * Replies Model
@@ -33,7 +32,6 @@ use InvalidArgumentException;
  * @property \CakeDC\Forum\Model\Table\ReportsTable&\Cake\ORM\Association\HasMany $Reports
  * @property \CakeDC\Forum\Model\Table\LikesTable&\Cake\ORM\Association\HasMany $Likes
  *
- * @method \CakeDC\Forum\Model\Entity\Reply get($primaryKey, $options = [])
  * @method \CakeDC\Forum\Model\Entity\Reply newEntity($data = null, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Reply newEmptyEntity()
  * @method \CakeDC\Forum\Model\Entity\Reply[] newEntities(array $data, array $options = [])
@@ -149,10 +147,9 @@ class RepliesTable extends Table
      * Last reply finder
      *
      * @param \Cake\ORM\Query\SelectQuery $query The query builder.
-     * @param array $options Options.
      * @return \Cake\ORM\Query\SelectQuery
      */
-    public function findLastReply(SelectQuery $query, array $options = []): SelectQuery
+    public function findLastReply(SelectQuery $query): SelectQuery
     {
         return $query->orderByDesc($this->aliasField('id'));
     }
@@ -161,21 +158,20 @@ class RepliesTable extends Table
      * Find by ID and parent_id
      *
      * @param \Cake\ORM\Query\SelectQuery $query The query builder.
-     * @param array $options Options.
+     * @param string $categorySlug
+     * @param string $threadSlug
      * @return \Cake\ORM\Query\SelectQuery
+     * @uses \Muffin\Slug\Model\Behavior\SlugBehavior::findSlugged()
      */
-    public function findByThreadAndCategory(SelectQuery $query, array $options = []): SelectQuery
-    {
-        $categorySlug = Hash::get($options, 'categorySlug');
-        $threadSlug = Hash::get($options, 'threadSlug');
-        if (!$categorySlug || !$threadSlug) {
-            throw new InvalidArgumentException('categorySlug and threadSlug are required');
-        }
-
+    public function findByThreadAndCategory(
+        SelectQuery $query,
+        string $categorySlug,
+        string $threadSlug
+    ): SelectQuery {
         return $query->contain([
             'Users',
-            'Categories' => fn(SelectQuery $query): SelectQuery => $query->find('slugged', ['slug' => $categorySlug]),
-            'Threads' => fn(SelectQuery $query): SelectQuery => $query->find('slugged', ['slug' => $threadSlug]),
+            'Categories' => fn(SelectQuery $query): SelectQuery => $query->find('slugged', slug: $categorySlug),
+            'Threads' => fn(SelectQuery $query): SelectQuery => $query->find('slugged', slug: $threadSlug),
             'Threads.Users',
         ]);
     }

@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace CakeDC\Forum\Test\TestCase\Controller\Admin;
 
+use Cake\Controller\Controller;
 use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
@@ -20,7 +20,7 @@ class CategoriesControllerTest extends TestCase
      *
      * @var array
      */
-    public $fixtures = [
+    public array $fixtures = [
         'plugin.CakeDC/Forum.Categories',
         'plugin.CakeDC/Forum.Posts',
         'plugin.CakeDC/Forum.Moderators',
@@ -31,13 +31,11 @@ class CategoriesControllerTest extends TestCase
     {
         parent::setUp();
 
-        Configure::write('Forum.authenticatedUserCallable', function (\Cake\Controller\Controller $controller) {
-            return [
-                'id' => 1,
-                'username' => 'testing',
-                'is_superuser' => true,
-            ];
-        });
+        Configure::write('Forum.authenticatedUserCallable', fn(Controller $controller): array => [
+            'id' => 1,
+            'username' => 'testing',
+            'is_superuser' => true,
+        ]);
 
         $this->enableRetainFlashMessages();
         $this->enableCsrfToken();
@@ -75,7 +73,7 @@ class CategoriesControllerTest extends TestCase
      */
     public function testIndexUnauthorized()
     {
-        Configure::write('Forum.authenticatedUserCallable', function (\Cake\Controller\Controller $controller) {
+        Configure::write('Forum.authenticatedUserCallable', function (Controller $controller) {
             return [
                 'id' => 2,
                 'username' => 'testing',
@@ -130,7 +128,7 @@ class CategoriesControllerTest extends TestCase
         $this->assertRedirect('forum/admin');
         $this->assertSession('The category has been saved.', 'Flash.flash.0.message');
 
-        $category = TableRegistry::get('CakeDC/Forum.Categories')->find()->orderDesc('Categories.id')->first();
+        $category = $this->fetchTable('CakeDC/Forum.Categories')->find()->orderByDesc('Categories.id')->first();
         $this->assertEquals($data['parent_id'], $category->get('parent_id'));
         $this->assertEquals($data['title'], $category->get('title'));
         $this->assertEquals('new-category', $category->get('slug'));
@@ -173,7 +171,7 @@ class CategoriesControllerTest extends TestCase
         $this->assertRedirect('/forum/admin');
         $this->assertSession('The category has been saved.', 'Flash.flash.0.message');
 
-        $category = TableRegistry::get('CakeDC/Forum.Categories')->get(4);
+        $category = $this->fetchTable('CakeDC/Forum.Categories')->get(4);
         $this->assertEquals($update['parent_id'], $category->get('parent_id'));
         $this->assertEquals($update['title'], $category->get('title'));
         $this->assertEquals($update['slug'], $category->get('slug'));
@@ -203,7 +201,7 @@ class CategoriesControllerTest extends TestCase
      */
     public function testDelete()
     {
-        $Categories = TableRegistry::get('CakeDC/Forum.Categories');
+        $Categories = $this->fetchTable('CakeDC/Forum.Categories');
         $category = $Categories->newEntity(['parent_id' => 1, 'title' => 'test cat', 'is_visible' => 1, 'description' => '']);
         $this->assertNotFalse($Categories->save($category));
 
@@ -221,7 +219,7 @@ class CategoriesControllerTest extends TestCase
      */
     public function testMoveUp()
     {
-        $Categories = TableRegistry::get('CakeDC/Forum.Categories');
+        $Categories = $this->fetchTable('CakeDC/Forum.Categories');
 
         $categories = $Categories->find('threaded')->toArray();
         $this->assertEquals(2, $categories[0]->children[0]->id);
@@ -243,7 +241,7 @@ class CategoriesControllerTest extends TestCase
      */
     public function testMoveDown()
     {
-        $Categories = TableRegistry::getTableLocator()->get('CakeDC/Forum.Categories');
+        $Categories = $this->fetchTable('CakeDC/Forum.Categories');
 
         $categories = $Categories->find('threaded')->toArray();
         $this->assertEquals(2, $categories[0]->children[0]->id);

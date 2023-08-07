@@ -15,9 +15,8 @@ namespace CakeDC\Forum\Model\Table;
 use Cake\ORM\Query\SelectQuery;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
-use Cake\Utility\Hash;
 use Cake\Validation\Validator;
-use InvalidArgumentException;
+use CakeDC\Forum\Model\Entity\Category;
 
 /**
  * ForumCategories Model
@@ -28,7 +27,6 @@ use InvalidArgumentException;
  * @property \CakeDC\Forum\Model\Table\PostsTable&\Cake\ORM\Association\HasMany $Posts
  * @property \CakeDC\Forum\Model\Table\ThreadsTable&\Cake\ORM\Association\HasMany $Threads
  *
- * @method \CakeDC\Forum\Model\Entity\Category get($primaryKey, $options = [])
  * @method \CakeDC\Forum\Model\Entity\Category newEntity($data = null, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Category newEmptyEntity()
  * @method \CakeDC\Forum\Model\Entity\Category[] newEntities(array $data, array $options = [])
@@ -155,16 +153,11 @@ class CategoriesTable extends Table
      * Find category children
      *
      * @param \Cake\ORM\Query\SelectQuery $query The query builder.
-     * @param array $options Options.
+     * @param \CakeDC\Forum\Model\Entity\Category $category
      * @return \Cake\ORM\Query\SelectQuery
      */
-    public function findChildren(SelectQuery $query, array $options = []): SelectQuery
+    public function findChildren(SelectQuery $query, Category $category): SelectQuery
     {
-        $category = Hash::get($options, 'category');
-        if (!$category) {
-            throw new InvalidArgumentException('Category is required');
-        }
-
         return $query
             ->where([
                 $query->expr()->gt('lft', $category->get('lft')),

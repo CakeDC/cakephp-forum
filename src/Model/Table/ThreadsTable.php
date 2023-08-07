@@ -24,7 +24,6 @@ use Cake\Utility\Hash;
 use Cake\Validation\Validator;
 use CakeDC\Forum\Model\Entity\Reply;
 use CakeDC\Forum\Model\Entity\Thread;
-use InvalidArgumentException;
 
 /**
  * Threads Model
@@ -38,7 +37,6 @@ use InvalidArgumentException;
  * @property \CakeDC\Forum\Model\Table\ReportsTable&\Cake\ORM\Association\HasMany $Reports
  * @property \CakeDC\Forum\Model\Table\LikesTable&\Cake\ORM\Association\HasMany $Likes
  *
- * @method \CakeDC\Forum\Model\Entity\Thread get($primaryKey, $options = [])
  * @method \CakeDC\Forum\Model\Entity\Thread newEntity($data = null, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Thread newEmptyEntity()
  * @method \CakeDC\Forum\Model\Entity\Thread[] newEntities(array $data, array $options = [])
@@ -230,19 +228,14 @@ class ThreadsTable extends Table
      * Find threads by category
      *
      * @param \Cake\ORM\Query\SelectQuery $query The query builder.
-     * @param array $options Options.
+     * @param int $category_id
      * @return \Cake\ORM\Query\SelectQuery
      */
-    public function findByCategory(SelectQuery $query, array $options = []): SelectQuery
+    public function findByCategory(SelectQuery $query, int $category_id): SelectQuery
     {
-        $categoryId = Hash::get($options, 'category_id');
-        if (!$categoryId) {
-            throw new InvalidArgumentException('category_id is required');
-        }
-
         return $query
             ->where([
-                $this->aliasField('category_id') => $categoryId,
+                $this->aliasField('category_id') => $category_id,
             ])
             ->contain(['Users', 'LastReplies' => ['Users'], 'ReportedReplies'])
             ->groupBy($this->aliasField('id'));
@@ -252,28 +245,23 @@ class ThreadsTable extends Table
      * Find threads user has started or participated in
      *
      * @param \Cake\ORM\Query\SelectQuery $query The query builder.
-     * @param array $options Options.
+     * @param int|string $user_id
      * @return \Cake\ORM\Query\SelectQuery
      */
-    public function findByUser(SelectQuery $query, array $options = []): SelectQuery
+    public function findByUser(SelectQuery $query, int|string $user_id): SelectQuery
     {
-        $userId = Hash::get($options, 'user_id');
-        if (!$userId) {
-            throw new InvalidArgumentException('user_id is required');
-        }
-
         return $query
             ->contain([
                 'Users',
                 'LastReplies' => ['Users'],
                 'ReportedReplies',
                 'Categories',
-                'UserReplies' => fn(SelectQuery $q): SelectQuery => $q->where(['UserReplies.user_id' => $userId]),
+                'UserReplies' => fn(SelectQuery $q): SelectQuery => $q->where(['UserReplies.user_id' => $user_id]),
             ])
             ->where([
                 'OR' => [
-                    $this->aliasField('user_id') => $userId,
-                    'UserReplies.user_id' => $userId,
+                    $this->aliasField('user_id') => $user_id,
+                    'UserReplies.user_id' => $user_id,
                 ],
             ])
             ->groupBy($this->aliasField('id'));
@@ -283,22 +271,15 @@ class ThreadsTable extends Table
      * Find threads for edit
      *
      * @param \Cake\ORM\Query\SelectQuery $query The query builder.
-     * @param array $options Options.
+     * @param int $category_id
+     * @param string $slug
      * @return \Cake\ORM\Query\SelectQuery
+     * @uses \Muffin\Slug\Model\Behavior\SlugBehavior::findSlugged()
      */
-    public function findForEdit(SelectQuery $query, array $options = []): SelectQuery
+    public function findForEdit(SelectQuery $query, int $category_id, string $slug): SelectQuery
     {
-        $categoryId = Hash::get($options, 'category_id');
-        if (!$categoryId) {
-            throw new InvalidArgumentException('category_id is required');
-        }
-        $slug = Hash::get($options, 'slug');
-        if (!$slug) {
-            throw new InvalidArgumentException('slug is required');
-        }
-
         return $query
-            ->where([$this->aliasField('category_id') => $categoryId])
-            ->find('slugged', ['slug' => $slug]);
+            ->where([$this->aliasField('category_id') => $category_id])
+            ->find('slugged', slug: $slug);
     }
 }

@@ -15,8 +15,6 @@ namespace CakeDC\Forum\Model\Table;
 use Cake\Core\Configure;
 use Cake\ORM\Query\SelectQuery;
 use Cake\ORM\Table;
-use Cake\Utility\Hash;
-use InvalidArgumentException;
 
 /**
  * Posts Model
@@ -28,7 +26,6 @@ use InvalidArgumentException;
  * @property \CakeDC\Forum\Model\Table\ReportsTable&\Cake\ORM\Association\HasMany $UserReports
  * @property \CakeDC\Forum\Model\Table\LikesTable&\Cake\ORM\Association\HasMany $Likes
  *
- * @method \CakeDC\Forum\Model\Entity\Post get($primaryKey, $options = [])
  * @method \CakeDC\Forum\Model\Entity\Post newEntity($data = null, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Post newEmptyEntity()
  * @method \CakeDC\Forum\Model\Entity\Post[] newEntities(array $data, array $options = [])
@@ -71,21 +68,16 @@ class PostsTable extends Table
      * Find posts by thread
      *
      * @param \Cake\ORM\Query\SelectQuery $query The query builder.
-     * @param array $options Options.
+     * @param int $thread_id
      * @return \Cake\ORM\Query\SelectQuery
      */
-    public function findByThread(SelectQuery $query, array $options = []): SelectQuery
+    public function findByThread(SelectQuery $query, int $thread_id): SelectQuery
     {
-        $parentId = Hash::get($options, 'thread_id');
-        if (!$parentId) {
-            throw new InvalidArgumentException('thread_id is required');
-        }
-
         return $query
             ->where([
                 'OR' => [
-                    $this->aliasField('id') => $parentId,
-                    $this->aliasField('parent_id') => $parentId,
+                    $this->aliasField('id') => $thread_id,
+                    $this->aliasField('parent_id') => $thread_id,
                 ],
             ])
             ->contain(['Users', 'Likes.Users']);
@@ -95,20 +87,15 @@ class PostsTable extends Table
      * Find posts with user report
      *
      * @param \Cake\ORM\Query\SelectQuery $query The query builder.
-     * @param array $options Options.
+     * @param int $user_id
      * @return \Cake\ORM\Query\SelectQuery
      */
-    public function findWithUserReport(SelectQuery $query, array $options = []): SelectQuery
+    public function findWithUserReport(SelectQuery $query, int $user_id): SelectQuery
     {
-        $userId = Hash::get($options, 'user_id');
-        if (!$userId) {
-            throw new InvalidArgumentException('user_id is required');
-        }
-
         return $query->contain([
             'UserReports' => fn(SelectQuery $q): SelectQuery => $q
                 ->where([
-                    'UserReports.user_id' => $userId,
+                    'UserReports.user_id' => $user_id,
                 ]),
         ]);
     }
@@ -117,20 +104,15 @@ class PostsTable extends Table
      * Find posts with user like
      *
      * @param \Cake\ORM\Query\SelectQuery $query The query builder.
-     * @param array $options Options.
+     * @param int $user_id
      * @return \Cake\ORM\Query\SelectQuery
      */
-    public function findWithUserLike(SelectQuery $query, array $options = []): SelectQuery
+    public function findWithUserLike(SelectQuery $query, int $user_id): SelectQuery
     {
-        $userId = Hash::get($options, 'user_id');
-        if (!$userId) {
-            throw new InvalidArgumentException('user_id is required');
-        }
-
         return $query->contain([
             'UserLikes' => fn(SelectQuery $q): SelectQuery => $q
                 ->where([
-                    'UserLikes.user_id' => $userId,
+                    'UserLikes.user_id' => $user_id,
                 ]),
         ]);
     }

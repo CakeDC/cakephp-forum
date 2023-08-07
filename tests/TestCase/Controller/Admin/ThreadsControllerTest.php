@@ -3,21 +3,24 @@ declare(strict_types=1);
 
 namespace CakeDC\Forum\Test\TestCase\Controller\Admin;
 
+use Cake\Controller\Controller;
 use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
-use Cake\TestSuite\IntegrationTestCase;
+use Cake\TestSuite\IntegrationTestTrait;
+use Cake\TestSuite\TestCase;
 
 /**
  * CakeDC\Forum\Controller\Admin\ThreadsController Test Case
  */
-class ThreadsControllerTest extends IntegrationTestCase
+class ThreadsControllerTest extends TestCase
 {
+    use IntegrationTestTrait;
+
     /**
      * Fixtures
      *
      * @var array
      */
-    public $fixtures = [
+    public array $fixtures = [
         'plugin.CakeDC/Forum.Categories',
         'plugin.CakeDC/Forum.Posts',
         'plugin.CakeDC/Forum.Users',
@@ -28,13 +31,11 @@ class ThreadsControllerTest extends IntegrationTestCase
     {
         parent::setUp();
 
-        Configure::write('Forum.authenticatedUserCallable', function (\Cake\Controller\Controller $controller) {
-            return [
-                'id' => 1,
-                'username' => 'testing',
-                'is_superuser' => true,
-            ];
-        });
+        Configure::write('Forum.authenticatedUserCallable', fn(Controller $controller): array => [
+            'id' => 1,
+            'username' => 'testing',
+            'is_superuser' => true,
+        ]);
 
         $this->enableRetainFlashMessages();
         $this->enableCsrfToken();
@@ -134,7 +135,7 @@ class ThreadsControllerTest extends IntegrationTestCase
         $this->assertRedirect('/forum/admin/threads?category_id=7');
         $this->assertSession('The thread has been saved.', 'Flash.flash.0.message');
 
-        $thread = TableRegistry::get('CakeDC/Forum.Threads')->find()->orderDesc('Threads.id')->first();
+        $thread = $this->fetchTable('CakeDC/Forum.Threads')->find()->orderByDesc('Threads.id')->first();
         $this->assertNull($thread->get('parent_id'));
         $this->assertEquals(1, $thread->get('user_id'));
         $this->assertEquals($data['category_id'], $thread->get('category_id'));
@@ -175,7 +176,7 @@ class ThreadsControllerTest extends IntegrationTestCase
         $this->assertRedirect('/forum/admin/threads?category_id=2');
         $this->assertSession('The thread has been saved.', 'Flash.flash.0.message');
 
-        $thread = TableRegistry::get('CakeDC/Forum.Threads')->get(1);
+        $thread = $this->fetchTable('CakeDC/Forum.Threads')->get(1);
         $this->assertEquals($update['message'], $thread->get('message'));
     }
 
@@ -198,7 +199,7 @@ class ThreadsControllerTest extends IntegrationTestCase
      */
     public function testDelete()
     {
-        $Threads = TableRegistry::get('CakeDC/Forum.Threads');
+        $Threads = $this->fetchTable('CakeDC/Forum.Threads');
         $thread = $Threads->newEntity(['title' => 'test thread', 'message' => 'test thread message']);
         $thread->parent_id = null;
         $thread->category_id = 2;

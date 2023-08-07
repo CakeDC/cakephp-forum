@@ -63,9 +63,8 @@ class ThreadsController extends AppController
      */
     public function view($id = null): void
     {
-        $thread = $this->Threads->get($id, [
-            'contain' => ['Categories', 'Users', 'Likes.Users'],
-        ]);
+        /** @var \CakeDC\Forum\Model\Entity\Post $thread */
+        $thread = $this->Threads->get($id, contain: ['Categories', 'Users', 'Likes.Users']);
 
         $replies = [];
         if (!$thread->parent_id) {

@@ -3,21 +3,24 @@ declare(strict_types=1);
 
 namespace CakeDC\Forum\Test\TestCase\Controller\Admin;
 
+use Cake\Controller\Controller;
 use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
-use Cake\TestSuite\IntegrationTestCase;
+use Cake\TestSuite\IntegrationTestTrait;
+use Cake\TestSuite\TestCase;
 
 /**
  * CakeDC\Forum\Controller\Admin\ReportsController Test Case
  */
-class ReportsControllerTest extends IntegrationTestCase
+class ReportsControllerTest extends TestCase
 {
+    use IntegrationTestTrait;
+
     /**
      * Fixtures
      *
      * @var array
      */
-    public $fixtures = [
+    public array $fixtures = [
         'plugin.CakeDC/Forum.Categories',
         'plugin.CakeDC/Forum.Posts',
         'plugin.CakeDC/Forum.Users',
@@ -28,13 +31,11 @@ class ReportsControllerTest extends IntegrationTestCase
     {
         parent::setUp();
 
-        Configure::write('Forum.authenticatedUserCallable', function (\Cake\Controller\Controller $controller) {
-            return [
-                'id' => 1,
-                'username' => 'testing',
-                'is_superuser' => true,
-            ];
-        });
+        Configure::write('Forum.authenticatedUserCallable', fn(Controller $controller): array => [
+            'id' => 1,
+            'username' => 'testing',
+            'is_superuser' => true,
+        ]);
 
         $this->enableRetainFlashMessages();
         $this->enableCsrfToken();
@@ -87,7 +88,7 @@ class ReportsControllerTest extends IntegrationTestCase
      */
     public function testDelete()
     {
-        $Reports = TableRegistry::getTableLocator()->get('CakeDC/Forum.Reports');
+        $Reports = $this->fetchTable('CakeDC/Forum.Reports');
         $report = $Reports->newEntity(['message' => 'test report message']);
         $report->post_id = 1;
         $report->user_id = 1;

@@ -3,21 +3,24 @@ declare(strict_types=1);
 
 namespace CakeDC\Forum\Test\TestCase\Controller;
 
+use Cake\Controller\Controller;
 use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
-use Cake\TestSuite\IntegrationTestCase;
+use Cake\TestSuite\IntegrationTestTrait;
+use Cake\TestSuite\TestCase;
 
 /**
  * CakeDC\Forum\Controller\LikesController Test Case
  */
-class LikesControllerTest extends IntegrationTestCase
+class LikesControllerTest extends TestCase
 {
+    use IntegrationTestTrait;
+
     /**
      * Fixtures
      *
      * @var array
      */
-    public $fixtures = [
+    public array $fixtures = [
         'plugin.CakeDC/Forum.Categories',
         'plugin.CakeDC/Forum.Posts',
         'plugin.CakeDC/Forum.Moderators',
@@ -29,12 +32,10 @@ class LikesControllerTest extends IntegrationTestCase
     {
         parent::setUp();
 
-        Configure::write('Forum.authenticatedUserCallable', function (\Cake\Controller\Controller $controller) {
-            return [
-                'id' => 1,
-                'username' => 'testing',
-            ];
-        });
+        Configure::write('Forum.authenticatedUserCallable', fn(Controller $controller): array => [
+            'id' => 1,
+            'username' => 'testing',
+        ]);
 
         $this->enableRetainFlashMessages();
         $this->enableCsrfToken();
@@ -48,8 +49,8 @@ class LikesControllerTest extends IntegrationTestCase
      */
     public function testAdd()
     {
-        $Posts = TableRegistry::get('CakeDC/Forum.Posts');
-        $Likes = TableRegistry::get('CakeDC/Forum.Likes');
+        $Posts = $this->fetchTable('CakeDC/Forum.Posts');
+        $Likes = $this->fetchTable('CakeDC/Forum.Likes');
 
         $post = $Posts->find()->where(['slug' => 'new-thread2'])->first();
         $likesCount = $post->get('likes_count');

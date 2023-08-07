@@ -31,8 +31,7 @@ class ReportsController extends AppController
     public function index(): void
     {
         $filter = array_intersect_key($this->request->getQueryParams(), array_flip(['post_id', 'thread_id']));
-
-        $reports = $this->paginate($this->Reports, ['finder' => 'filtered'] + $filter);
+        $reports = $this->paginate($this->Reports->find('filtered', $filter));
 
         $this->set(compact('reports'));
         $this->viewBuilder()->setOption('serialize', ['reports']);

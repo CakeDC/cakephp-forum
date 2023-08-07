@@ -3,21 +3,24 @@ declare(strict_types=1);
 
 namespace CakeDC\Forum\Test\TestCase\Controller;
 
+use Cake\Controller\Controller;
 use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
-use Cake\TestSuite\IntegrationTestCase;
+use Cake\TestSuite\IntegrationTestTrait;
+use Cake\TestSuite\TestCase;
 
 /**
  * CakeDC\Forum\Controller\ThreadsController Test Case
  */
-class ThreadsControllerTest extends IntegrationTestCase
+class ThreadsControllerTest extends TestCase
 {
+    use IntegrationTestTrait;
+
     /**
      * Fixtures
      *
      * @var array
      */
-    public $fixtures = [
+    public array $fixtures = [
         'plugin.CakeDC/Forum.Categories',
         'plugin.CakeDC/Forum.Posts',
         'plugin.CakeDC/Forum.Users',
@@ -30,12 +33,10 @@ class ThreadsControllerTest extends IntegrationTestCase
     {
         parent::setUp();
 
-        Configure::write('Forum.authenticatedUserCallable', function (\Cake\Controller\Controller $controller) {
-            return [
-                'id' => 1,
-                'username' => 'testing',
-            ];
-        });
+        Configure::write('Forum.authenticatedUserCallable', fn(Controller $controller): array => [
+            'id' => 1,
+            'username' => 'testing',
+        ]);
 
         $this->enableRetainFlashMessages();
         $this->enableCsrfToken();
@@ -123,25 +124,23 @@ class ThreadsControllerTest extends IntegrationTestCase
         $this->assertRedirect('/forum/cpus-andoverclocking/overclocking-cpu-gpu-memory-stability-testing-guidelines');
         $this->assertSession('The thread has been saved.', 'Flash.flash.0.message');
 
-        $thread = TableRegistry::get('CakeDC/Forum.Threads')->find('slugged', ['slug' => 'overclocking-cpu-gpu-memory-stability-testing-guidelines'])->first();
+        $thread = $this->fetchTable('CakeDC/Forum.Threads')->find('slugged', ['slug' => 'overclocking-cpu-gpu-memory-stability-testing-guidelines'])->first();
         $this->assertEquals($data['title'], $thread->get('title'));
         $this->assertEquals($data['message'], $thread->get('message'));
         $this->assertEquals($data['is_sticky'], $thread->get('is_sticky'));
         $this->assertEquals($data['is_locked'], $thread->get('is_locked'));
 
-        Configure::write('Forum.authenticatedUserCallable', function (\Cake\Controller\Controller $controller) {
-            return [
-                'id' => 2,
-                'username' => 'testing',
-            ];
-        });
-        $thread = TableRegistry::get('CakeDC/Forum.Threads')->find('slugged', ['slug' => 'one-more-thread'])->first();
+        Configure::write('Forum.authenticatedUserCallable', fn(Controller $controller): array => [
+            'id' => 2,
+            'username' => 'testing',
+        ]);
+        $thread = $this->fetchTable('CakeDC/Forum.Threads')->find('slugged', ['slug' => 'one-more-thread'])->first();
         $this->assertFalse($thread->get('is_sticky'));
         $this->assertFalse($thread->get('is_locked'));
         $this->post('/forum/cpus-andoverclocking/one-more-thread/edit', ['title' => 'bbb', 'message' => 'ccc', 'is_sticky' => 1, 'is_locked' => 1]);
         $this->assertRedirect('/forum/cpus-andoverclocking/one-more-thread');
         $this->assertSession('The thread has been saved.', 'Flash.flash.0.message');
-        $updatedThread = TableRegistry::get('CakeDC/Forum.Threads')->find('slugged', ['slug' => 'one-more-thread'])->first();
+        $updatedThread = $this->fetchTable('CakeDC/Forum.Threads')->find('slugged', ['slug' => 'one-more-thread'])->first();
         // Make sure non-moderator can't update is_sticky and is_locked
         $this->assertEquals('bbb', $updatedThread->get('title'));
         $this->assertEquals('ccc', $updatedThread->get('message'));
@@ -185,16 +184,14 @@ class ThreadsControllerTest extends IntegrationTestCase
         $this->assertRedirect('/forum/digital-and-video-cameras/overclocking-cpu-gpu-memory-stability-testing-guidelines');
         $this->assertSession('The thread has been saved.', 'Flash.flash.0.message');
 
-        $thread = TableRegistry::get('CakeDC/Forum.Threads')->find('slugged', ['slug' => 'overclocking-cpu-gpu-memory-stability-testing-guidelines'])->contain(['Replies'])->first();
+        $thread = $this->fetchTable('CakeDC/Forum.Threads')->find('slugged', ['slug' => 'overclocking-cpu-gpu-memory-stability-testing-guidelines'])->contain(['Replies'])->first();
         $this->assertEquals(7, $thread->get('category_id'));
         $this->assertEmpty(array_diff(collection($thread->get('replies'))->extract('category_id')->toArray(), [7]));
 
-        Configure::write('Forum.authenticatedUserCallable', function (\Cake\Controller\Controller $controller) {
-            return [
-                'id' => 2,
-                'username' => 'testing',
-            ];
-        });
+        Configure::write('Forum.authenticatedUserCallable', fn(Controller $controller): array => [
+            'id' => 2,
+            'username' => 'testing',
+        ]);
         $this->get('/forum/digital-and-video-cameras/overclocking-cpu-gpu-memory-stability-testing-guidelines/move');
         $this->assertResponseError();
     }
@@ -220,7 +217,7 @@ class ThreadsControllerTest extends IntegrationTestCase
         $this->assertRedirect('/forum/cpus-andoverclocking/new-test-thread');
         $this->assertSession('The thread has been saved.', 'Flash.flash.0.message');
 
-        $thread = TableRegistry::get('CakeDC/Forum.Threads')->find()->orderDesc('Threads.id')->first();
+        $thread = $this->fetchTable('CakeDC/Forum.Threads')->find()->orderByDesc('Threads.id')->first();
         $this->assertEquals(2, $thread->get('category_id'));
         $this->assertNull($thread->get('parent_id'));
         $this->assertEquals(1, $thread->get('user_id'));
@@ -249,7 +246,7 @@ class ThreadsControllerTest extends IntegrationTestCase
     public function testDelete()
     {
         // Delete own thread
-        $Threads = TableRegistry::getTableLocator()->get('CakeDC/Forum.Threads');
+        $Threads = $this->fetchTable('CakeDC/Forum.Threads');
         $thread = $Threads->newEntity(['title' => 'thread to delete', 'message' => 'test thread message']);
         $thread->category_id = 2;
         $thread->user_id = 1;
@@ -268,13 +265,11 @@ class ThreadsControllerTest extends IntegrationTestCase
     public function testDeleteNotModerator()
     {
         // Deleting a thread when user is not moderator
-        Configure::write('Forum.authenticatedUserCallable', function (\Cake\Controller\Controller $controller) {
-            return [
-                'id' => 2,
-                'username' => 'testing',
-            ];
-        });
-        $Threads = TableRegistry::getTableLocator()->get('CakeDC/Forum.Threads');
+        Configure::write('Forum.authenticatedUserCallable', fn(Controller $controller): array => [
+            'id' => 2,
+            'username' => 'testing',
+        ]);
+        $Threads = $this->fetchTable('CakeDC/Forum.Threads');
         $thread = $Threads->newEntity(['title' => 'thread to delete', 'message' => 'test thread message']);
         $thread->category_id = 2;
         $thread->user_id = 1;
@@ -298,12 +293,10 @@ class ThreadsControllerTest extends IntegrationTestCase
         $this->assertCount(6, $threads);
         $this->assertEquals('Overclocking CPU/GPU/Memory Stability Testing Guidelines', $threads[0]->title);
 
-        Configure::write('Forum.authenticatedUserCallable', function (\Cake\Controller\Controller $controller) {
-            return [
-                'id' => 2,
-                'username' => 'testing',
-            ];
-        });
+        Configure::write('Forum.authenticatedUserCallable', fn(Controller $controller): array => [
+            'id' => 2,
+            'username' => 'testing',
+        ]);
         $this->get('/forum/my-conversations');
         $threads = $this->viewVariable('threads')->toArray();
         $this->assertNotEmpty($threads);

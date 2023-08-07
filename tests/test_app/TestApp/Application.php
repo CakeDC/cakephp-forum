@@ -11,15 +11,17 @@ declare(strict_types=1);
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
-namespace CakeDC\Forum\Test\App;
+namespace TestApp;
 
 use Cake\Error\Middleware\ErrorHandlerMiddleware;
+use Cake\Http\BaseApplication;
 use Cake\Http\Middleware\CsrfProtectionMiddleware;
 use Cake\Http\MiddlewareQueue;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
+use CakeDC\Forum\ForumPlugin;
 
-class Application extends \Cake\Http\BaseApplication
+class Application extends BaseApplication
 {
     /**
      * Setup the middleware queue
@@ -40,7 +42,7 @@ class Application extends \Cake\Http\BaseApplication
             ->add(ErrorHandlerMiddleware::class)
             ->add(AssetMiddleware::class)
             ->add(CsrfProtectionMiddleware::class)
-            ->add(new RoutingMiddleware($this, null));
+            ->add(new RoutingMiddleware($this));
 
         return $middlewareQueue;
     }
@@ -50,6 +52,6 @@ class Application extends \Cake\Http\BaseApplication
      */
     public function bootstrap(): void
     {
-        $this->addPlugin(\CakeDC\Forum\ForumPlugin::class);
+        $this->addPlugin(ForumPlugin::class);
     }
 }

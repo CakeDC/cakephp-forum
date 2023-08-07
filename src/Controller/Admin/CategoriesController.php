@@ -45,9 +45,7 @@ class CategoriesController extends AppController
      */
     public function view($id = null): void
     {
-        $category = $this->Categories->get($id, [
-            'contain' => ['ParentCategories', 'SubCategories', 'Moderators.Users'],
-        ]);
+        $category = $this->Categories->get($id, contain: ['ParentCategories', 'SubCategories', 'Moderators.Users']);
 
         $this->set('category', $category);
         $this->viewBuilder()->setOption('serialize', 'category');
@@ -86,9 +84,7 @@ class CategoriesController extends AppController
      */
     public function edit($id = null)
     {
-        $category = $this->Categories->get($id, [
-            'contain' => [],
-        ]);
+        $category = $this->Categories->get($id);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $category = $this->Categories->patchEntity($category, $this->request->getData());
             if ($this->Categories->save($category)) {

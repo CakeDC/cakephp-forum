@@ -23,7 +23,6 @@ use Cake\Validation\Validator;
  * @property \CakeDC\Forum\Model\Table\CategoriesTable&\Cake\ORM\Association\BelongsTo $Categories
  * @property \Cake\ORM\Table&\Cake\ORM\Association\BelongsTo $Users
  *
- * @method \CakeDC\Forum\Model\Entity\Moderator get($primaryKey, $options = [])
  * @method \CakeDC\Forum\Model\Entity\Moderator newEntity($data = null, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Moderator newEmptyEntity()
  * @method \CakeDC\Forum\Model\Entity\Moderator[] newEntities(array $data, array $options = [])

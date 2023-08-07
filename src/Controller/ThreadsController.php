@@ -81,7 +81,7 @@ class ThreadsController extends AppController
      */
     public function my(): void
     {
-        $threads = $this->paginate($this->Threads->find('byUser', ['user_id' => $this->_getAuthenticatedUserId()]));
+        $threads = $this->paginate($this->Threads->find('byUser', user_id: $this->_getAuthenticatedUserId()));
 
         $this->set(compact('threads'));
     }
@@ -97,12 +97,12 @@ class ThreadsController extends AppController
     {
         $thread = $this->_getThread($categorySlug, $slug);
 
-        $query = $this->Posts->find('byThread', ['thread_id' => $thread->id]);
+        $query = $this->Posts->find('byThread', thread_id: $thread->id);
         $userId = $this->_getAuthenticatedUserId();
         if ($userId) {
             $query = $query
-                ->find('withUserReport', ['user_id' => $userId])
-                ->find('withUserLike', ['user_id' => $userId]);
+                ->find('withUserReport', user_id: $userId)
+                ->find('withUserLike', user_id: $userId);
         }
         $posts = $this->paginate($query);
 

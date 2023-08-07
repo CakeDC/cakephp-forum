@@ -126,8 +126,9 @@ trait ForumTrait
     protected function _getCategory(string $slug): Category
     {
         /** @var \CakeDC\Forum\Model\Entity\Category $category */
-        $category = $this->Categories->find('slugged', ['slug' => $slug])->firstOrFail();
-        $category->set('children', $this->Categories->find('children', ['category' => $category])->toArray());
+        /** @uses \Muffin\Slug\Model\Behavior\SlugBehavior::findSlugged() */
+        $category = $this->Categories->find('slugged', slug: $slug)->firstOrFail();
+        $category->set('children', $this->Categories->find('children', category: $category)->toArray());
 
         $this->set(['category' => $category]);
 
@@ -144,7 +145,7 @@ trait ForumTrait
      */
     protected function _getBreadcrumbs($categoryId): array
     {
-        $breadcrumbs = $this->Categories->find('path', ['for' => $categoryId])->toArray();
+        $breadcrumbs = $this->Categories->find('path', for: $categoryId)->toArray();
         $forumUserIsModerator = $this->_forumUserIsModerator($categoryId);
 
         $this->set(['breadcrumbs' => $breadcrumbs, 'forumUserIsModerator' => $forumUserIsModerator]);
@@ -167,10 +168,10 @@ trait ForumTrait
             ->contain([
                 'Users',
                 'Categories' => fn(SelectQuery $query): SelectQuery => $query
-                    ->find('slugged', ['slug' => $categorySlug]),
+                    ->find('slugged', slug: $categorySlug),
                 'Categories.SubCategories',
             ])
-            ->find('slugged', ['slug' => $slug])
+            ->find('slugged', slug: $slug)
             ->firstOrFail();
 
         $category = $thread->category;
@@ -192,7 +193,13 @@ trait ForumTrait
      */
     protected function _getReply($categorySlug, $threadSlug, $id): Reply
     {
-        $reply = $this->Replies->get($id, ['finder' => 'byThreadAndCategory'] + ['categorySlug' => $categorySlug, 'threadSlug' => $threadSlug]);
+        /** @var \CakeDC\Forum\Model\Entity\Reply $reply */
+        $reply = $this->Replies->get(
+            primaryKey: $id,
+            finder: 'byThreadAndCategory',
+            categorySlug: $categorySlug,
+            threadSlug: $threadSlug
+        );
 
         $category = $reply->category;
         $thread = $reply->thread;
@@ -215,7 +222,9 @@ trait ForumTrait
     protected function _getPost($categorySlug, $threadSlug, $id): Post
     {
         $thread = $this->_getThread($categorySlug, $threadSlug);
-        $post = $this->Posts->get($id, ['finder' => 'byThread', 'thread_id' => $thread->id]);
+
+        /** @var \CakeDC\Forum\Model\Entity\Post $post */
+        $post = $this->Posts->get($id, finder: 'byThread', thread_id: $thread->id);
 
         $this->set(['post' => $post]);
 

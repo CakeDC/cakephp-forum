@@ -23,7 +23,6 @@ use Cake\Validation\Validator;
  * @property \CakeDC\Forum\Model\Table\PostsTable&\Cake\ORM\Association\BelongsTo $Posts
  * @property \Cake\ORM\Table&\Cake\ORM\Association\BelongsTo $Users
  *
- * @method \CakeDC\Forum\Model\Entity\Like get($primaryKey, $options = [])
  * @method \CakeDC\Forum\Model\Entity\Like newEntity($data = null, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Like newEmptyEntity()
  * @method \CakeDC\Forum\Model\Entity\Like[] newEntities(array $data, array $options = [])

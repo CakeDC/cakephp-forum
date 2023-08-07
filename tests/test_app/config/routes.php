@@ -1,9 +1,10 @@
 <?php
+declare(strict_types=1);
 
 use Cake\Routing\RouteBuilder;
-use Cake\Routing\Router;
-return static function (RouteBuilder $builder) {
-    $builder->scope('/', function (RouteBuilder $routes) {
+
+return static function (RouteBuilder $builder): void {
+    $builder->scope('/', function (RouteBuilder $routes): void {
         $routes->setExtensions(['json']);
 
         $routes->connect('/{controller}', ['action' => 'index'], ['routeClass' => 'InflectedRoute']);
@@ -11,4 +12,3 @@ return static function (RouteBuilder $builder) {
         }
     );
 };
-require ROOT . DS . 'config' . DS . 'routes.php';

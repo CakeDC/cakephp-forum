@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace CakeDC\Forum\Test\App\Controller;
+namespace TestApp\Controller;
 
 use Cake\Controller\Controller;
 
@@ -14,11 +14,14 @@ use Cake\Controller\Controller;
  */
 class AppController extends Controller
 {
+    /**
+     * @inheritDoc
+     * @throws \Exception
+     */
     public function initialize(): void
     {
         parent::initialize();
 
-        $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
     }
 }

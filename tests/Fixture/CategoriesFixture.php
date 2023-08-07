@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace CakeDC\Forum\Test\Fixture;
 
 use Cake\TestSuite\Fixture\TestFixture;
@@ -13,52 +15,14 @@ class CategoriesFixture extends TestFixture
      *
      * @var string
      */
-    public $table = 'forum_categories';
-
-    /**
-     * Fields
-     *
-     * @var array
-     */
-    // @codingStandardsIgnoreStart
-    public $fields = [
-        'id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
-        'parent_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
-        'last_post_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
-        'lft' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
-        'rght' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
-        'title' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
-        'slug' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
-        'description' => ['type' => 'text', 'length' => null, 'null' => false, 'comment' => '', 'precision' => null],
-        'threads_count' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => 0, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
-        'replies_count' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => 0, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
-        'is_visible' => ['type' => 'boolean', 'length' => null, 'null' => false, 'default' => 0, 'comment' => '', 'precision' => null],
-        'created' => ['type' => 'datetime', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
-        'modified' => ['type' => 'datetime', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
-        '_indexes' => [
-            //'parent_id' => ['type' => 'index', 'columns' => ['parent_id'], 'length' => []],
-            'lft' => ['type' => 'index', 'columns' => ['lft'], 'length' => []],
-            'rght' => ['type' => 'index', 'columns' => ['rght'], 'length' => []],
-            //'slug' => ['type' => 'index', 'columns' => ['slug'], 'length' => []],
-            'is_visible' => ['type' => 'index', 'columns' => ['is_visible'], 'length' => []],
-            //'title' => ['type' => 'fulltext', 'columns' => ['title'], 'length' => []],
-        ],
-        '_constraints' => [
-            'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
-        ],
-        '_options' => [
-            'engine' => 'InnoDB',
-            //'collation' => 'utf8_general_ci'
-        ],
-    ];
-    // @codingStandardsIgnoreEnd
+    public string $table = 'forum_categories';
 
     /**
      * Records
      *
      * @var array
      */
-    public $records = [
+    public array $records = [
         [
             //'id' => 1,
             'parent_id' => null,

@@ -19,16 +19,9 @@ declare(strict_types=1);
  * installed as a dependency of an application.
  */
 
-// @codingStandardsIgnoreFile
-
-use Cake\Cache\Cache;
-use Cake\Chronos\Chronos;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
-use Cake\Datasource\ConnectionManager;
-use Cake\Log\Log;
-use Cake\Routing\DispatcherFactory;
-use Cake\Utility\Security;
+use CakeDC\Forum\ForumPlugin;
 
 $findRoot = function ($root) {
     do {
@@ -50,131 +43,98 @@ if (!defined('DS')) {
 define('ROOT', $root);
 define('APP_DIR', 'TestApp');
 define('WEBROOT_DIR', 'webroot');
-
-define('TMP', sys_get_temp_dir() . DS);
-define('LOGS', TMP . 'logs' . DS);
-define('CACHE', TMP . 'cache' . DS);
-define('SESSIONS', TMP . 'sessions' . DS);
-
-define('CAKE_CORE_INCLUDE_PATH', ROOT . DS . 'vendor' . DS . 'cakephp' . DS . 'cakephp');
-define('CORE_PATH', CAKE_CORE_INCLUDE_PATH . DS);
-define('CAKE', CORE_PATH . 'src' . DS);
-define('CORE_TESTS', CORE_PATH . 'tests' . DS);
-define('CORE_TEST_CASES', CORE_TESTS . 'TestCase');
-define('TEST_APP', ROOT . DS . 'tests' . DS);
-
-// Point app constants to the test app.
-define('APP', TEST_APP . 'App' . DS);
+define('TESTS', ROOT . DS . 'tests' . DS);
+define('TEST_APP', TESTS . 'test_app' . DS);
+define('APP', TEST_APP . 'TestApp' . DS);
 define('WWW_ROOT', TEST_APP . 'webroot' . DS);
 define('CONFIG', TEST_APP . 'config' . DS);
 
+define('TMP', ROOT . DS . 'tmp' . DS);
+define('LOGS', TMP . 'logs' . DS);
+define('CACHE', TMP . 'cache' . DS);
+define('CAKE_CORE_INCLUDE_PATH', ROOT . '/vendor/cakephp/cakephp');
+define('CORE_PATH', CAKE_CORE_INCLUDE_PATH . DS);
+define('CAKE', CORE_PATH . 'src' . DS);
+
+require CAKE . 'functions.php';
 require ROOT . '/vendor/autoload.php';
-require_once CORE_PATH . 'config/bootstrap.php';
 
-Configure::write('App', ['namespace' => 'CakeDC\Forum\Test\App']);
+Cake\Core\Configure::write('debug', true);
 
-date_default_timezone_set('UTC');
-mb_internal_encoding('UTF-8');
+ini_set('intl.default_locale', 'en_US');
 
-Configure::write('debug', true);
-Configure::write('App', [
-    'namespace' => 'App',
+@mkdir(TMP . 'cache/models', 0777);
+@mkdir(TMP . 'cache/persistent', 0777);
+@mkdir(TMP . 'cache/views', 0777);
+
+$cache = [
+    'default' => [
+        'engine' => 'File',
+    ],
+    '_cake_core_' => [
+        'className' => 'File',
+        'prefix' => 'mailgun_tracking_myapp_cake_core_',
+        'path' => CACHE . 'persistent/',
+        'serialize' => true,
+        'duration' => '+10 seconds',
+    ],
+    '_cake_model_' => [
+        'className' => 'File',
+        'prefix' => 'mailgun_tracking_app_cake_model_',
+        'path' => CACHE . 'models/',
+        'serialize' => 'File',
+        'duration' => '+10 seconds',
+    ],
+];
+
+Cake\Cache\Cache::setConfig($cache);
+Cake\Core\Configure::write('Session', [
+    'defaults' => 'php',
+]);
+
+Plugin::getCollection()->add(new ForumPlugin([
+    'path' => dirname(dirname(__FILE__)) . DS,
+    'routes' => true,
+]));
+if (file_exists($root . '/config/bootstrap.php')) {
+    require $root . '/config/bootstrap.php';
+}
+
+if (!getenv('db_dsn')) {
+    putenv('db_dsn=sqlite:///:memory:');
+}
+
+Cake\Datasource\ConnectionManager::setConfig('test', [
+    'url' => getenv('db_dsn'),
+    'timezone' => 'UTC',
+]);
+
+class_alias('TestApp\Controller\AppController', 'App\Controller\AppController');
+class_alias('Cake\View\View', 'App\View\AppView');
+\Cake\Core\Configure::write('App', [
+    'namespace' => 'TestApp',
     'encoding' => 'UTF-8',
     'base' => false,
     'baseUrl' => false,
-    'dir' => APP_DIR,
-    'webroot' => 'webroot',
+    'dir' => 'src',
+    'webroot' => WEBROOT_DIR,
     'wwwRoot' => WWW_ROOT,
     'fullBaseUrl' => 'http://localhost',
     'imageBaseUrl' => 'img/',
     'jsBaseUrl' => 'js/',
     'cssBaseUrl' => 'css/',
     'paths' => [
-        'plugins' => [dirname(APP) . DS . 'plugins' . DS],
-        'templates' => [APP . 'Template' . DS]
-    ]
-]);
-
-Cache::setConfig([
-    'default' => [
-        'engine' => 'File'
-    ],
-    '_cake_core_' => [
-        'engine' => 'File',
-        'prefix' => 'cake_core_',
-        'serialize' => true,
-    ],
-    '_cake_model_' => [
-        'engine' => 'File',
-        'prefix' => 'cake_model_',
-        'serialize' => true,
+        'plugins' => [APP . DS . 'plugins' . DS],
+        'templates' => [TEST_APP . 'templates' . DS],
     ],
 ]);
-// Ensure default test connection is defined
-if (!getenv('db_dsn')) {
-    putenv('db_dsn=sqlite:///:memory:');
-}
-
-ConnectionManager::setConfig('test', [
-    'url' => getenv('db_dsn'),
-    'timezone' => 'UTC'
-]);
-
-Configure::write('Session', [
-    'defaults' => 'php',
-]);
-
-Configure::write('plugins', [
-    'Muffin/Slug' => ROOT . DS . 'vendor' . DS . 'muffin' . DS . 'slug',
-    'Muffin/Orderly' => ROOT . DS . 'vendor' . DS . 'muffin' . DS . 'orderly',
-]);
-
-Log::setConfig([
-    'debug' => [
-        'engine' => 'Cake\Log\Engine\FileLog',
-        'levels' => ['notice', 'info', 'debug'],
-        'file' => 'debug',
-        'path' => LOGS,
-    ],
-    'error' => [
-        'engine' => 'Cake\Log\Engine\FileLog',
-        'levels' => ['warning', 'error', 'critical', 'alert', 'emergency'],
-        'file' => 'error',
-        'path' => LOGS,
-    ],
-]);
-class_alias('CakeDC\Forum\Test\App\Controller\AppController', 'App\Controller\AppController');
-class_alias('CakeDC\Forum\Test\App\Controller\UsersController', 'App\Controller\UsersController');
-class_alias('CakeDC\Forum\Test\App\Application', 'App\Application');
-
-Chronos::setTestNow(Chronos::now());
-Security::setSalt('a-long-but-not-random-value');
-
-ini_set('intl.default_locale', 'en_US');
-ini_set('session.gc_divisor', '1');
-
-// Fixate sessionid early on, as php7.2+
-// does not allow the sessionid to be set after stdout
-// has been written to.
+\Cake\Utility\Security::setSalt('yoyz186elmi66ab9pz4imbb3tgy9vnsgsfgwe2r8tyxbbfdygu9e09tlxyg8p7dq');
+Configure::write('Forum.userModel', 'Users');
+Configure::write('Forum.adminCheck', 'is_superuser');
 session_id('cli');
-
 \Cake\Routing\Router::reload();
-$application = new \CakeDC\Forum\Test\App\Application(CONFIG);
-$application->bootstrap();
-$application->pluginBootstrap();
 
-// Use migrations to build test database schema.
-//
-// Will rebuild the database if the migration state differs
-// from the migration history in files.
-//
-// If you are not using CakePHP's migrations you can
-// hook into your migration tool of choice here or
-// load schema from a SQL dump file with
-// use Cake\TestSuite\Fixture\SchemaLoader;
-// (new SchemaLoader())->loadSqlFiles('./tests/schema.sql', 'test');
-// in tests/bootstrap.php
-use Cake\TestSuite\Fixture\SchemaLoader;
-
-//(new SchemaLoader())->loadSqlFiles('path/to/schema.sql', 'test');
-//(new \Migrations\TestSuite\Migrator())->run();
+if (env('FIXTURE_SCHEMA_METADATA')) {
+    $loader = new \Cake\TestSuite\Fixture\SchemaLoader();
+    $loader->loadInternalFile(env('FIXTURE_SCHEMA_METADATA'));
+}

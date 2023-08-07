@@ -3,21 +3,24 @@ declare(strict_types=1);
 
 namespace CakeDC\Forum\Test\TestCase\Controller;
 
+use Cake\Controller\Controller;
 use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
-use Cake\TestSuite\IntegrationTestCase;
+use Cake\TestSuite\IntegrationTestTrait;
+use Cake\TestSuite\TestCase;
 
 /**
  * CakeDC\Forum\Controller\RepliesController Test Case
  */
-class RepliesControllerTest extends IntegrationTestCase
+class RepliesControllerTest extends TestCase
 {
+    use IntegrationTestTrait;
+
     /**
      * Fixtures
      *
      * @var array
      */
-    public $fixtures = [
+    public array $fixtures = [
         'plugin.CakeDC/Forum.Categories',
         'plugin.CakeDC/Forum.Posts',
         'plugin.CakeDC/Forum.Users',
@@ -30,12 +33,10 @@ class RepliesControllerTest extends IntegrationTestCase
     {
         parent::setUp();
 
-        Configure::write('Forum.authenticatedUserCallable', function (\Cake\Controller\Controller $controller) {
-            return [
-                'id' => 1,
-                'username' => 'testing',
-            ];
-        });
+        Configure::write('Forum.authenticatedUserCallable', fn(Controller $controller): array => [
+            'id' => 1,
+            'username' => 'testing',
+        ]);
 
         $this->enableRetainFlashMessages();
         $this->enableCsrfToken();
@@ -62,7 +63,7 @@ class RepliesControllerTest extends IntegrationTestCase
         $this->assertRedirect('/forum/cpus-andoverclocking/overclocking-cpu-gpu-memory-stability-testing-guidelines');
         $this->assertSession('The reply has been saved.', 'Flash.flash.0.message');
 
-        $reply = TableRegistry::get('CakeDC/Forum.Replies')->get(2);
+        $reply = $this->fetchTable('CakeDC/Forum.Replies')->get(2);
         $this->assertEquals($data['message'], $reply->get('message'));
     }
 
@@ -105,7 +106,7 @@ class RepliesControllerTest extends IntegrationTestCase
         $this->assertRedirect('/forum/cpus-andoverclocking/overclocking-cpu-gpu-memory-stability-testing-guidelines');
         $this->assertSession('The reply has been saved.', 'Flash.flash.0.message');
 
-        $reply = TableRegistry::get('CakeDC/Forum.Replies')->find()->orderDesc('Replies.id')->first();
+        $reply = $this->fetchTable('CakeDC/Forum.Replies')->find()->orderByDesc('Replies.id')->first();
         $this->assertEquals(2, $reply->get('category_id'));
         $this->assertEquals(1, $reply->get('parent_id'));
         $this->assertEquals(1, $reply->get('user_id'));
@@ -138,7 +139,7 @@ class RepliesControllerTest extends IntegrationTestCase
     public function testDelete()
     {
         // Delete own reply
-        $Replies = TableRegistry::get('CakeDC/Forum.Replies');
+        $Replies = $this->fetchTable('CakeDC/Forum.Replies');
         $reply = $Replies->newEntity(['message' => 'test reply message']);
         $reply->parent_id = 1;
         $reply->category_id = 2;

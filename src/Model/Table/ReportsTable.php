@@ -16,7 +16,6 @@ use Cake\Core\Configure;
 use Cake\ORM\Query\SelectQuery;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
-use Cake\Utility\Hash;
 use Cake\Validation\Validator;
 
 /**
@@ -25,7 +24,6 @@ use Cake\Validation\Validator;
  * @property \CakeDC\Forum\Model\Table\PostsTable&\Cake\ORM\Association\BelongsTo $Posts
  * @property \Cake\ORM\Table&\Cake\ORM\Association\BelongsTo $Users
  *
- * @method \CakeDC\Forum\Model\Entity\Report get($primaryKey, $options = [])
  * @method \CakeDC\Forum\Model\Entity\Report newEntity($data = null, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Report newEmptyEntity()
  * @method \CakeDC\Forum\Model\Entity\Report[] newEntities(array $data, array $options = [])
@@ -102,34 +100,35 @@ class ReportsTable extends Table
      * Find filtered
      *
      * @param \Cake\ORM\Query\SelectQuery $query The query builder.
-     * @param array $options Options.
+     * @param int|null $post_id
+     * @param int|null $thread_id
+     * @param int|null $category_id
      * @return \Cake\ORM\Query\SelectQuery
      */
-    public function findFiltered(SelectQuery $query, array $options = []): SelectQuery
-    {
+    public function findFiltered(
+        SelectQuery $query,
+        ?int $post_id = null,
+        ?int $thread_id = null,
+        ?int $category_id = null
+    ): SelectQuery {
         $where = [];
-        $contain = [
-            'Users',
-            'Posts' => ['Categories', 'Users', 'Threads.Users'],
-        ];
-
-        $postId = Hash::get($options, 'post_id');
-        $threadId = Hash::get($options, 'thread_id');
-        if ($postId) {
-            $where['Reports.post_id'] = $postId;
-        } elseif ($threadId) {
+        if ($post_id) {
+            $where['Reports.post_id'] = $post_id;
+        } elseif ($thread_id) {
             $where['OR'] = [
-                'Posts.id' => $threadId,
-                'Posts.parent_id' => $threadId,
+                'Posts.id' => $thread_id,
+                'Posts.parent_id' => $thread_id,
             ];
         }
-        $categoryId = Hash::get($options, 'category_id');
-        if (!is_null($categoryId)) {
-            $where['Posts.category_id IN'] = (array)$categoryId;
+        if (!is_null($category_id)) {
+            $where['Posts.category_id IN'] = (array)$category_id;
         }
 
         return $query
-            ->contain($contain)
+            ->contain([
+                'Users',
+                'Posts' => ['Categories', 'Users', 'Threads.Users'],
+            ])
             ->where($where);
     }
 }

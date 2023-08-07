@@ -91,7 +91,8 @@ class ReportsController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
 
-        $report = $this->Reports->get($id, ['contain' => ['Posts']]);
+        /** @var \CakeDC\Forum\Model\Entity\Report $report */
+        $report = $this->Reports->get($id, contain: ['Posts']);
 
         if (!$this->_forumUserIsModerator($report->post->category_id)) {
             throw new UnauthorizedException();
