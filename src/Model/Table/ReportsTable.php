@@ -98,18 +98,12 @@ class ReportsTable extends Table
 
     /**
      * Find filtered
-     *
-     * @param \Cake\ORM\Query\SelectQuery $query The query builder.
-     * @param int|null $post_id
-     * @param int|null $thread_id
-     * @param int|null $category_id
-     * @return \Cake\ORM\Query\SelectQuery
      */
     public function findFiltered(
         SelectQuery $query,
-        ?int $post_id = null,
-        ?int $thread_id = null,
-        ?int $category_id = null
+        int|string|null $post_id = null,
+        int|string|null $thread_id = null,
+        int|string|null $category_id = null
     ): SelectQuery {
         $where = [];
         if ($post_id) {

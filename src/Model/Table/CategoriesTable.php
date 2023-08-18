@@ -122,11 +122,8 @@ class CategoriesTable extends Table
 
     /**
      * Get options list for dropdown
-     *
-     * @param bool $grouped Grouped
-     * @return array
      */
-    public function getOptionsList($grouped = false): array
+    public function getOptionsList(bool $grouped = false): array
     {
         $categories = $this->find()->all()->nest('id', 'parent_id');
 
@@ -151,10 +148,6 @@ class CategoriesTable extends Table
 
     /**
      * Find category children
-     *
-     * @param \Cake\ORM\Query\SelectQuery $query The query builder.
-     * @param \CakeDC\Forum\Model\Entity\Category $category
-     * @return \Cake\ORM\Query\SelectQuery
      */
     public function findChildren(SelectQuery $query, Category $category): SelectQuery
     {

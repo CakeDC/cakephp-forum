@@ -66,10 +66,6 @@ class PostsTable extends Table
 
     /**
      * Find posts by thread
-     *
-     * @param \Cake\ORM\Query\SelectQuery $query The query builder.
-     * @param int $thread_id
-     * @return \Cake\ORM\Query\SelectQuery
      */
     public function findByThread(SelectQuery $query, int $thread_id): SelectQuery
     {
@@ -85,10 +81,6 @@ class PostsTable extends Table
 
     /**
      * Find posts with user report
-     *
-     * @param \Cake\ORM\Query\SelectQuery $query The query builder.
-     * @param int $user_id
-     * @return \Cake\ORM\Query\SelectQuery
      */
     public function findWithUserReport(SelectQuery $query, int $user_id): SelectQuery
     {
@@ -102,10 +94,6 @@ class PostsTable extends Table
 
     /**
      * Find posts with user like
-     *
-     * @param \Cake\ORM\Query\SelectQuery $query The query builder.
-     * @param int $user_id
-     * @return \Cake\ORM\Query\SelectQuery
      */
     public function findWithUserLike(SelectQuery $query, int $user_id): SelectQuery
     {

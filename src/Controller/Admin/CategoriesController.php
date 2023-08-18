@@ -25,8 +25,6 @@ class CategoriesController extends AppController
 {
     /**
      * Index method
-     *
-     * @return void
      */
     public function index(): void
     {
@@ -39,11 +37,9 @@ class CategoriesController extends AppController
     /**
      * View method
      *
-     * @param string|null $id Category id.
-     * @return void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null): void
+    public function view(string $id = null): void
     {
         $category = $this->Categories->get($id, contain: ['ParentCategories', 'SubCategories', 'Moderators.Users']);
 
@@ -82,7 +78,7 @@ class CategoriesController extends AppController
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Http\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
+    public function edit(string $id = null)
     {
         $category = $this->Categories->get($id);
         if ($this->request->is(['patch', 'post', 'put'])) {
@@ -104,11 +100,9 @@ class CategoriesController extends AppController
     /**
      * Delete method
      *
-     * @param string|null $id Category id.
-     * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null): ?Response
+    public function delete(string $id = null): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
         $category = $this->Categories->get($id);
@@ -123,11 +117,8 @@ class CategoriesController extends AppController
 
     /**
      * Move category up
-     *
-     * @param int $id Category id
-     * @return \Cake\Http\Response|null
      */
-    public function moveUp($id): ?Response
+    public function moveUp(string $id = null): ?Response
     {
         $this->request->allowMethod('post');
 
@@ -144,11 +135,8 @@ class CategoriesController extends AppController
 
     /**
      * Move category down
-     *
-     * @param int $id Category id
-     * @return \Cake\Http\Response|null
      */
-    public function moveDown($id): ?Response
+    public function moveDown(string $id = null): ?Response
     {
         $this->request->allowMethod('post');
 

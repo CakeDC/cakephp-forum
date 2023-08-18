@@ -145,9 +145,6 @@ class RepliesTable extends Table
 
     /**
      * Last reply finder
-     *
-     * @param \Cake\ORM\Query\SelectQuery $query The query builder.
-     * @return \Cake\ORM\Query\SelectQuery
      */
     public function findLastReply(SelectQuery $query): SelectQuery
     {
@@ -157,10 +154,6 @@ class RepliesTable extends Table
     /**
      * Find by ID and parent_id
      *
-     * @param \Cake\ORM\Query\SelectQuery $query The query builder.
-     * @param string $categorySlug
-     * @param string $threadSlug
-     * @return \Cake\ORM\Query\SelectQuery
      * @uses \Muffin\Slug\Model\Behavior\SlugBehavior::findSlugged()
      */
     public function findByThreadAndCategory(
@@ -176,15 +169,6 @@ class RepliesTable extends Table
         ]);
     }
 
-    /**
-     * beforeFind callback
-     *
-     * @param \Cake\Event\Event $event Event
-     * @param \Cake\ORM\Query\SelectQuery $query Query
-     * @param \ArrayObject $options Options
-     * @param bool $primary Primary
-     * @return void
-     */
     public function beforeFind(EventInterface $event, SelectQuery $query, ArrayObject $options, bool $primary): void
     {
         if (!Hash::get($options, 'all')) {

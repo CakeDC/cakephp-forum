@@ -12,6 +12,7 @@ declare(strict_types=1);
  */
 namespace CakeDC\Forum\Controller\Traits;
 
+use ArrayAccess;
 use Cake\Core\Configure;
 use Cake\ORM\Query\SelectQuery;
 use Cake\Utility\Hash;
@@ -36,8 +37,6 @@ trait ForumTrait
 {
     /**
      * Get the authenticated user id. See _getAuthenticatedUser
-     *
-     * @return mixed
      */
     protected function _getAuthenticatedUserId(): mixed
     {
@@ -47,10 +46,8 @@ trait ForumTrait
     /**
      * Get the authenticated user. Try to use config Forum.authenticatedUserCallable to
      * when $this->loadedAuthenticatedUser is false.
-     *
-     * @return array|\ArrayAccess|null
      */
-    protected function _getAuthenticatedUser(): \ArrayAccess|array|null
+    protected function _getAuthenticatedUser(): ArrayAccess|array|null
     {
         if ($this->loadedAuthenticatedUser) {
             return $this->authenticatedUser;
@@ -69,8 +66,6 @@ trait ForumTrait
 
     /**
      * Check if current user is admin
-     *
-     * @return bool
      */
     protected function _forumUserIsAdmin(): bool
     {
@@ -96,7 +91,6 @@ trait ForumTrait
      * Check if current user is moderator
      *
      * @param int|null $categoryId Category id
-     * @return bool
      */
     protected function _forumUserIsModerator($categoryId = null): bool
     {
@@ -119,9 +113,6 @@ trait ForumTrait
 
     /**
      * Get category by slug
-     *
-     * @param string $slug Category slug
-     * @return \CakeDC\Forum\Model\Entity\Category
      */
     protected function _getCategory(string $slug): Category
     {
@@ -155,12 +146,8 @@ trait ForumTrait
 
     /**
      * Get thread by category slug and thread slug
-     *
-     * @param string $categorySlug Category slug
-     * @param string $slug Slug
-     * @return \CakeDC\Forum\Model\Entity\Thread
      */
-    protected function _getThread($categorySlug, $slug): Thread
+    protected function _getThread(string $categorySlug, string $slug): Thread
     {
         /** @var \CakeDC\Forum\Model\Entity\Thread $thread */
         $thread = $this->Threads
@@ -185,13 +172,8 @@ trait ForumTrait
 
     /**
      * Get reply by category slug, thread slug and reply id
-     *
-     * @param string $categorySlug Category slug
-     * @param string $threadSlug Thread slug
-     * @param int $id Reply id
-     * @return \CakeDC\Forum\Model\Entity\Reply
      */
-    protected function _getReply($categorySlug, $threadSlug, $id): Reply
+    protected function _getReply(string $categorySlug, string $threadSlug, mixed $id): Reply
     {
         /** @var \CakeDC\Forum\Model\Entity\Reply $reply */
         $reply = $this->Replies->get(
@@ -213,13 +195,8 @@ trait ForumTrait
 
     /**
      * Get post by category slug, thread slug and post id
-     *
-     * @param string $categorySlug Category slug
-     * @param string $threadSlug Thread slug
-     * @param int $id Post id
-     * @return \CakeDC\Forum\Model\Entity\Post
      */
-    protected function _getPost($categorySlug, $threadSlug, $id): Post
+    protected function _getPost(string $categorySlug, string $threadSlug, mixed $id): Post
     {
         $thread = $this->_getThread($categorySlug, $threadSlug);
 

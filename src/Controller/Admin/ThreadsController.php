@@ -26,8 +26,6 @@ class ThreadsController extends AppController
 {
     /**
      * Index method
-     *
-     * @return void
      */
     public function index(): void
     {
@@ -57,11 +55,9 @@ class ThreadsController extends AppController
     /**
      * View method
      *
-     * @param string|null $id Thread id.
-     * @return void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null): void
+    public function view(string $id = null): void
     {
         /** @var \CakeDC\Forum\Model\Entity\Post $thread */
         $thread = $this->Threads->get($id, contain: ['Categories', 'Users', 'Likes.Users']);
@@ -112,11 +108,10 @@ class ThreadsController extends AppController
     /**
      * Edit method
      *
-     * @param string|null $id Post id.
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Http\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
+    public function edit(string $id = null)
     {
         $thread = $this->Threads->get($id);
 
@@ -139,11 +134,10 @@ class ThreadsController extends AppController
     /**
      * Move method
      *
-     * @param string|null $id Post id.
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Http\Exception\NotFoundException When record not found.
      */
-    public function move($id = null)
+    public function move(string $id = null)
     {
         $thread = $this->Threads->get($id);
 
@@ -166,11 +160,9 @@ class ThreadsController extends AppController
     /**
      * Delete method
      *
-     * @param string|null $id Post id.
-     * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null): ?Response
+    public function delete(string $id = null): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
         $thread = $this->Threads->get($id);

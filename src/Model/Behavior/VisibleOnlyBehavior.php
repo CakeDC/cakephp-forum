@@ -24,22 +24,11 @@ class VisibleOnlyBehavior extends Behavior
 {
     /**
      * Default configuration.
-     *
-     * @var array
      */
     protected array $_defaultConfig = [
         'field' => 'is_visible',
     ];
 
-    /**
-     * beforeFind callback
-     *
-     * @param \Cake\Event\Event $event Event
-     * @param \Cake\ORM\Query\SelectQuery $query Query
-     * @param \ArrayObject $options Options
-     * @param bool $primary Primary
-     * @return void
-     */
     public function beforeFind(EventInterface $event, SelectQuery $query, ArrayObject $options, bool $primary): void
     {
         $query->where([

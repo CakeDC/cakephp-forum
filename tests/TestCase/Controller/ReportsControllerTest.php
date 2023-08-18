@@ -70,7 +70,7 @@ class ReportsControllerTest extends TestCase
         $this->get('/forum/reports');
         $this->assertResponseOk();
         $reports = $this->viewVariable('reports')->toArray();
-        $this->assertCount(0, $reports);
+        $this->assertCount(2, $reports);
 
         // Non-moderator
         Configure::write('Forum.authenticatedUserCallable', function (Controller $controller) {

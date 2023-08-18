@@ -25,7 +25,7 @@ if (!isset($link)) {
     }
 }
 
-$username = Hash::get($user, Configure::read('Forum.userNameField'));
+$username = Hash::get($user ?? [], Configure::read('Forum.userNameField'));
 
 if ($link === false) {
     echo h($username);

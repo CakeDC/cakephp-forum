@@ -32,7 +32,6 @@ class ThreadsController extends AppController
      * Implement this method to avoid having to overwrite
      * the constructor and call parent.
      *
-     * @return void
      * @throws \Exception
      */
     public function initialize(): void
@@ -50,8 +49,6 @@ class ThreadsController extends AppController
 
     /**
      * List threads in category method
-     *
-     * @return void
      */
     public function index(): void
     {
@@ -76,8 +73,6 @@ class ThreadsController extends AppController
 
     /**
      * List threads user has created or participated in
-     *
-     * @return void
      */
     public function my(): void
     {
@@ -93,7 +88,7 @@ class ThreadsController extends AppController
      * @param string $slug Thread slug
      * @return void
      */
-    public function view($categorySlug, $slug): void
+    public function view(string $categorySlug, string $slug): void
     {
         $thread = $this->_getThread($categorySlug, $slug);
 
@@ -121,10 +116,9 @@ class ThreadsController extends AppController
     /**
      * Add method
      *
-     * @param string $categorySlug Category slug
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
-    public function add($categorySlug)
+    public function add(string $categorySlug)
     {
         $category = $this->_getCategory($categorySlug);
         if ($category->sub_categories) {
@@ -145,12 +139,10 @@ class ThreadsController extends AppController
     /**
      * Edit method
      *
-     * @param string $categorySlug Category slug.
-     * @param string $threadSlug Thread slug.
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Http\Exception\NotFoundException When record not found.
      */
-    public function edit($categorySlug, $threadSlug)
+    public function edit(string $categorySlug, string $threadSlug)
     {
         $thread = $this->_getThread($categorySlug, $threadSlug);
         if ($thread->user_id != $this->_getAuthenticatedUserId()) {
@@ -165,12 +157,10 @@ class ThreadsController extends AppController
     /**
      * Move method
      *
-     * @param string $categorySlug Category slug.
-     * @param string $threadSlug Thread slug.
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Http\Exception\NotFoundException When record not found.
      */
-    public function move($categorySlug, $threadSlug)
+    public function move(string $categorySlug, string $threadSlug)
     {
         $thread = $this->_getThread($categorySlug, $threadSlug);
         if (!$this->_forumUserIsModerator($thread->category_id)) {
@@ -189,12 +179,9 @@ class ThreadsController extends AppController
     /**
      * Delete method
      *
-     * @param string $categorySlug Category slug.
-     * @param string $threadSlug Thread slug.
-     * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($categorySlug, $threadSlug): ?Response
+    public function delete(string $categorySlug, string $threadSlug): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
 
@@ -214,10 +201,6 @@ class ThreadsController extends AppController
 
     /**
      * Save thread
-     *
-     * @param \CakeDC\Forum\Model\Entity\Thread $thread Thread
-     * @param array $fields Fields list
-     * @return \Cake\Http\Response|null
      */
     protected function _save(Thread $thread, array $fields = ['title', 'message']): ?Response
     {

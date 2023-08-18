@@ -27,8 +27,6 @@ class ReportsController extends AppController
 {
     /**
      * Index method
-     *
-     * @return void
      */
     public function index(): void
     {
@@ -50,12 +48,10 @@ class ReportsController extends AppController
     /**
      * Add method
      *
-     * @param string $categorySlug Category slug
-     * @param string $threadSlug Thread slug
-     * @param int $postId Post id
+     * @param string $postId Post id
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
-    public function add($categorySlug, $threadSlug, $postId)
+    public function add(string $categorySlug, string $threadSlug, string $postId)
     {
         $post = $this->_getPost($categorySlug, $threadSlug, $postId);
         $userId = $this->_getAuthenticatedUserId();
@@ -83,11 +79,9 @@ class ReportsController extends AppController
     /**
      * Delete method
      *
-     * @param int $id Report id
-     * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id): ?Response
+    public function delete(string $id = null): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
 

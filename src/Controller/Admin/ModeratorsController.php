@@ -51,13 +51,12 @@ class ModeratorsController extends AppController
     /**
      * Delete method
      *
-     * @param string|null $id Post id.
-     * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null): ?Response
+    public function delete(string $id = null): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
+        /** @var \CakeDC\Forum\Model\Entity\Moderator $moderator */
         $moderator = $this->Moderators->get($id);
         if ($this->Moderators->delete($moderator)) {
             $this->Flash->success(__('The moderator has been deleted.'));

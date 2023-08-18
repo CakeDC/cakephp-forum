@@ -185,15 +185,6 @@ class ThreadsTable extends Table
         return $rules;
     }
 
-    /**
-     * beforeFind callback
-     *
-     * @param \Cake\Event\Event $event Event
-     * @param \Cake\ORM\Query\SelectQuery $query Query
-     * @param \ArrayObject $options Options
-     * @param bool $primary Primary
-     * @return void
-     */
     public function beforeFind(EventInterface $event, SelectQuery $query, ArrayObject $options, bool $primary): void
     {
         if (!Hash::get($options, 'all')) {
@@ -201,14 +192,6 @@ class ThreadsTable extends Table
         }
     }
 
-    /**
-     * afterSave callback
-     *
-     * @param \Cake\Event\Event $event Event
-     * @param \Cake\Datasource\EntityInterface $entity Entity
-     * @param \ArrayObject $options Options
-     * @return void
-     */
     public function afterSave(EventInterface $event, EntityInterface $entity, ArrayObject $options): void
     {
         if ($entity->isDirty('category_id')) {
@@ -226,10 +209,6 @@ class ThreadsTable extends Table
 
     /**
      * Find threads by category
-     *
-     * @param \Cake\ORM\Query\SelectQuery $query The query builder.
-     * @param int $category_id
-     * @return \Cake\ORM\Query\SelectQuery
      */
     public function findByCategory(SelectQuery $query, int $category_id): SelectQuery
     {
@@ -243,10 +222,6 @@ class ThreadsTable extends Table
 
     /**
      * Find threads user has started or participated in
-     *
-     * @param \Cake\ORM\Query\SelectQuery $query The query builder.
-     * @param int|string $user_id
-     * @return \Cake\ORM\Query\SelectQuery
      */
     public function findByUser(SelectQuery $query, int|string $user_id): SelectQuery
     {
@@ -270,10 +245,6 @@ class ThreadsTable extends Table
     /**
      * Find threads for edit
      *
-     * @param \Cake\ORM\Query\SelectQuery $query The query builder.
-     * @param int $category_id
-     * @param string $slug
-     * @return \Cake\ORM\Query\SelectQuery
      * @uses \Muffin\Slug\Model\Behavior\SlugBehavior::findSlugged()
      */
     public function findForEdit(SelectQuery $query, int $category_id, string $slug): SelectQuery

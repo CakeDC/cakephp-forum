@@ -24,21 +24,21 @@ class ModeratorsFixture extends TestFixture
      */
     public array $records = [
         [
-            //'id' => 1,
+            'id' => 1,
             'category_id' => 2,
             'user_id' => 1,
             'created' => '2017-07-24 12:53:04',
             'modified' => '2017-07-24 12:53:04',
         ],
         [
-            //'id' => 2,
+            'id' => 2,
             'category_id' => 3,
             'user_id' => 2,
             'created' => '2017-07-24 12:53:04',
             'modified' => '2017-07-24 12:53:04',
         ],
         [
-            //'id' => 3,
+            'id' => 3,
             'category_id' => 7,
             'user_id' => 3,
             'created' => '2017-07-24 12:53:04',

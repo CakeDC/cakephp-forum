@@ -28,11 +28,9 @@ class RepliesController extends AppController
     /**
      * Add method
      *
-     * @param string $categorySlug Category slug
-     * @param string $threadSlug Thread slug
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
-    public function add($categorySlug, $threadSlug)
+    public function add(string $categorySlug, string $threadSlug)
     {
         $thread = $this->_getThread($categorySlug, $threadSlug);
         if ($thread->is_locked) {
@@ -47,20 +45,18 @@ class RepliesController extends AppController
         $this->set(compact('reply'));
 
         if ($this->request->is(['post'])) {
-            return $this->_save($reply);
+            return $this->save($reply);
         }
     }
 
     /**
      * Edit method
      *
-     * @param string $categorySlug Category slug.
-     * @param string $threadSlug Thread slug.
-     * @param int $id Reply id.
+     * @param string $id Reply id.
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Http\Exception\NotFoundException When record not found.
      */
-    public function edit($categorySlug, $threadSlug, $id)
+    public function edit(string $categorySlug, string $threadSlug, string $id)
     {
         $reply = $this->_getReply($categorySlug, $threadSlug, $id);
 
@@ -69,20 +65,17 @@ class RepliesController extends AppController
         }
 
         if ($this->request->is(['post', 'put', 'patch'])) {
-            return $this->_save($reply);
+            return $this->save($reply);
         }
     }
 
     /**
      * Delete method
      *
-     * @param string $categorySlug Category slug.
-     * @param string $threadSlug Thread slug.
      * @param int $id Reply id
-     * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($categorySlug, $threadSlug, $id): ?Response
+    public function delete(string $categorySlug, string $threadSlug, string $id): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
 
@@ -103,11 +96,8 @@ class RepliesController extends AppController
 
     /**
      * Save thread
-     *
-     * @param \CakeDC\Forum\Model\Entity\Reply $reply Reply
-     * @return \Cake\Http\Response|null
      */
-    protected function _save(Reply $reply): ?Response
+    protected function save(Reply $reply): ?Response
     {
         $reply = $this->Replies->patchEntity($reply, $this->request->getData(), ['fields' => ['message']]);
         if (!$this->Replies->save($reply)) {

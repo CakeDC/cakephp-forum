@@ -27,7 +27,6 @@ abstract class AppController extends Controller
      * Implement this method to avoid having to overwrite
      * the constructor and call parent.
      *
-     * @return void
      * @throws \Exception
      */
     public function initialize(): void

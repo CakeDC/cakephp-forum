@@ -27,11 +27,9 @@ class RepliesController extends AppController
     /**
      * View method
      *
-     * @param string|null $id Post id.
-     * @return void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null): void
+    public function view(string $id = null): void
     {
         $reply = $this->Replies->get($id, contain: ['Threads', 'Categories', 'Users']);
 
@@ -73,11 +71,10 @@ class RepliesController extends AppController
     /**
      * Edit method
      *
-     * @param string|null $id Post id.
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Http\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
+    public function edit(string $id = null)
     {
         /** @var \CakeDC\Forum\Model\Entity\Reply $reply */
         $reply = $this->Replies->get($id, contain: ['Threads']);
@@ -101,11 +98,9 @@ class RepliesController extends AppController
     /**
      * Delete method
      *
-     * @param string|null $id Post id.
-     * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null): ?Response
+    public function delete(string $id = null): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
         $reply = $this->Replies->get($id);

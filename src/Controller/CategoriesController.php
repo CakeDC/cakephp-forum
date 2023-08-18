@@ -22,8 +22,6 @@ class CategoriesController extends AppController
 {
     /**
      * Index method
-     *
-     * @return void
      */
     public function index(): void
     {

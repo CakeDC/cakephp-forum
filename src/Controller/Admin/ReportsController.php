@@ -25,8 +25,6 @@ class ReportsController extends AppController
 {
     /**
      * Index method
-     *
-     * @return void
      */
     public function index(): void
     {
@@ -40,11 +38,9 @@ class ReportsController extends AppController
     /**
      * Delete method
      *
-     * @param int $id Report id
-     * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id): ?Response
+    public function delete(string $id = null): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
 
