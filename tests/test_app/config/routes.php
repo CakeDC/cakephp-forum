@@ -9,6 +9,5 @@ return static function (RouteBuilder $builder): void {
 
         $routes->connect('/{controller}', ['action' => 'index'], ['routeClass' => 'InflectedRoute']);
         $routes->connect('/{controller}/{action}/*', [], ['routeClass' => 'InflectedRoute']);
-        }
-    );
+    });
 };

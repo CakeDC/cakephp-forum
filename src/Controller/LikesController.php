@@ -48,6 +48,11 @@ class LikesController extends AppController
             }
         }
 
-        return $this->redirect(['controller' => 'Threads', 'action' => 'view', 'category' => $categorySlug, 'thread' => $threadSlug]);
+        return $this->redirect([
+            'controller' => 'Threads',
+            'action' => 'view',
+            'category' => $categorySlug,
+            'thread' => $threadSlug,
+        ]);
     }
 }

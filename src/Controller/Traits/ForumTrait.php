@@ -92,7 +92,7 @@ trait ForumTrait
      *
      * @param int|null $categoryId Category id
      */
-    protected function _forumUserIsModerator($categoryId = null): bool
+    protected function _forumUserIsModerator(?int $categoryId = null): bool
     {
         if ($this->_forumUserIsAdmin()) {
             return true;
@@ -132,9 +132,9 @@ trait ForumTrait
      * Get breadcrumbs
      *
      * @param int $categoryId Category id
-     * @return \CakeDC\Forum\Model\Entity\Category[]
+     * @return array<\CakeDC\Forum\Model\Entity\Category>
      */
-    protected function _getBreadcrumbs($categoryId): array
+    protected function _getBreadcrumbs(int $categoryId): array
     {
         $breadcrumbs = $this->Categories->find('path', for: $categoryId)->toArray();
         $forumUserIsModerator = $this->_forumUserIsModerator($categoryId);
@@ -154,7 +154,7 @@ trait ForumTrait
             ->find()
             ->contain([
                 'Users',
-                'Categories' => fn(SelectQuery $query): SelectQuery => $query
+                'Categories' => fn (SelectQuery $query): SelectQuery => $query
                     ->find('slugged', slug: $categorySlug),
                 'Categories.SubCategories',
             ])

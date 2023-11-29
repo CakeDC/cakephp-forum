@@ -14,8 +14,7 @@ use Migrations\AbstractMigration;
 
 class CreateModeratorsTable extends AbstractMigration
 {
-
-    public function up()
+    public function up(): void
     {
         $this->table('forum_moderators')
             ->addColumn('category_id', 'integer', [
@@ -57,13 +56,13 @@ class CreateModeratorsTable extends AbstractMigration
                 'id',
                 [
                     'update' => 'CASCADE',
-                    'delete' => 'CASCADE'
+                    'delete' => 'CASCADE',
                 ]
             )
             ->update();
     }
 
-    public function down()
+    public function down(): void
     {
         $this->table('forum_moderators')
             ->dropForeignKey(
@@ -73,4 +72,3 @@ class CreateModeratorsTable extends AbstractMigration
         $this->table('forum_moderators')->drop()->save();
     }
 }
-

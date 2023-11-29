@@ -19,8 +19,13 @@ declare(strict_types=1);
  * installed as a dependency of an application.
  */
 
+use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
+use Cake\Datasource\ConnectionManager;
+use Cake\Routing\Router;
+use Cake\TestSuite\Fixture\SchemaLoader;
+use Cake\Utility\Security;
 use CakeDC\Forum\ForumPlugin;
 
 $findRoot = function ($root) {
@@ -31,7 +36,7 @@ $findRoot = function ($root) {
             return $root;
         }
     } while ($root !== $lastRoot);
-    throw new Exception("Cannot find the root of the application, unable to run tests");
+    throw new Exception('Cannot find the root of the application, unable to run tests');
 };
 $root = $findRoot(__FILE__);
 unset($findRoot);
@@ -59,13 +64,13 @@ define('CAKE', CORE_PATH . 'src' . DS);
 require CAKE . 'functions.php';
 require ROOT . '/vendor/autoload.php';
 
-Cake\Core\Configure::write('debug', true);
+Configure::write('debug', true);
 
 ini_set('intl.default_locale', 'en_US');
 
-@mkdir(TMP . 'cache/models', 0777);
-@mkdir(TMP . 'cache/persistent', 0777);
-@mkdir(TMP . 'cache/views', 0777);
+mkdir(TMP . 'cache/models', 0777);
+mkdir(TMP . 'cache/persistent', 0777);
+mkdir(TMP . 'cache/views', 0777);
 
 $cache = [
     'default' => [
@@ -87,8 +92,8 @@ $cache = [
     ],
 ];
 
-Cake\Cache\Cache::setConfig($cache);
-Cake\Core\Configure::write('Session', [
+Cache::setConfig($cache);
+Configure::write('Session', [
     'defaults' => 'php',
 ]);
 
@@ -104,14 +109,14 @@ if (!getenv('db_dsn')) {
     putenv('db_dsn=sqlite:///:memory:');
 }
 
-Cake\Datasource\ConnectionManager::setConfig('test', [
+ConnectionManager::setConfig('test', [
     'url' => getenv('db_dsn'),
     'timezone' => 'UTC',
 ]);
 
 class_alias('TestApp\Controller\AppController', 'App\Controller\AppController');
 class_alias('Cake\View\View', 'App\View\AppView');
-\Cake\Core\Configure::write('App', [
+Configure::write('App', [
     'namespace' => 'TestApp',
     'encoding' => 'UTF-8',
     'base' => false,
@@ -128,13 +133,13 @@ class_alias('Cake\View\View', 'App\View\AppView');
         'templates' => [TEST_APP . 'templates' . DS],
     ],
 ]);
-\Cake\Utility\Security::setSalt('yoyz186elmi66ab9pz4imbb3tgy9vnsgsfgwe2r8tyxbbfdygu9e09tlxyg8p7dq');
+Security::setSalt('yoyz186elmi66ab9pz4imbb3tgy9vnsgsfgwe2r8tyxbbfdygu9e09tlxyg8p7dq');
 Configure::write('Forum.userModel', 'Users');
 Configure::write('Forum.adminCheck', 'is_superuser');
 session_id('cli');
-\Cake\Routing\Router::reload();
+Router::reload();
 
 if (env('FIXTURE_SCHEMA_METADATA')) {
-    $loader = new \Cake\TestSuite\Fixture\SchemaLoader();
+    $loader = new SchemaLoader();
     $loader->loadInternalFile(env('FIXTURE_SCHEMA_METADATA'));
 }

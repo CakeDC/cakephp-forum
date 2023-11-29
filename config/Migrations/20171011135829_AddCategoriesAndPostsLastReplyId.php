@@ -20,9 +20,10 @@ class AddCategoriesAndPostsLastReplyId extends AbstractMigration
      *
      * More information on this method is available here:
      * http://docs.phinx.org/en/latest/migrations.html#the-change-method
+     *
      * @return void
      */
-    public function change()
+    public function change(): void
     {
         $this->table('forum_categories')
             ->addColumn('last_post_id', 'integer', [
@@ -51,7 +52,7 @@ class AddCategoriesAndPostsLastReplyId extends AbstractMigration
                 'id',
                 [
                     'update' => 'CASCADE',
-                    'delete' => 'SET_NULL'
+                    'delete' => 'SET_NULL',
                 ]
             )
             ->update();
@@ -63,7 +64,7 @@ class AddCategoriesAndPostsLastReplyId extends AbstractMigration
                 'id',
                 [
                     'update' => 'CASCADE',
-                    'delete' => 'SET_NULL'
+                    'delete' => 'SET_NULL',
                 ]
             )
             ->update();
@@ -83,7 +84,7 @@ class AddCategoriesAndPostsLastReplyId extends AbstractMigration
             $Categories->saveOrFail($category);
         }
 
-        $threads = $Threads->find()->order('Threads.id');
+        $threads = $Threads->find()->orderBy('Threads.id');
         foreach ($threads as $thread) {
             if (!$reply = $Replies->find()->where(['Replies.parent_id' => $thread->id])->orderByDesc('Replies.id')->first()) {
                 continue;

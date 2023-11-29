@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace CakeDC\Forum\Controller;
 
 use App\Controller\AppController as BaseController;
+use ArrayAccess;
 use Cake\Event\EventInterface;
 use CakeDC\Forum\Controller\Traits\ForumTrait;
 
@@ -31,13 +32,13 @@ class AppController extends BaseController
     use ForumTrait;
 
     /**
-     * @var array|\ArrayAccess|null
+     * @var \ArrayAccess|array|null
      */
-    protected $authenticatedUser;
+    protected array|ArrayAccess|null $authenticatedUser = null;
     /**
      * @var bool
      */
-    protected $loadedAuthenticatedUser = false;
+    protected bool $loadedAuthenticatedUser = false;
 
     /**
      * Initialization hook method.

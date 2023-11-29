@@ -14,7 +14,7 @@ use Migrations\AbstractMigration;
 
 class Initial extends AbstractMigration
 {
-    public function up()
+    public function up(): void
     {
         $this->table('forum_categories')
             ->addColumn('parent_id', 'integer', [
@@ -237,7 +237,7 @@ class Initial extends AbstractMigration
                 'id',
                 [
                     'update' => 'CASCADE',
-                    'delete' => 'CASCADE'
+                    'delete' => 'CASCADE',
                 ]
             )
             ->addForeignKey(
@@ -246,7 +246,7 @@ class Initial extends AbstractMigration
                 'id',
                 [
                     'update' => 'CASCADE',
-                    'delete' => 'CASCADE'
+                    'delete' => 'CASCADE',
                 ]
             )
             ->update();
@@ -258,13 +258,13 @@ class Initial extends AbstractMigration
                 'id',
                 [
                     'update' => 'CASCADE',
-                    'delete' => 'CASCADE'
+                    'delete' => 'CASCADE',
                 ]
             )
             ->update();
     }
 
-    public function down()
+    public function down(): void
     {
         $this->table('forum_posts')
             ->dropForeignKey(
@@ -279,8 +279,10 @@ class Initial extends AbstractMigration
                 'post_id'
             );
 
-        $this->table('forum_categories')->drop()->save();;
-        $this->table('forum_posts')->drop()->save();;
-        $this->table('forum_reports')->drop()->save();;
+        $this->table('forum_categories')->drop()->save();
+
+        $this->table('forum_posts')->drop()->save();
+
+        $this->table('forum_reports')->drop()->save();
     }
 }

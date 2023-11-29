@@ -14,8 +14,7 @@ use Migrations\AbstractMigration;
 
 class AddPostsIsVisibleColumn extends AbstractMigration
 {
-
-    public function up()
+    public function up(): void
     {
 
         $this->table('forum_posts')
@@ -28,7 +27,7 @@ class AddPostsIsVisibleColumn extends AbstractMigration
             ->update();
     }
 
-    public function down()
+    public function down(): void
     {
 
         $this->table('forum_posts')
@@ -36,4 +35,3 @@ class AddPostsIsVisibleColumn extends AbstractMigration
             ->update();
     }
 }
-

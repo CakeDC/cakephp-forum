@@ -14,20 +14,20 @@ use Migrations\AbstractMigration;
 
 class AddPostsLastReplyCreatedColumn extends AbstractMigration
 {
-    public function up()
+    public function up(): void
     {
         $this->table('forum_posts')
             ->addColumn('last_reply_created', 'datetime', [
                 'default' => null,
                 'limit' => null,
                 'null' => true,
-                'after' => 'is_locked'
+                'after' => 'is_locked',
             ])
             ->addIndex(['last_reply_created'])
             ->update();
     }
 
-    public function down()
+    public function down(): void
     {
         $this->table('forum_posts')
             ->removeColumn(

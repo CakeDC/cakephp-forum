@@ -1,6 +1,5 @@
 # CakeDC Forum Plugin
 
-[![Build Status](https://img.shields.io/travis/CakeDC/cakephp-forum/master.svg?style=flat-square)](https://travis-ci.org/CakeDC/cakephp-forum)
 [![Coverage Status](https://img.shields.io/coveralls/CakeDC/cakephp-forum.svg?style=flat-square)](https://coveralls.io/r/CakeDC/cakephp-forum?branch=master)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
 
@@ -48,4 +47,4 @@ License
 
 Copyright 2023 Cake Development Corporation (CakeDC). All rights reserved.
 
-Licensed under the [MIT](http://www.opensource.org/licenses/mit-license.php) License. Redistributions of the source code included in this repository must retain the copyright notice found in each file. 
+Licensed under the [MIT](http://www.opensource.org/licenses/mit-license.php) License. Redistributions of the source code included in this repository must retain the copyright notice found in each file.

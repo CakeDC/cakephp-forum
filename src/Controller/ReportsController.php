@@ -68,7 +68,12 @@ class ReportsController extends AppController
             if ($this->Reports->save($report)) {
                 $this->Flash->success(__('The report has been saved.'));
 
-                return $this->redirect(['controller' => 'Threads', 'action' => 'view', 'category' => $categorySlug, 'thread' => $threadSlug]);
+                return $this->redirect([
+                    'controller' => 'Threads',
+                    'action' => 'view',
+                    'category' => $categorySlug,
+                    'thread' => $threadSlug,
+                ]);
             }
             $this->Flash->error(__('The report could not be saved. Please, try again.'));
         }
@@ -81,7 +86,7 @@ class ReportsController extends AppController
      *
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete(string $id = null): ?Response
+    public function delete(?string $id = null): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
 

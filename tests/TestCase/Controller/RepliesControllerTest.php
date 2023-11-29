@@ -33,7 +33,7 @@ class RepliesControllerTest extends TestCase
     {
         parent::setUp();
 
-        Configure::write('Forum.authenticatedUserCallable', fn(Controller $controller): array => [
+        Configure::write('Forum.authenticatedUserCallable', fn (Controller $controller): array => [
             'id' => 1,
             'username' => 'testing',
         ]);

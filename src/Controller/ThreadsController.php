@@ -186,7 +186,10 @@ class ThreadsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
 
         $thread = $this->_getThread($categorySlug, $threadSlug);
-        if ($thread->user_id !== $this->_getAuthenticatedUserId() && !$this->_forumUserIsModerator($thread->category_id)) {
+        if (
+            $thread->user_id !== $this->_getAuthenticatedUserId() &&
+            !$this->_forumUserIsModerator($thread->category_id)
+        ) {
             throw new UnauthorizedException();
         }
 
@@ -223,6 +226,11 @@ class ThreadsController extends AppController
             $this->Threads->loadInto($thread, ['Categories']);
         }
 
-        return $this->redirect(['controller' => 'Threads', 'action' => 'view', 'category' => $thread->category->slug, 'thread' => $thread->slug]);
+        return $this->redirect([
+            'controller' => 'Threads',
+            'action' => 'view',
+            'category' => $thread->category->slug,
+            'thread' => $thread->slug,
+        ]);
     }
 }

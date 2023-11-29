@@ -36,7 +36,6 @@ use CakeDC\Forum\Model\Entity\Thread;
  * @property \CakeDC\Forum\Model\Table\RepliesTable&\Cake\ORM\Association\HasMany $Replies
  * @property \CakeDC\Forum\Model\Table\ReportsTable&\Cake\ORM\Association\HasMany $Reports
  * @property \CakeDC\Forum\Model\Table\LikesTable&\Cake\ORM\Association\HasMany $Likes
- *
  * @method \CakeDC\Forum\Model\Entity\Thread newEntity($data = null, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Thread newEmptyEntity()
  * @method \CakeDC\Forum\Model\Entity\Thread[] newEntities(array $data, array $options = [])
@@ -44,7 +43,6 @@ use CakeDC\Forum\Model\Entity\Thread;
  * @method \CakeDC\Forum\Model\Entity\Thread patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Thread[] patchEntities($entities, array $data, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Thread findOrCreate($search, callable $callback = null, $options = [])
- *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Slug\Model\Behavior\SlugBehavior
  * @mixin \Muffin\Orderly\Model\Behavior\OrderlyBehavior
@@ -65,16 +63,42 @@ class ThreadsTable extends Table
         $this->setDisplayField('title');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Categories')->setClassName('CakeDC/Forum.Categories')->setJoinType('INNER');
-        $this->hasMany('Replies')->setClassName('CakeDC/Forum.Replies')->setForeignKey('parent_id')->setDependent(true)->setCascadeCallbacks(true);
-        $this->hasOne('UserReplies')->setClassName('CakeDC/Forum.Replies')->setForeignKey('parent_id');
-        $this->belongsTo('LastReplies')->setClassName('CakeDC/Forum.Posts')->setForeignKey('last_reply_id');
-        $this->hasOne('ReportedReplies')->setClassName('CakeDC/Forum.Replies')->setForeignKey('parent_id')->setConditions([
-            'ReportedReplies.reports_count >' => 0,
-        ]);
-        $this->hasMany('Reports')->setClassName('CakeDC/Forum.Reports')->setForeignKey('post_id');
-        $this->hasMany('Likes')->setClassName('CakeDC/Forum.Likes')->setForeignKey('post_id');
-        $this->belongsTo('Users')->setClassName(Configure::read('Forum.userModel'))->setJoinType('INNER');
+        $this->belongsTo('Categories')
+            ->setClassName('CakeDC/Forum.Categories')
+            ->setJoinType('INNER');
+
+        $this->hasMany('Replies')
+            ->setClassName('CakeDC/Forum.Replies')
+            ->setForeignKey('parent_id')
+            ->setDependent(true)
+            ->setCascadeCallbacks(true);
+
+        $this->hasOne('UserReplies')
+            ->setClassName('CakeDC/Forum.Replies')
+            ->setForeignKey('parent_id');
+
+        $this->belongsTo('LastReplies')
+            ->setClassName('CakeDC/Forum.Posts')
+            ->setForeignKey('last_reply_id');
+
+        $this->hasOne('ReportedReplies')
+            ->setClassName('CakeDC/Forum.Replies')
+            ->setForeignKey('parent_id')
+            ->setConditions([
+                'ReportedReplies.reports_count >' => 0,
+            ]);
+
+        $this->hasMany('Reports')
+            ->setClassName('CakeDC/Forum.Reports')
+            ->setForeignKey('post_id');
+
+        $this->hasMany('Likes')
+            ->setClassName('CakeDC/Forum.Likes')
+            ->setForeignKey('post_id');
+
+        $this->belongsTo('Users')
+            ->setClassName(Configure::read('Forum.userModel'))
+            ->setJoinType('INNER');
 
         $this->addBehavior('Timestamp', [
             'events' => [
@@ -98,7 +122,11 @@ class ThreadsTable extends Table
                 'threads_count',
                 'last_post_id' => function ($event, Thread $entity, ThreadsTable $table) {
                     $Posts = TableRegistry::getTableLocator()->get('CakeDC/Forum.Posts');
-                    $lastPost = $Posts->find()->where(['category_id' => $entity->category_id])->orderByDesc('id')->first();
+                    $lastPost = $Posts
+                        ->find()
+                        ->where(['category_id' => $entity->category_id])
+                        ->orderByDesc('id')
+                        ->first();
                     if (!$lastPost) {
                         return null;
                     }
@@ -185,6 +213,9 @@ class ThreadsTable extends Table
         return $rules;
     }
 
+    /**
+     * BeforeFind callback
+     */
     public function beforeFind(EventInterface $event, SelectQuery $query, ArrayObject $options, bool $primary): void
     {
         if (!Hash::get($options, 'all')) {
@@ -192,13 +223,20 @@ class ThreadsTable extends Table
         }
     }
 
+    /**
+     * AfterSave callback
+     */
     public function afterSave(EventInterface $event, EntityInterface $entity, ArrayObject $options): void
     {
         if ($entity->isDirty('category_id')) {
-            $this->Replies->find()->where(['parent_id' => $entity['id']])->all()->each(function (Reply $reply) use ($entity) {
-                $reply->category_id = $entity->get('category_id');
-                $this->Replies->saveOrFail($reply);
-            });
+            $this->Replies
+                ->find()
+                ->where(['parent_id' => $entity['id']])
+                ->all()
+                ->each(function (Reply $reply) use ($entity): void {
+                    $reply->category_id = $entity->get('category_id');
+                    $this->Replies->saveOrFail($reply);
+                });
         }
 
         if ($entity->isNew()) {
@@ -231,7 +269,8 @@ class ThreadsTable extends Table
                 'LastReplies' => ['Users'],
                 'ReportedReplies',
                 'Categories',
-                'UserReplies' => fn(SelectQuery $q): SelectQuery => $q->where(['UserReplies.user_id' => $user_id]),
+                'UserReplies' => fn (SelectQuery $q): SelectQuery => $q
+                    ->where(['UserReplies.user_id' => $user_id]),
             ])
             ->where([
                 'OR' => [

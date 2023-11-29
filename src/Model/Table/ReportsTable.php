@@ -23,7 +23,6 @@ use Cake\Validation\Validator;
  *
  * @property \CakeDC\Forum\Model\Table\PostsTable&\Cake\ORM\Association\BelongsTo $Posts
  * @property \Cake\ORM\Table&\Cake\ORM\Association\BelongsTo $Users
- *
  * @method \CakeDC\Forum\Model\Entity\Report newEntity($data = null, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Report newEmptyEntity()
  * @method \CakeDC\Forum\Model\Entity\Report[] newEntities(array $data, array $options = [])
@@ -31,7 +30,6 @@ use Cake\Validation\Validator;
  * @method \CakeDC\Forum\Model\Entity\Report patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Report[] patchEntities($entities, array $data, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Report findOrCreate($search, callable $callback = null, $options = [])
- *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Cake\ORM\Behavior\CounterCacheBehavior
  */
@@ -58,8 +56,13 @@ class ReportsTable extends Table
             ],
         ]);
 
-        $this->belongsTo('Posts')->setClassName('CakeDC/Forum.Posts')->setJoinType('INNER');
-        $this->belongsTo('Users')->setClassName(Configure::read('Forum.userModel'))->setJoinType('INNER');
+        $this->belongsTo('Posts')
+            ->setClassName('CakeDC/Forum.Posts')
+            ->setJoinType('INNER');
+
+        $this->belongsTo('Users')
+            ->setClassName(Configure::read('Forum.userModel'))
+            ->setJoinType('INNER');
     }
 
     /**

@@ -39,7 +39,7 @@ class CategoriesController extends AppController
      *
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view(string $id = null): void
+    public function view(?string $id = null): void
     {
         $category = $this->Categories->get($id, contain: ['ParentCategories', 'SubCategories', 'Moderators.Users']);
 
@@ -78,7 +78,7 @@ class CategoriesController extends AppController
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Http\Exception\NotFoundException When record not found.
      */
-    public function edit(string $id = null)
+    public function edit(?string $id = null)
     {
         $category = $this->Categories->get($id);
         if ($this->request->is(['patch', 'post', 'put'])) {
@@ -102,7 +102,7 @@ class CategoriesController extends AppController
      *
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete(string $id = null): ?Response
+    public function delete(?string $id = null): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
         $category = $this->Categories->get($id);
@@ -118,7 +118,7 @@ class CategoriesController extends AppController
     /**
      * Move category up
      */
-    public function moveUp(string $id = null): ?Response
+    public function moveUp(?string $id = null): ?Response
     {
         $this->request->allowMethod('post');
 
@@ -136,7 +136,7 @@ class CategoriesController extends AppController
     /**
      * Move category down
      */
-    public function moveDown(string $id = null): ?Response
+    public function moveDown(?string $id = null): ?Response
     {
         $this->request->allowMethod('post');
 

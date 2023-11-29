@@ -26,7 +26,6 @@ use CakeDC\Forum\Model\Entity\Category;
  * @property \CakeDC\Forum\Model\Table\ModeratorsTable&\Cake\ORM\Association\HasMany $Moderators
  * @property \CakeDC\Forum\Model\Table\PostsTable&\Cake\ORM\Association\HasMany $Posts
  * @property \CakeDC\Forum\Model\Table\ThreadsTable&\Cake\ORM\Association\HasMany $Threads
- *
  * @method \CakeDC\Forum\Model\Entity\Category newEntity($data = null, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Category newEmptyEntity()
  * @method \CakeDC\Forum\Model\Entity\Category[] newEntities(array $data, array $options = [])
@@ -34,7 +33,6 @@ use CakeDC\Forum\Model\Entity\Category;
  * @method \CakeDC\Forum\Model\Entity\Category patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Category[] patchEntities($entities, array $data, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Category findOrCreate($search, callable $callback = null, $options = [])
- *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Cake\ORM\Behavior\TreeBehavior
  * @mixin \Muffin\Slug\Model\Behavior\SlugBehavior
@@ -61,13 +59,27 @@ class CategoriesTable extends Table
         $this->addBehavior('Muffin/Slug.Slug');
         $this->addBehavior('Muffin/Orderly.Orderly', ['order' => $this->aliasField('lft')]);
 
-        $this->hasMany('Threads')->setClassName('CakeDC/Forum.Threads')->setConditions([
-            'Threads.parent_id IS' => null,
-        ]);
-        $this->belongsTo('LastPosts')->setClassName('CakeDC/Forum.Posts')->setForeignKey('last_post_id');
-        $this->belongsTo('ParentCategories')->setClassName('CakeDC/Forum.Categories')->setForeignKey('parent_id');
-        $this->hasMany('SubCategories')->setClassName('CakeDC/Forum.Categories')->setForeignKey('parent_id');
-        $this->hasMany('Moderators')->setClassName('CakeDC/Forum.Moderators')->setForeignKey('category_id');
+        $this->hasMany('Threads')
+            ->setClassName('CakeDC/Forum.Threads')
+            ->setConditions([
+                'Threads.parent_id IS' => null,
+            ]);
+
+        $this->belongsTo('LastPosts')
+            ->setClassName('CakeDC/Forum.Posts')
+            ->setForeignKey('last_post_id');
+
+        $this->belongsTo('ParentCategories')
+            ->setClassName('CakeDC/Forum.Categories')
+            ->setForeignKey('parent_id');
+
+        $this->hasMany('SubCategories')
+            ->setClassName('CakeDC/Forum.Categories')
+            ->setForeignKey('parent_id');
+
+        $this->hasMany('Moderators')
+            ->setClassName('CakeDC/Forum.Moderators')
+            ->setForeignKey('category_id');
     }
 
     /**
@@ -131,7 +143,10 @@ class CategoriesTable extends Table
             $result = [];
             foreach ($categories->toArray() as $category) {
                 if ($category->children) {
-                    $result[$category->title] = collection($category->children)->indexBy('id')->extract('title')->toArray();
+                    $result[$category->title] = collection($category->children)
+                        ->indexBy('id')
+                        ->extract('title')
+                        ->toArray();
                 } else {
                     $result[$category->id] = $category->title;
                 }

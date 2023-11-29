@@ -32,7 +32,7 @@ class LikesControllerTest extends TestCase
     {
         parent::setUp();
 
-        Configure::write('Forum.authenticatedUserCallable', fn(Controller $controller): array => [
+        Configure::write('Forum.authenticatedUserCallable', fn (Controller $controller): array => [
             'id' => 1,
             'username' => 'testing',
         ]);
@@ -50,7 +50,6 @@ class LikesControllerTest extends TestCase
     public function testAdd()
     {
         $Posts = $this->fetchTable('CakeDC/Forum.Posts');
-        $Likes = $this->fetchTable('CakeDC/Forum.Likes');
 
         $post = $Posts->find()->where(['slug' => 'new-thread2'])->first();
         $likesCount = $post->get('likes_count');

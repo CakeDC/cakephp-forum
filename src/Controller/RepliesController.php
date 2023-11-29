@@ -20,7 +20,7 @@ use CakeDC\Forum\Model\Entity\Reply;
 /**
  * Replies Controller
  *
- * @method Reply[] paginate($object = null, array $settings = [])
+ * @method \CakeDC\Forum\Model\Entity\Reply[] paginate($object = null, array $settings = [])
  * @mixin \Cake\Controller\Controller
  */
 class RepliesController extends AppController
@@ -81,7 +81,10 @@ class RepliesController extends AppController
 
         $reply = $this->_getReply($categorySlug, $threadSlug, $id);
 
-        if ($reply->user_id !== $this->_getAuthenticatedUserId() && !$this->_forumUserIsModerator($reply->category_id)) {
+        if (
+            $reply->user_id !== $this->_getAuthenticatedUserId() &&
+            !$this->_forumUserIsModerator($reply->category_id)
+        ) {
             throw new UnauthorizedException();
         }
 
@@ -91,7 +94,12 @@ class RepliesController extends AppController
             $this->Flash->error(__('The reply could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['controller' => 'Threads', 'action' => 'view', 'category' => $categorySlug, 'thread' => $threadSlug]);
+        return $this->redirect([
+            'controller' => 'Threads',
+            'action' => 'view',
+            'category' => $categorySlug,
+            'thread' => $threadSlug,
+        ]);
     }
 
     /**

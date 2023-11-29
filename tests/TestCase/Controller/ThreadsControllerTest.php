@@ -33,7 +33,7 @@ class ThreadsControllerTest extends TestCase
     {
         parent::setUp();
 
-        Configure::write('Forum.authenticatedUserCallable', fn(Controller $controller): array => [
+        Configure::write('Forum.authenticatedUserCallable', fn (Controller $controller): array => [
             'id' => 1,
             'username' => 'testing',
         ]);
@@ -130,7 +130,7 @@ class ThreadsControllerTest extends TestCase
         $this->assertEquals($data['is_sticky'], $thread->get('is_sticky'));
         $this->assertEquals($data['is_locked'], $thread->get('is_locked'));
 
-        Configure::write('Forum.authenticatedUserCallable', fn(Controller $controller): array => [
+        Configure::write('Forum.authenticatedUserCallable', fn (Controller $controller): array => [
             'id' => 2,
             'username' => 'testing',
         ]);
@@ -188,7 +188,7 @@ class ThreadsControllerTest extends TestCase
         $this->assertEquals(7, $thread->get('category_id'));
         $this->assertEmpty(array_diff(collection($thread->get('replies'))->extract('category_id')->toArray(), [7]));
 
-        Configure::write('Forum.authenticatedUserCallable', fn(Controller $controller): array => [
+        Configure::write('Forum.authenticatedUserCallable', fn (Controller $controller): array => [
             'id' => 2,
             'username' => 'testing',
         ]);
@@ -265,7 +265,7 @@ class ThreadsControllerTest extends TestCase
     public function testDeleteNotModerator()
     {
         // Deleting a thread when user is not moderator
-        Configure::write('Forum.authenticatedUserCallable', fn(Controller $controller): array => [
+        Configure::write('Forum.authenticatedUserCallable', fn (Controller $controller): array => [
             'id' => 2,
             'username' => 'testing',
         ]);
@@ -293,7 +293,7 @@ class ThreadsControllerTest extends TestCase
         $this->assertCount(6, $threads);
         $this->assertEquals('Overclocking CPU/GPU/Memory Stability Testing Guidelines', $threads[0]->title);
 
-        Configure::write('Forum.authenticatedUserCallable', fn(Controller $controller): array => [
+        Configure::write('Forum.authenticatedUserCallable', fn (Controller $controller): array => [
             'id' => 2,
             'username' => 'testing',
         ]);

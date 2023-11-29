@@ -14,8 +14,7 @@ use Migrations\AbstractMigration;
 
 class CreateLikesTable extends AbstractMigration
 {
-
-    public function up()
+    public function up(): void
     {
 
         $this->table('forum_likes')
@@ -58,7 +57,7 @@ class CreateLikesTable extends AbstractMigration
                 'id',
                 [
                     'update' => 'CASCADE',
-                    'delete' => 'CASCADE'
+                    'delete' => 'CASCADE',
                 ]
             )
             ->update();
@@ -73,7 +72,7 @@ class CreateLikesTable extends AbstractMigration
             ->update();
     }
 
-    public function down()
+    public function down(): void
     {
         $this->table('forum_likes')
             ->dropForeignKey(
@@ -87,4 +86,3 @@ class CreateLikesTable extends AbstractMigration
         $this->table('forum_likes')->drop()->save();
     }
 }
-

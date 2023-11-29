@@ -25,7 +25,6 @@ use Cake\ORM\Table;
  * @property \CakeDC\Forum\Model\Table\LikesTable&\Cake\ORM\Association\HasOne $UserLikes
  * @property \CakeDC\Forum\Model\Table\ReportsTable&\Cake\ORM\Association\HasMany $UserReports
  * @property \CakeDC\Forum\Model\Table\LikesTable&\Cake\ORM\Association\HasMany $Likes
- *
  * @method \CakeDC\Forum\Model\Entity\Post newEntity($data = null, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Post newEmptyEntity()
  * @method \CakeDC\Forum\Model\Entity\Post[] newEntities(array $data, array $options = [])
@@ -33,7 +32,6 @@ use Cake\ORM\Table;
  * @method \CakeDC\Forum\Model\Entity\Post patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Post[] patchEntities($entities, array $data, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Post findOrCreate($search, callable $callback = null, $options = [])
- *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Orderly\Model\Behavior\OrderlyBehavior
  */
@@ -56,12 +54,28 @@ class PostsTable extends Table
         $this->addBehavior('Timestamp');
         $this->addBehavior('Muffin/Orderly.Orderly', ['order' => $this->aliasField('id')]);
 
-        $this->belongsTo('Threads')->setClassName('CakeDC/Forum.Threads')->setForeignKey('parent_id');
-        $this->belongsTo('Categories')->setClassName('CakeDC/Forum.Categories')->setJoinType('INNER');
-        $this->belongsTo('Users')->setClassName(Configure::read('Forum.userModel'));
-        $this->hasOne('UserLikes')->setClassName('CakeDC/Forum.Likes')->setForeignKey('post_id');
-        $this->hasOne('UserReports')->setClassName('CakeDC/Forum.Reports')->setForeignKey('post_id');
-        $this->hasMany('Likes')->setClassName('CakeDC/Forum.Likes')->setForeignKey('post_id');
+        $this->belongsTo('Threads')
+            ->setClassName('CakeDC/Forum.Threads')
+            ->setForeignKey('parent_id');
+
+        $this->belongsTo('Categories')
+            ->setClassName('CakeDC/Forum.Categories')
+            ->setJoinType('INNER');
+
+        $this->belongsTo('Users')
+            ->setClassName(Configure::read('Forum.userModel'));
+
+        $this->hasOne('UserLikes')
+            ->setClassName('CakeDC/Forum.Likes')
+            ->setForeignKey('post_id');
+
+        $this->hasOne('UserReports')
+            ->setClassName('CakeDC/Forum.Reports')
+            ->setForeignKey('post_id');
+
+        $this->hasMany('Likes')
+            ->setClassName('CakeDC/Forum.Likes')
+            ->setForeignKey('post_id');
     }
 
     /**
@@ -85,7 +99,7 @@ class PostsTable extends Table
     public function findWithUserReport(SelectQuery $query, int $user_id): SelectQuery
     {
         return $query->contain([
-            'UserReports' => fn(SelectQuery $q): SelectQuery => $q
+            'UserReports' => fn (SelectQuery $q): SelectQuery => $q
                 ->where([
                     'UserReports.user_id' => $user_id,
                 ]),
@@ -98,7 +112,7 @@ class PostsTable extends Table
     public function findWithUserLike(SelectQuery $query, int $user_id): SelectQuery
     {
         return $query->contain([
-            'UserLikes' => fn(SelectQuery $q): SelectQuery => $q
+            'UserLikes' => fn (SelectQuery $q): SelectQuery => $q
                 ->where([
                     'UserLikes.user_id' => $user_id,
                 ]),

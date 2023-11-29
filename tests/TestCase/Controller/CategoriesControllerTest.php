@@ -30,7 +30,7 @@ class CategoriesControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        Configure::write('Forum.authenticatedUserCallable', fn(Controller $controller): array => [
+        Configure::write('Forum.authenticatedUserCallable', fn (Controller $controller): array => [
             'id' => 1,
             'username' => 'testing',
         ]);
@@ -89,7 +89,7 @@ class CategoriesControllerTest extends TestCase
         $this->assertResponseContains('>Reports<');
         $forumUserIsModerator = $this->viewVariable('forumUserIsModerator');
         $this->assertTrue($forumUserIsModerator);
-        Configure::write('Forum.authenticatedUserCallable', fn(Controller $controller): array => [
+        Configure::write('Forum.authenticatedUserCallable', fn (Controller $controller): array => [
             'id' => 4,
             'username' => 'user',
         ]);

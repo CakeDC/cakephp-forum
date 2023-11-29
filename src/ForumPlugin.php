@@ -53,7 +53,7 @@ class ForumPlugin extends BasePlugin
             // Posts count field in User model for CounterCache behavior. Not used if FALSE
             'userPostsCountField' => false,
             // Function for messages rendering in forum templates
-            'messageRenderer' => fn(string $message): string => nl2br(h($message)),
+            'messageRenderer' => fn (string $message): string => nl2br(h($message)),
             // Field name or callable function to check if user is has access to admin interface
             'adminCheck' => 'is_superuser',
             // Threads limit per page

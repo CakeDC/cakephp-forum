@@ -57,7 +57,7 @@ class ThreadsController extends AppController
      *
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view(string $id = null): void
+    public function view(?string $id = null): void
     {
         /** @var \CakeDC\Forum\Model\Entity\Post $thread */
         $thread = $this->Threads->get($id, contain: ['Categories', 'Users', 'Likes.Users']);
@@ -111,7 +111,7 @@ class ThreadsController extends AppController
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Http\Exception\NotFoundException When record not found.
      */
-    public function edit(string $id = null)
+    public function edit(?string $id = null)
     {
         $thread = $this->Threads->get($id);
 
@@ -137,7 +137,7 @@ class ThreadsController extends AppController
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Http\Exception\NotFoundException When record not found.
      */
-    public function move(string $id = null)
+    public function move(?string $id = null)
     {
         $thread = $this->Threads->get($id);
 
@@ -162,7 +162,7 @@ class ThreadsController extends AppController
      *
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete(string $id = null): ?Response
+    public function delete(?string $id = null): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
         $thread = $this->Threads->get($id);

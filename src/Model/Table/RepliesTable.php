@@ -31,7 +31,6 @@ use CakeDC\Forum\Model\Entity\Reply;
  * @property \Cake\ORM\Table&\Cake\ORM\Association\BelongsTo $Users
  * @property \CakeDC\Forum\Model\Table\ReportsTable&\Cake\ORM\Association\HasMany $Reports
  * @property \CakeDC\Forum\Model\Table\LikesTable&\Cake\ORM\Association\HasMany $Likes
- *
  * @method \CakeDC\Forum\Model\Entity\Reply newEntity($data = null, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Reply newEmptyEntity()
  * @method \CakeDC\Forum\Model\Entity\Reply[] newEntities(array $data, array $options = [])
@@ -39,7 +38,6 @@ use CakeDC\Forum\Model\Entity\Reply;
  * @method \CakeDC\Forum\Model\Entity\Reply patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Reply[] patchEntities($entities, array $data, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Reply findOrCreate($search, callable $callback = null, $options = [])
- *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Orderly\Model\Behavior\OrderlyBehavior
  */
@@ -59,11 +57,25 @@ class RepliesTable extends Table
         $this->setDisplayField('message');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Threads')->setClassName('CakeDC/Forum.Threads')->setForeignKey('parent_id');
-        $this->belongsTo('Categories')->setClassName('CakeDC/Forum.Categories')->setJoinType('INNER');
-        $this->hasMany('Reports')->setClassName('CakeDC/Forum.Reports')->setForeignKey('post_id');
-        $this->hasMany('Likes')->setClassName('CakeDC/Forum.Likes')->setForeignKey('post_id');
-        $this->belongsTo('Users')->setClassName(Configure::read('Forum.userModel'))->setJoinType('INNER');
+        $this->belongsTo('Threads')
+            ->setClassName('CakeDC/Forum.Threads')
+            ->setForeignKey('parent_id');
+
+        $this->belongsTo('Categories')
+            ->setClassName('CakeDC/Forum.Categories')
+            ->setJoinType('INNER');
+
+        $this->hasMany('Reports')
+            ->setClassName('CakeDC/Forum.Reports')
+            ->setForeignKey('post_id');
+
+        $this->hasMany('Likes')
+            ->setClassName('CakeDC/Forum.Likes')
+            ->setForeignKey('post_id');
+
+        $this->belongsTo('Users')
+            ->setClassName(Configure::read('Forum.userModel'))
+            ->setJoinType('INNER');
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('Muffin/Orderly.Orderly', ['order' => $this->aliasField('id')]);
@@ -73,7 +85,11 @@ class RepliesTable extends Table
                 'replies_count',
                 'last_post_id' => function ($event, Reply $entity, RepliesTable $table) {
                     $Posts = TableRegistry::getTableLocator()->get('CakeDC/Forum.Posts');
-                    $lastPost = $Posts->find()->where(['category_id' => $entity->category_id])->orderByDesc('id')->first();
+                    $lastPost = $Posts
+                        ->find()
+                        ->where(['category_id' => $entity->category_id])
+                        ->orderByDesc('id')
+                        ->first();
                     if (!$lastPost) {
                         return null;
                     }
@@ -163,12 +179,17 @@ class RepliesTable extends Table
     ): SelectQuery {
         return $query->contain([
             'Users',
-            'Categories' => fn(SelectQuery $query): SelectQuery => $query->find('slugged', slug: $categorySlug),
-            'Threads' => fn(SelectQuery $query): SelectQuery => $query->find('slugged', slug: $threadSlug),
+            'Categories' => fn (SelectQuery $query): SelectQuery => $query
+                ->find('slugged', slug: $categorySlug),
+            'Threads' => fn (SelectQuery $query): SelectQuery => $query
+                ->find('slugged', slug: $threadSlug),
             'Threads.Users',
         ]);
     }
 
+    /**
+     * BeforeFind callback
+     */
     public function beforeFind(EventInterface $event, SelectQuery $query, ArrayObject $options, bool $primary): void
     {
         if (!Hash::get($options, 'all')) {

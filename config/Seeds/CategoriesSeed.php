@@ -32,7 +32,7 @@ class CategoriesSeed extends AbstractSeed
         $data = [
             [
                 'id' => '1',
-                'parent_id' => NULL,
+                'parent_id' => null,
                 'lft' => '11',
                 'rght' => '18',
                 'title' => 'Hardware and Technology',
@@ -60,7 +60,7 @@ class CategoriesSeed extends AbstractSeed
             ],
             [
                 'id' => '3',
-                'parent_id' => NULL,
+                'parent_id' => null,
                 'lft' => '1',
                 'rght' => '10',
                 'title' => 'Consumer Electronics',
@@ -88,7 +88,7 @@ class CategoriesSeed extends AbstractSeed
             ],
             [
                 'id' => '5',
-                'parent_id' => NULL,
+                'parent_id' => null,
                 'lft' => '19',
                 'rght' => '26',
                 'title' => 'Software',

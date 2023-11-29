@@ -15,7 +15,6 @@ use Cake\Controller\Controller;
 class AppController extends Controller
 {
     /**
-     * @inheritDoc
      * @throws \Exception
      */
     public function initialize(): void

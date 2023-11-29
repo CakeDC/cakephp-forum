@@ -51,6 +51,6 @@ return [
         'prefix' => 'Admin',
         'plugin' => 'CakeDC/Forum',
         'controller' => '*',
-        'action' => '*'
+        'action' => '*',
     ],
 ];

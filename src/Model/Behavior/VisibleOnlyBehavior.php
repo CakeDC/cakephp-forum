@@ -29,6 +29,9 @@ class VisibleOnlyBehavior extends Behavior
         'field' => 'is_visible',
     ];
 
+    /**
+     * BeforeFind callback
+     */
     public function beforeFind(EventInterface $event, SelectQuery $query, ArrayObject $options, bool $primary): void
     {
         $query->where([
