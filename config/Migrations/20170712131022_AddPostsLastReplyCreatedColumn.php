@@ -14,6 +14,9 @@ use Migrations\AbstractMigration;
 
 class AddPostsLastReplyCreatedColumn extends AbstractMigration
 {
+    /**
+     * @return void
+     */
     public function up(): void
     {
         $this->table('forum_posts')
@@ -27,6 +30,9 @@ class AddPostsLastReplyCreatedColumn extends AbstractMigration
             ->update();
     }
 
+    /**
+     * @return void
+     */
     public function down(): void
     {
         $this->table('forum_posts')

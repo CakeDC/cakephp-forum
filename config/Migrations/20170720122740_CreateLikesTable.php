@@ -14,9 +14,11 @@ use Migrations\AbstractMigration;
 
 class CreateLikesTable extends AbstractMigration
 {
+    /**
+     * @return void
+     */
     public function up(): void
     {
-
         $this->table('forum_likes')
             ->addColumn('post_id', 'integer', [
                 'default' => null,
@@ -72,6 +74,9 @@ class CreateLikesTable extends AbstractMigration
             ->update();
     }
 
+    /**
+     * @return void
+     */
     public function down(): void
     {
         $this->table('forum_likes')

@@ -14,6 +14,9 @@ use Migrations\AbstractMigration;
 
 class Initial extends AbstractMigration
 {
+    /**
+     * @return void
+     */
     public function up(): void
     {
         $this->table('forum_categories')
@@ -264,6 +267,9 @@ class Initial extends AbstractMigration
             ->update();
     }
 
+    /**
+     * @return void
+     */
     public function down(): void
     {
         $this->table('forum_posts')

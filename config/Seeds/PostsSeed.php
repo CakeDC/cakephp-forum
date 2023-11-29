@@ -61,7 +61,10 @@ aaa',
                 'slug' => '',
                 'message' => 'Like others have said, sticky please!
 
-About the Prime95 Large FFT, I\'ve gotten crashes on my Phenom II on Blend that I haven\'t gotten on Large FFT. This required me to run it 24 hours with crashes happening on the 20th hour a lot of times. These crashes were fixed by increasing increasing CPU or CPU-NB volts or downing the CPU or CPU-NB clock speeds.',
+About the Prime95 Large FFT, I\'ve gotten crashes on my Phenom II on Blend that I haven\'t gotten on Large FFT. This ' .
+                    'required me to run it 24 hours with crashes happening on the 20th hour a lot of times. These ' .
+                    'crashes were fixed by increasing increasing CPU or CPU-NB volts or downing the CPU or CPU-NB ' .
+                    'clock speeds.',
                 'replies_count' => '0',
                 'reports_count' => '1',
                 'likes_count' => '1',
@@ -79,7 +82,8 @@ About the Prime95 Large FFT, I\'ve gotten crashes on my Phenom II on Blend that 
                 'user_id' => '1',
                 'title' => '7700K vs 7800X Techspot review',
                 'slug' => '7700k-vs-7800x-techspot-review',
-                'message' => 'Obviously it is 1080p and will not matter much in 4K, but that is some really bad numbers for the 7800X.',
+                'message' => 'Obviously it is 1080p and will not matter much in 4K, but that is some really bad' .
+                    ' numbers for the 7800X.',
                 'replies_count' => '1',
                 'reports_count' => '0',
                 'likes_count' => '0',
@@ -97,7 +101,8 @@ About the Prime95 Large FFT, I\'ve gotten crashes on my Phenom II on Blend that 
                 'user_id' => '1',
                 'title' => 'Anandtech：Intel\'s Skylake-SP Xeon VS AMD\'s EPYC 7000',
                 'slug' => 'anandtech-intels-skylake-sp-xeon-vs-amds-epyc-7000',
-                'message' => 'With the exception of database software and vectorizable HPC code, AMD\'s EPYC 7601 ($4200) offers slightly less or slightly better performance than Intel\'s Xeon 8176 ($8000+).',
+                'message' => 'With the exception of database software and vectorizable HPC code, AMD\'s EPYC 7601 ' .
+                    '($4200) offers slightly less or slightly better performance than Intel\'s Xeon 8176 ($8000+).',
                 'replies_count' => '2',
                 'reports_count' => '0',
                 'likes_count' => '0',
@@ -122,7 +127,8 @@ source: ranker.sisoftware.net
 
 for comparation:
 
-• AMD FX(tm)-8350 Eight-Core Processor (4M 8T 4.84GHz, 2.63GHz IMC, 4x 2MB L2 cache, 8MB L3 cache, Steamroller 125W TDP): 223.16Mpix/s
+• AMD FX(tm)-8350 Eight-Core Processor (4M 8T 4.84GHz, 2.63GHz IMC, 4x 2MB L2 cache, 8MB L3 cache, Steamroller ' .
+                    '125W TDP): 223.16Mpix/s
 source: ranker.sisoftware.net',
                 'replies_count' => '0',
                 'reports_count' => '0',
@@ -141,7 +147,8 @@ source: ranker.sisoftware.net',
                 'user_id' => '1',
                 'title' => '',
                 'slug' => '',
-                'message' => 'Is this targeted at data center use because it doesn\'t make much sense for anything else. Maybe a hedge against ARM?',
+                'message' => 'Is this targeted at data center use because it doesn\'t make much sense for ' .
+                    'anything else. Maybe a hedge against ARM?',
                 'replies_count' => '0',
                 'reports_count' => '0',
                 'likes_count' => '0',

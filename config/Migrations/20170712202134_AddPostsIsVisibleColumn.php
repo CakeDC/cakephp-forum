@@ -14,9 +14,11 @@ use Migrations\AbstractMigration;
 
 class AddPostsIsVisibleColumn extends AbstractMigration
 {
+    /**
+     * @return void
+     */
     public function up(): void
     {
-
         $this->table('forum_posts')
             ->addColumn('is_visible', 'boolean', [
                 'after' => 'is_locked',
@@ -27,9 +29,11 @@ class AddPostsIsVisibleColumn extends AbstractMigration
             ->update();
     }
 
+    /**
+     * @return void
+     */
     public function down(): void
     {
-
         $this->table('forum_posts')
             ->removeColumn('is_visible')
             ->update();

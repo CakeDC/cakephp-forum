@@ -14,9 +14,11 @@ use Migrations\AbstractMigration;
 
 class AddReportsCount extends AbstractMigration
 {
+    /**
+     * @return void
+     */
     public function up(): void
     {
-
         $this->table('forum_posts')
             ->addColumn('reports_count', 'integer', [
                 'after' => 'replies_count',
@@ -27,9 +29,11 @@ class AddReportsCount extends AbstractMigration
             ->update();
     }
 
+    /**
+     * @return void
+     */
     public function down(): void
     {
-
         $this->table('forum_posts')
             ->removeColumn('reports_count')
             ->update();

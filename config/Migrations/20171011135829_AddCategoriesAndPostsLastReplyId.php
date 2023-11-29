@@ -76,7 +76,12 @@ class AddCategoriesAndPostsLastReplyId extends AbstractMigration
 
         $categories = $Categories->find()->orderBy('Categories.id');
         foreach ($categories as $category) {
-            if (!$post = $Posts->find()->where(['Posts.category_id' => $category->id])->orderByDesc('Posts.id')->first()) {
+            $post = $Posts
+                ->find()
+                ->where(['Posts.category_id' => $category->id])
+                ->orderByDesc('Posts.id')
+                ->first();
+            if (!$post) {
                 continue;
             }
 
@@ -86,7 +91,12 @@ class AddCategoriesAndPostsLastReplyId extends AbstractMigration
 
         $threads = $Threads->find()->orderBy('Threads.id');
         foreach ($threads as $thread) {
-            if (!$reply = $Replies->find()->where(['Replies.parent_id' => $thread->id])->orderByDesc('Replies.id')->first()) {
+            $reply = $Replies
+                ->find()
+                ->where(['Replies.parent_id' => $thread->id])
+                ->orderByDesc('Replies.id')
+                ->first();
+            if (!$reply) {
                 continue;
             }
 

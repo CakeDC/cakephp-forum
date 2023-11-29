@@ -14,6 +14,9 @@ use Migrations\AbstractMigration;
 
 class CreateModeratorsTable extends AbstractMigration
 {
+    /**
+     * @return void
+     */
     public function up(): void
     {
         $this->table('forum_moderators')
@@ -62,6 +65,9 @@ class CreateModeratorsTable extends AbstractMigration
             ->update();
     }
 
+    /**
+     * @return void
+     */
     public function down(): void
     {
         $this->table('forum_moderators')
