@@ -39,7 +39,6 @@ use CakeDC\Forum\Model\Entity\Thread;
  * @method \CakeDC\Forum\Model\Entity\Thread newEntity($data = null, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Thread newEmptyEntity()
  * @method \CakeDC\Forum\Model\Entity\Thread[] newEntities(array $data, array $options = [])
- * @method \CakeDC\Forum\Model\Entity\Thread|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \CakeDC\Forum\Model\Entity\Thread patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Thread[] patchEntities($entities, array $data, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Thread findOrCreate($search, callable $callback = null, $options = [])

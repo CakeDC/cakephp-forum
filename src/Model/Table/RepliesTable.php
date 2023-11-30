@@ -22,6 +22,7 @@ use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 use Cake\Validation\Validator;
 use CakeDC\Forum\Model\Entity\Reply;
+use CakeDC\Forum\Model\Entity\Thread;
 
 /**
  * Replies Model
@@ -34,7 +35,6 @@ use CakeDC\Forum\Model\Entity\Reply;
  * @method \CakeDC\Forum\Model\Entity\Reply newEntity($data = null, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Reply newEmptyEntity()
  * @method \CakeDC\Forum\Model\Entity\Reply[] newEntities(array $data, array $options = [])
- * @method \CakeDC\Forum\Model\Entity\Reply|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \CakeDC\Forum\Model\Entity\Reply patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Reply[] patchEntities($entities, array $data, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Reply findOrCreate($search, callable $callback = null, $options = [])
@@ -101,7 +101,9 @@ class RepliesTable extends Table
                 'last_reply_created' => function ($event, Reply $entity, RepliesTable $table) {
                     $lastReply = $table->find()->where(['parent_id' => $entity->parent_id])->orderByDesc('id')->first();
                     if (!$lastReply) {
-                        return $this->Threads->get($entity->parent_id)->created;
+                        /** @var Thread $thread */
+                        $thread = $this->Threads->get($entity->parent_id);
+                        return $thread->created;
                     }
 
                     return $lastReply['created'];

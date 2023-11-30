@@ -26,7 +26,6 @@ use Cake\Validation\Validator;
  * @method \CakeDC\Forum\Model\Entity\Report newEntity($data = null, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Report newEmptyEntity()
  * @method \CakeDC\Forum\Model\Entity\Report[] newEntities(array $data, array $options = [])
- * @method \CakeDC\Forum\Model\Entity\Report|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \CakeDC\Forum\Model\Entity\Report patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Report[] patchEntities($entities, array $data, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Report findOrCreate($search, callable $callback = null, $options = [])

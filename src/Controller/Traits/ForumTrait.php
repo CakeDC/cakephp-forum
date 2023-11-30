@@ -25,11 +25,6 @@ use UnexpectedValueException;
 /**
  * ForumTrait
  *
- * @property \CakeDC\Forum\Model\Table\CategoriesTable $Categories
- * @property \CakeDC\Forum\Model\Table\ThreadsTable $Threads
- * @property \CakeDC\Forum\Model\Table\RepliesTable $Replies
- * @property \CakeDC\Forum\Model\Table\PostsTable $Posts
- * @property \CakeDC\Forum\Model\Table\ModeratorsTable $Moderators
  * @mixin \CakeDC\Forum\Controller\AppController
  * @mixin \Cake\Controller\Controller
  */

@@ -19,8 +19,20 @@
   </projectFiles>
 
   <issueHandlers>
+    <LessSpecificReturnType errorLevel="suppress" />
     <RedundantPropertyInitializationCheck errorLevel="suppress"/>
     <RedundantCast errorLevel="suppress"/>
     <UndefinedAttributeClass errorLevel="suppress"/>
+    <LessSpecificReturnType errorLevel="info" />
+
+    <MissingClosureReturnType errorLevel="info" />
+
+    <PropertyNotSetInConstructor errorLevel="info" />
+    <MissingConstructor errorLevel="info" />
+    <MissingClosureParamType errorLevel="info" />
+    <MissingParamType errorLevel="info" />
+
+    <DocblockTypeContradiction errorLevel="info" />
+    <RedundantConditionGivenDocblockType errorLevel="info" />
   </issueHandlers>
 </psalm>

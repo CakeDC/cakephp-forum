@@ -68,9 +68,17 @@ Configure::write('debug', true);
 
 ini_set('intl.default_locale', 'en_US');
 
-mkdir(TMP . 'cache/models', 0777);
-mkdir(TMP . 'cache/persistent', 0777);
-mkdir(TMP . 'cache/views', 0777);
+if (!is_dir(TMP . 'cache/models')) {
+    mkdir(TMP . 'cache/models', 0777);
+}
+
+if (!is_dir(TMP . 'cache/persistent')) {
+    mkdir(TMP . 'cache/persistent', 0777);
+}
+
+if (!is_dir(TMP . 'cache/views')) {
+    mkdir(TMP . 'cache/views', 0777);
+}
 
 $cache = [
     'default' => [

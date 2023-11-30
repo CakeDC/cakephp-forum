@@ -17,7 +17,7 @@ use Cake\Http\Response;
 /**
  * Reports Controller
  *
- * @method \CakeDC\Forum\Model\Entity\Report[] paginate($object = null, array $settings = [])
+ * @method \Cake\Datasource\Paging\PaginatedInterface<\CakeDC\Forum\Model\Entity\Report> paginate($object = null, array $settings = [])
  * @property \CakeDC\Forum\Model\Table\ReportsTable $Reports
  * @mixin \Cake\Controller\Controller
  */

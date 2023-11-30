@@ -21,7 +21,7 @@ use CakeDC\Forum\Model\Entity\Thread;
 /**
  * Threads Controller
  *
- * @method \CakeDC\Forum\Model\Entity\Thread[] paginate($object = null, array $settings = [])
+ * @method \Cake\Datasource\Paging\PaginatedInterface<\CakeDC\Forum\Model\Entity\Thread> paginate($object = null, array $settings = [])
  * @mixin \Cake\Controller\Controller
  */
 class ThreadsController extends AppController
@@ -125,6 +125,7 @@ class ThreadsController extends AppController
             throw new BadRequestException();
         }
 
+        /** @var Thread $thread */
         $thread = $this->Threads->newEmptyEntity();
         $thread->user_id = $this->_getAuthenticatedUserId();
         $thread->set('category', $category);
@@ -211,6 +212,7 @@ class ThreadsController extends AppController
             $fields = array_merge($fields, ['is_sticky', 'is_locked']);
         }
 
+        /** @var Thread $thread */
         $thread = $this->Threads->patchEntity($thread, $this->request->getData(), compact('fields'));
         $reloadCategory = $thread->isDirty('category_id');
 
@@ -223,7 +225,8 @@ class ThreadsController extends AppController
         $this->Flash->success(__('The thread has been saved.'));
 
         if ($reloadCategory) {
-            $this->Threads->loadInto($thread, ['Categories']);
+            /** @var Thread $thread */
+            $thread = $this->Threads->loadInto($thread, ['Categories']);
         }
 
         return $this->redirect([

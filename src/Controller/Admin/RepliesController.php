@@ -14,11 +14,13 @@ namespace CakeDC\Forum\Controller\Admin;
 
 use Cake\Http\Exception\BadRequestException;
 use Cake\Http\Response;
+use CakeDC\Forum\Model\Entity\Reply;
+use CakeDC\Forum\Model\Entity\Thread;
 
 /**
  * Replies Controller
  *
- * @method \CakeDC\Forum\Model\Entity\Reply[] paginate($object = null, array $settings = [])
+ * @method \Cake\Datasource\Paging\PaginatedInterface<\CakeDC\Forum\Model\Entity\Reply> paginate($object = null, array $settings = [])
  * @property \CakeDC\Forum\Model\Table\RepliesTable $Replies
  * @mixin \Cake\Controller\Controller
  */
@@ -49,6 +51,9 @@ class RepliesController extends AppController
             throw new BadRequestException();
         }
 
+        /**
+         * @var Thread $thread
+         */
         $thread = $this->Replies->Threads->get($parentId);
         $reply = $this->Replies->newEmptyEntity();
         $reply->user_id = $this->_getAuthenticatedUserId();
@@ -103,6 +108,9 @@ class RepliesController extends AppController
     public function delete(?string $id = null): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
+        /**
+         * @var Reply $reply
+         */
         $reply = $this->Replies->get($id);
         if ($this->Replies->delete($reply)) {
             $this->Flash->success(__('The reply has been deleted.'));

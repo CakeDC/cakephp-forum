@@ -20,7 +20,7 @@ use CakeDC\Forum\Model\Entity\Reply;
 /**
  * Replies Controller
  *
- * @method \CakeDC\Forum\Model\Entity\Reply[] paginate($object = null, array $settings = [])
+ * @method \Cake\Datasource\Paging\PaginatedInterface<\CakeDC\Forum\Model\Entity\Reply> paginate($object = null, array $settings = [])
  * @mixin \Cake\Controller\Controller
  */
 class RepliesController extends AppController
@@ -37,6 +37,7 @@ class RepliesController extends AppController
             throw new BadRequestException();
         }
 
+        /** @var Reply $reply */
         $reply = $this->Replies->newEmptyEntity();
         $reply->user_id = $this->_getAuthenticatedUserId();
         $reply->set('category', $thread->category);
@@ -72,7 +73,7 @@ class RepliesController extends AppController
     /**
      * Delete method
      *
-     * @param int $id Reply id
+     * @param string $id Reply id
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function delete(string $categorySlug, string $threadSlug, string $id): ?Response
@@ -107,6 +108,7 @@ class RepliesController extends AppController
      */
     protected function save(Reply $reply): ?Response
     {
+        /** @var Reply $reply */
         $reply = $this->Replies->patchEntity($reply, $this->request->getData(), ['fields' => ['message']]);
         if (!$this->Replies->save($reply)) {
             $this->Flash->error(__('The reply could not be saved. Please, try again.'));

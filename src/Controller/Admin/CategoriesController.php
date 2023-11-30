@@ -17,7 +17,7 @@ use Cake\Http\Response;
 /**
  * Categories Controller
  *
- * @method \CakeDC\Forum\Model\Entity\Category[] paginate($object = null, array $settings = [])
+ * @method \Cake\Datasource\Paging\PaginatedInterface<\CakeDC\Forum\Model\Entity\Category> paginate($object = null, array $settings = [])
  * @property \CakeDC\Forum\Model\Table\CategoriesTable $Categories
  * @mixin \Cake\Controller\Controller
  */

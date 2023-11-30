@@ -28,7 +28,6 @@ use Cake\ORM\Table;
  * @method \CakeDC\Forum\Model\Entity\Post newEntity($data = null, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Post newEmptyEntity()
  * @method \CakeDC\Forum\Model\Entity\Post[] newEntities(array $data, array $options = [])
- * @method \CakeDC\Forum\Model\Entity\Post|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \CakeDC\Forum\Model\Entity\Post patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Post[] patchEntities($entities, array $data, array $options = [])
  * @method \CakeDC\Forum\Model\Entity\Post findOrCreate($search, callable $callback = null, $options = [])

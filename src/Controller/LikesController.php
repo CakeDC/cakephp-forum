@@ -18,7 +18,7 @@ use Cake\Http\Response;
 /**
  * Likes Controller
  *
- * @method \CakeDC\Forum\Model\Entity\Like[] paginate($object = null, array $settings = [])
+ * @method \Cake\Datasource\Paging\PaginatedInterface<\CakeDC\Forum\Model\Entity\Like> paginate($object = null, array $settings = [])
  * @property \CakeDC\Forum\Model\Table\LikesTable $Likes
  * @mixin \Cake\Controller\Controller
  */
