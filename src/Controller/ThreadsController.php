@@ -66,7 +66,8 @@ class ThreadsController extends AppController
             return;
         }
 
-        $threads = $this->paginate($this->Threads->find('byCategory', ['category_id' => $category->id]));
+        /** @uses \CakeDC\Forum\Model\Table\ThreadsTable::findByCategory() */
+        $threads = $this->paginate($this->Threads->find(type: 'byCategory', category_id: $category->id));
 
         $this->set(compact('threads'));
     }

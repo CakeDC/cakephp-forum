@@ -15,17 +15,17 @@ namespace CakeDC\Forum\Controller;
 use App\Controller\AppController as BaseController;
 use ArrayAccess;
 use Cake\Event\EventInterface;
-use Cake\ORM\Table;
 use CakeDC\Forum\Controller\Traits\ForumTrait;
-use CakeDC\Forum\Model\Table\CategoriesTable;
-use CakeDC\Forum\Model\Table\ModeratorsTable;
-use CakeDC\Forum\Model\Table\PostsTable;
-use CakeDC\Forum\Model\Table\RepliesTable;
-use CakeDC\Forum\Model\Table\ThreadsTable;
 
 /**
  * Forum Controller
  *
+ * @psalm-suppress UndefinedThisPropertyAssignment
+ * @property \CakeDC\Forum\Model\Table\CategoriesTable $Categories
+ * @property \CakeDC\Forum\Model\Table\ThreadsTable $Threads
+ * @property \CakeDC\Forum\Model\Table\RepliesTable $Replies
+ * @property \CakeDC\Forum\Model\Table\PostsTable $Posts
+ * @property \CakeDC\Forum\Model\Table\ModeratorsTable $Moderators
  * @mixin \Cake\Controller\Controller
  */
 class AppController extends BaseController
@@ -40,11 +40,6 @@ class AppController extends BaseController
      * @var bool
      */
     protected bool $loadedAuthenticatedUser = false;
-    protected CategoriesTable|Table $Categories;
-    protected ThreadsTable|Table $Threads;
-    protected RepliesTable|Table $Replies;
-    protected PostsTable|Table $Posts;
-    protected ModeratorsTable|Table $Moderators;
 
     /**
      * Initialization hook method.

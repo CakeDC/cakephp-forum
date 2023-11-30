@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace CakeDC\Forum\Controller\Admin;
 
 use Cake\Http\Response;
+use Cake\Utility\Hash;
 
 /**
  * Reports Controller
@@ -29,7 +30,14 @@ class ReportsController extends AppController
     public function index(): void
     {
         $filter = array_intersect_key($this->request->getQueryParams(), array_flip(['post_id', 'thread_id']));
-        $reports = $this->paginate($this->Reports->find('filtered', $filter));
+        /** @uses \CakeDC\Forum\Model\Table\ReportsTable::findFiltered() */
+
+        $reports = $this->paginate($this->Reports->find(
+            type: 'filtered',
+            post_id: Hash::get($filter, 'post_id'),
+            thread_id: Hash::get($filter, 'post_id'),
+            category_id: Hash::get($filter, 'category_id')
+        ));
 
         $this->set(compact('reports'));
         $this->viewBuilder()->setOption('serialize', ['reports']);

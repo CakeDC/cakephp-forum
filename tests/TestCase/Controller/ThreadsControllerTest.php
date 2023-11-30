@@ -124,7 +124,9 @@ class ThreadsControllerTest extends TestCase
         $this->assertRedirect('/forum/cpus-andoverclocking/overclocking-cpu-gpu-memory-stability-testing-guidelines');
         $this->assertSession('The thread has been saved.', 'Flash.flash.0.message');
 
-        $thread = $this->fetchTable('CakeDC/Forum.Threads')->find('slugged', ['slug' => 'overclocking-cpu-gpu-memory-stability-testing-guidelines'])->first();
+        $thread = $this->fetchTable('CakeDC/Forum.Threads')
+            ->find(type: 'slugged', slug: 'overclocking-cpu-gpu-memory-stability-testing-guidelines')
+            ->first();
         $this->assertEquals($data['title'], $thread->get('title'));
         $this->assertEquals($data['message'], $thread->get('message'));
         $this->assertEquals($data['is_sticky'], $thread->get('is_sticky'));
@@ -134,13 +136,17 @@ class ThreadsControllerTest extends TestCase
             'id' => 2,
             'username' => 'testing',
         ]);
-        $thread = $this->fetchTable('CakeDC/Forum.Threads')->find('slugged', ['slug' => 'one-more-thread'])->first();
+        $thread = $this->fetchTable('CakeDC/Forum.Threads')
+            ->find(type: 'slugged', slug: 'one-more-thread')
+            ->first();
         $this->assertFalse($thread->get('is_sticky'));
         $this->assertFalse($thread->get('is_locked'));
         $this->post('/forum/cpus-andoverclocking/one-more-thread/edit', ['title' => 'bbb', 'message' => 'ccc', 'is_sticky' => 1, 'is_locked' => 1]);
         $this->assertRedirect('/forum/cpus-andoverclocking/one-more-thread');
         $this->assertSession('The thread has been saved.', 'Flash.flash.0.message');
-        $updatedThread = $this->fetchTable('CakeDC/Forum.Threads')->find('slugged', ['slug' => 'one-more-thread'])->first();
+        $updatedThread = $this->fetchTable('CakeDC/Forum.Threads')
+            ->find(type: 'slugged', slug: 'one-more-thread')
+            ->first();
         // Make sure non-moderator can't update is_sticky and is_locked
         $this->assertEquals('bbb', $updatedThread->get('title'));
         $this->assertEquals('ccc', $updatedThread->get('message'));
@@ -184,7 +190,10 @@ class ThreadsControllerTest extends TestCase
         $this->assertRedirect('/forum/digital-and-video-cameras/overclocking-cpu-gpu-memory-stability-testing-guidelines');
         $this->assertSession('The thread has been saved.', 'Flash.flash.0.message');
 
-        $thread = $this->fetchTable('CakeDC/Forum.Threads')->find('slugged', ['slug' => 'overclocking-cpu-gpu-memory-stability-testing-guidelines'])->contain(['Replies'])->first();
+        $thread = $this->fetchTable('CakeDC/Forum.Threads')
+            ->find(type: 'slugged', slug: 'overclocking-cpu-gpu-memory-stability-testing-guidelines')
+            ->contain(['Replies'])
+            ->first();
         $this->assertEquals(7, $thread->get('category_id'));
         $this->assertEmpty(array_diff(collection($thread->get('replies'))->extract('category_id')->toArray(), [7]));
 

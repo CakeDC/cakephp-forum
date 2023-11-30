@@ -25,6 +25,7 @@ use UnexpectedValueException;
 /**
  * ForumTrait
  *
+ * @psalm-suppress UndefinedThisPropertyAssignment
  * @mixin \CakeDC\Forum\Controller\AppController
  * @mixin \Cake\Controller\Controller
  */
