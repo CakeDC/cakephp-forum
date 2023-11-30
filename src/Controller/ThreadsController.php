@@ -125,7 +125,7 @@ class ThreadsController extends AppController
             throw new BadRequestException();
         }
 
-        /** @var Thread $thread */
+        /** @var \CakeDC\Forum\Model\Entity\Thread $thread */
         $thread = $this->Threads->newEmptyEntity();
         $thread->user_id = $this->_getAuthenticatedUserId();
         $thread->set('category', $category);
@@ -212,7 +212,7 @@ class ThreadsController extends AppController
             $fields = array_merge($fields, ['is_sticky', 'is_locked']);
         }
 
-        /** @var Thread $thread */
+        /** @var \CakeDC\Forum\Model\Entity\Thread $thread */
         $thread = $this->Threads->patchEntity($thread, $this->request->getData(), compact('fields'));
         $reloadCategory = $thread->isDirty('category_id');
 
@@ -225,7 +225,7 @@ class ThreadsController extends AppController
         $this->Flash->success(__('The thread has been saved.'));
 
         if ($reloadCategory) {
-            /** @var Thread $thread */
+            /** @var \CakeDC\Forum\Model\Entity\Thread $thread */
             $thread = $this->Threads->loadInto($thread, ['Categories']);
         }
 

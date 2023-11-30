@@ -14,7 +14,6 @@ namespace CakeDC\Forum\Controller\Admin;
 
 use Cake\Core\Configure;
 use Cake\Http\Response;
-use CakeDC\Forum\Model\Entity\Thread;
 
 /**
  * Threads Controller
@@ -166,7 +165,7 @@ class ThreadsController extends AppController
     public function delete(?string $id = null): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
-        /** @var Thread $thread */
+        /** @var \CakeDC\Forum\Model\Entity\Thread $thread */
         $thread = $this->Threads->get($id);
         if ($this->Threads->delete($thread)) {
             $this->Flash->success(__('The thread has been deleted.'));

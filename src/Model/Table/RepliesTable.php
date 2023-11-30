@@ -22,7 +22,6 @@ use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 use Cake\Validation\Validator;
 use CakeDC\Forum\Model\Entity\Reply;
-use CakeDC\Forum\Model\Entity\Thread;
 
 /**
  * Replies Model
@@ -101,8 +100,9 @@ class RepliesTable extends Table
                 'last_reply_created' => function ($event, Reply $entity, RepliesTable $table) {
                     $lastReply = $table->find()->where(['parent_id' => $entity->parent_id])->orderByDesc('id')->first();
                     if (!$lastReply) {
-                        /** @var Thread $thread */
+                        /** @var \CakeDC\Forum\Model\Entity\Thread $thread */
                         $thread = $this->Threads->get($entity->parent_id);
+
                         return $thread->created;
                     }
 

@@ -37,7 +37,7 @@ class RepliesController extends AppController
             throw new BadRequestException();
         }
 
-        /** @var Reply $reply */
+        /** @var \CakeDC\Forum\Model\Entity\Reply $reply */
         $reply = $this->Replies->newEmptyEntity();
         $reply->user_id = $this->_getAuthenticatedUserId();
         $reply->set('category', $thread->category);
@@ -108,7 +108,7 @@ class RepliesController extends AppController
      */
     protected function save(Reply $reply): ?Response
     {
-        /** @var Reply $reply */
+        /** @var \CakeDC\Forum\Model\Entity\Reply $reply */
         $reply = $this->Replies->patchEntity($reply, $this->request->getData(), ['fields' => ['message']]);
         if (!$this->Replies->save($reply)) {
             $this->Flash->error(__('The reply could not be saved. Please, try again.'));

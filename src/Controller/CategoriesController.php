@@ -14,6 +14,7 @@ namespace CakeDC\Forum\Controller;
 
 /**
  * Categories Controller
+ *
  * @method \Cake\Datasource\Paging\PaginatedInterface<\CakeDC\Forum\Model\Entity\Category> paginate($object = null, array $settings = [])
  * @mixin \Cake\Controller\Controller
  */

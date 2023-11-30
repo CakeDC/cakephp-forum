@@ -14,8 +14,6 @@ namespace CakeDC\Forum\Controller\Admin;
 
 use Cake\Http\Exception\BadRequestException;
 use Cake\Http\Response;
-use CakeDC\Forum\Model\Entity\Reply;
-use CakeDC\Forum\Model\Entity\Thread;
 
 /**
  * Replies Controller
@@ -52,7 +50,7 @@ class RepliesController extends AppController
         }
 
         /**
-         * @var Thread $thread
+         * @var \CakeDC\Forum\Model\Entity\Thread $thread
          */
         $thread = $this->Replies->Threads->get($parentId);
         $reply = $this->Replies->newEmptyEntity();
@@ -109,7 +107,7 @@ class RepliesController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         /**
-         * @var Reply $reply
+         * @var \CakeDC\Forum\Model\Entity\Reply $reply
          */
         $reply = $this->Replies->get($id);
         if ($this->Replies->delete($reply)) {
